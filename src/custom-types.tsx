@@ -29,6 +29,7 @@ type RootStackParamList = {
   MyTranscript: undefined;
   MyAttendance: undefined;
   CourseAttendance: undefined;
+  ReportBug: undefined
 };
 
 // add more props types if and when needed

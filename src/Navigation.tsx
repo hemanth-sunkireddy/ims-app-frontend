@@ -25,6 +25,7 @@ import Transcript from "./screens/Transcript";
 import ViewAttendance from "./screens/Attendance/Attendance";
 import CourseAttendanceView from "./screens/Attendance/CourseAttendanceView";
 import LogOut from "./components/LogOut";
+import ReportBug from "./screens/ReportBug/ReportBug";
 
 import * as types from "./custom-types";
 import { otherIcons, IconSet } from "./constants/Icons";
@@ -122,6 +123,7 @@ function Navigation(): React.JSX.Element {
         />
         <Stack.Screen name="Notifications" component={Notification} />
         <Stack.Screen name="Logout" component={LogOut} />
+        <Stack.Screen name="ReportBug" component={ReportBug}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
