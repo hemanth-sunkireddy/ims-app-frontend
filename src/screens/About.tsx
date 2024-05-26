@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     marginBottom: 10
+  },
+  link:{
+    textDecorationStyle: "solid",
+    textDecorationLine: "underline"
   }
 });
 
@@ -53,14 +57,36 @@ function About(): React.JSX.Element {
         </Text>
       </View>
 
-      <View style={{ flexDirection: "row", padding: 20 }}>
-        <Text style={{ fontWeight: "bold" }}>Contribute / Report Issues: </Text>
+      <View style={{ flexDirection: "row", paddingLeft: 20, paddingTop: 20 }}>
+        <Text style={{ fontWeight: "bold" }}>App Codebase: </Text>
         <TouchableOpacity
           onPress={() => {
-            Linking.openURL("https://github.com/IMS-IIITH/ims-mobile-app");
+            Linking.openURL("https://github.com/IMS-IIITH/frontend");
           }}
         >
-          <Text>Github</Text>
+          <Text style={styles.link}>GitHub repository</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ flexDirection: "row", paddingLeft: 20 }}>
+        <Text style={{ fontWeight: "bold" }}>Contribution: </Text>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL("https://github.com/IMS-IIITH/wiki/wiki/Developer-Documentation");
+          }}
+        >
+          <Text style={styles.link}>Developer Manual</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ flexDirection: "row", paddingLeft: 20 }}>
+        <Text style={{ fontWeight: "bold" }}>Report Issues: </Text>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL("https://github.com/IMS-IIITH/frontend/issues");
+          }}
+        >
+          <Text style={styles.link}>Issues page</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
