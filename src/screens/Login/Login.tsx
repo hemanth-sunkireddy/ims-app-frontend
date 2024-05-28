@@ -103,7 +103,6 @@ function Login({
             ) : (
               <Text style={{ color: "white" }}>Login</Text>
             )}
-
           </Button>
         </View>
       </SafeAreaView>
