@@ -21,6 +21,7 @@ function Login({
   const [_Password, onChangePassword] = React.useState("");
   const [isloading, setIsLoading] = React.useState(false);
   const [errorText, setErrorText] = React.useState("");
+  const [successText, setSuccessText] = React.useState("");
 
   const handleLoginPress = async () => {
     try {
@@ -37,11 +38,11 @@ function Login({
         // After Successful Authentication, Get User Details
         setIsLoading(true);
         try {
-          setErrorText("Authentication Success, Getting User Details..");
+          setSuccessText("Authentication Success, Getting User Details..");
           console.log("Getting User Details...");
           const user_details_status = await get_user_details();
           if (user_details_status == true) {
-            setErrorText(
+            setSuccessText(
               "User Details Fetched Success. Redirecting to Dashboard",
             );
             console.log("Recieved User Details Successfully...");
@@ -76,6 +77,7 @@ function Login({
         <TreeLogo />
         <View style={{ alignItems: "center" }}>
           <Text style={{ color: "red", fontSize: 20 }}>{errorText}</Text>
+          <Text style={{ color: "#2D0C8B", fontSize: 20 }}>{successText}</Text>
         </View>
         <Credentials
           onChangeEmail={onChangeEmail}

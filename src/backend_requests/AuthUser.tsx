@@ -51,15 +51,13 @@ export const authenticate_user = async (
     setIsError(false);
     // Handle the response
     if (response.status === 200) {
-      setErrorText("Auth Success, Getting Cookies....");
       const cookie_status = await getCookie(response, uri_for_auth);
       if (cookie_status == false) {
         setErrorText(
-          "Auth Success, Cookie assign failed, Please Click Login again",
+          "Authentication Success, Cookie assign failed, Please Click Login again",
         );
         return false;
       }
-      setErrorText("Auth, Cookie Assign Success.");
       return true;
     } else {
       setErrorText("Invalid Credentials");
