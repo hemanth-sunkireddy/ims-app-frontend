@@ -92,21 +92,24 @@ function About(): React.JSX.Element {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.subHeading}>
-        This app has been made with ❤️ (and ☕) by Abhiram, Bhav, Hemanth,
-        Jakeer and Samyak. It's being further developed and maintained by them
-        and institute Web Admins.
-      </Text>
+      <View style={styles.contentContainer}>
+        <Text style={styles.subHeading}>Credits</Text>
+        <Text style={styles.description}>
+          This app has been made with ❤️ (and ☕) by Abhiram, Bhav, Hemanth,
+          Jakeer and Samyak. It's being further developed and maintained by them
+          and institute Web Admins.
+        </Text>
 
-      <View style={{ flexDirection: "row", paddingTop: 20 }}>
-        <Text style={styles.description}>Contact: </Text>
-        <TouchableOpacity
-          onPress={() => {
-            Linking.openURL("mailto:webadmin@students.iiit.ac.in");
-          }}
-        >
-          <Text style={styles.link}>webadmin@students.iiit.ac.in</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row", paddingTop: 20 }}>
+          <Text style={styles.description}>Contact: </Text>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL("mailto:webadmin@students.iiit.ac.in");
+            }}
+          >
+            <Text style={styles.link}>webadmin@students.iiit.ac.in</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
