@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
   },
   link: {
     textDecorationStyle: "solid",
-    textDecorationLine: "underline"
-  }
+    textDecorationLine: "underline",
+  },
 });
 
 function About(): React.JSX.Element {
@@ -72,7 +72,9 @@ function About(): React.JSX.Element {
         <Text style={{ fontWeight: "bold" }}>Contribution: </Text>
         <TouchableOpacity
           onPress={() => {
-            Linking.openURL("https://github.com/IMS-IIITH/wiki/wiki/Developer-Documentation");
+            Linking.openURL(
+              "https://github.com/IMS-IIITH/wiki/wiki/Developer-Documentation",
+            );
           }}
         >
           <Text style={styles.link}>Developer Manual</Text>
@@ -90,8 +92,11 @@ function About(): React.JSX.Element {
         </TouchableOpacity>
       </View>
 
-
-      <Text style={styles.subHeading}>This app has been made with ❤️ (and ☕) by Abhiram, Bhav, Hemanth, Jakeer and Samyak. It's being further developed and maintained by them and institute Web Admins.</Text>
+      <Text style={styles.subHeading}>
+        This app has been made with ❤️ (and ☕) by Abhiram, Bhav, Hemanth,
+        Jakeer and Samyak. It's being further developed and maintained by them
+        and institute Web Admins.
+      </Text>
 
       <View style={{ flexDirection: "row", paddingTop: 20 }}>
         <Text style={styles.description}>Contact: </Text>

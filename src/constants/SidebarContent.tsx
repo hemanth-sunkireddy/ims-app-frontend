@@ -46,7 +46,7 @@ export const entries: Entries = {
   reportBug: {
     name: "Report a Bug",
     icon: bugIcon,
-    target: "ReportBug"
+    target: "ReportBug",
   },
-  logout: { name: "LogOut", icon: logoutIcon, target: "Logout" }
+  logout: { name: "LogOut", icon: logoutIcon, target: "Logout" },
 };
