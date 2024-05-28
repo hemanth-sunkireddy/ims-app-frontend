@@ -49,6 +49,7 @@ export const otherIcons = {
     cross: require("../assets/icons/cross.png"),
     edit: require("../assets/icons/edit.png"),
     file_input: require("../assets/icons/file-input.png"),
+    bug: require("../assets/icons/bug.png"),
 
     handwave: require("../assets/icons/handwave.png"),
     red_dot: require("../assets/icons/red_dot.png"),
@@ -63,6 +64,7 @@ export const otherIcons = {
     cross: require("../assets/icons/cross_dark.png"),
     edit: require("../assets/icons/edit_dark.png"),
     file_input: require("../assets/icons/file-input_dark.png"),
+    bug: require("../assets/icons/bug_dark.png"),
 
     forgot: require("../assets/icons/forgot_dark.png"),
     reset: require("../assets/icons/reset_dark.png"),

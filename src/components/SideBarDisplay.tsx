@@ -68,6 +68,7 @@ function SidebarDisplay(): React.JSX.Element {
         {renderEntry(entries.transcript)}
         <WhiteLine />
         {renderEntry(entries.about)}
+        {renderEntry(entries.reportBug)}
         {renderEntry(entries.logout)}
       </DrawerContentScrollView>
     );

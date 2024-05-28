@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
+  link: {
+    textDecorationStyle: "solid",
+    textDecorationLine: "underline"
+  }
 });
 
 function About(): React.JSX.Element {
@@ -53,14 +57,50 @@ function About(): React.JSX.Element {
         </Text>
       </View>
 
-      <View style={{ flexDirection: "row", padding: 20 }}>
-        <Text style={{ fontWeight: "bold" }}>Contribute / Report Issues: </Text>
+      <View style={{ flexDirection: "row", paddingLeft: 20, paddingTop: 20 }}>
+        <Text style={{ fontWeight: "bold" }}>App Codebase: </Text>
         <TouchableOpacity
           onPress={() => {
-            Linking.openURL("https://github.com/IMS-IIITH");
+            Linking.openURL("https://github.com/IMS-IIITH/frontend");
           }}
         >
-          <Text>Github</Text>
+          <Text style={styles.link}>GitHub repository</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ flexDirection: "row", paddingLeft: 20 }}>
+        <Text style={{ fontWeight: "bold" }}>Contribution: </Text>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL("https://github.com/IMS-IIITH/wiki/wiki/Developer-Documentation");
+          }}
+        >
+          <Text style={styles.link}>Developer Manual</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ flexDirection: "row", paddingLeft: 20 }}>
+        <Text style={{ fontWeight: "bold" }}>Report Issues: </Text>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL("https://github.com/IMS-IIITH/frontend/issues");
+          }}
+        >
+          <Text style={styles.link}>Issues page</Text>
+        </TouchableOpacity>
+      </View>
+
+
+      <Text style={styles.subHeading}>This app has been made with ❤️ (and ☕) by Abhiram, Bhav, Hemanth, Jakeer and Samyak. It's being further developed and maintained by them and institute Web Admins.</Text>
+
+      <View style={{ flexDirection: "row", paddingTop: 20 }}>
+        <Text style={styles.description}>Contact: </Text>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL("mailto:webadmin@students.iiit.ac.in");
+          }}
+        >
+          <Text style={styles.link}>webadmin@students.iiit.ac.in</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

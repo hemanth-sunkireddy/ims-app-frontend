@@ -23,6 +23,7 @@ const attendanceIcon = dDarkIcons.attendance;
 const transcriptIcon = dDarkIcons.transcript;
 const aboutIcon = dDarkIcons.about;
 const logoutIcon = oDarkIcons.logout;
+const bugIcon = oDarkIcons.bug;
 
 export const entries: Entries = {
   dashboard: { name: "Dashboard", icon: homeIcon, target: "BottomTab" },
@@ -42,5 +43,10 @@ export const entries: Entries = {
     target: "MyTranscript",
   },
   about: { name: "About", icon: aboutIcon, target: "About" },
-  logout: { name: "LogOut", icon: logoutIcon, target: "Logout" },
+  reportBug: {
+    name: "Report a Bug",
+    icon: bugIcon,
+    target: "ReportBug"
+  },
+  logout: { name: "LogOut", icon: logoutIcon, target: "Logout" }
 };
