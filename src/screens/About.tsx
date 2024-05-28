@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10
   },
-  link:{
+  link: {
     textDecorationStyle: "solid",
     textDecorationLine: "underline"
   }
@@ -87,6 +87,20 @@ function About(): React.JSX.Element {
           }}
         >
           <Text style={styles.link}>Issues page</Text>
+        </TouchableOpacity>
+      </View>
+
+
+      <Text style={styles.subHeading}>This app has been made with ❤️ (and ☕) by Abhiram, Bhav, Hemanth, Jakeer and Samyak. It's being further developed and maintained by them and institute Web Admins.</Text>
+
+      <View style={{ flexDirection: "row", paddingTop: 20 }}>
+        <Text style={styles.description}>Contact: </Text>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL("mailto:webadmin@students.iiit.ac.in");
+          }}
+        >
+          <Text style={styles.link}>webadmin@students.iiit.ac.in</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
