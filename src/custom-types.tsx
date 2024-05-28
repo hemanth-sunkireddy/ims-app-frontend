@@ -92,7 +92,7 @@ export type {
   MyLeavesProps,
   MyTranscriptProps,
   MyAttendanceProps,
-  CourseAttendanceProps
+  CourseAttendanceProps,
 };
 
 export { UserTypes };

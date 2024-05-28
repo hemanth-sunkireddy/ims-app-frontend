@@ -5,35 +5,35 @@ import {
   View,
   SafeAreaView,
   Text,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import global from "../styles/global";
 
 const styles = StyleSheet.create({
   contentContainer: {
     paddingHorizontal: 20,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   heading: {
     fontSize: 25,
     fontWeight: "bold",
     marginBottom: 10,
-    color: "black"
+    color: "black",
   },
   subHeading: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
-    color: "black"
+    color: "black",
   },
   description: {
     fontSize: 16,
-    marginBottom: 10
+    marginBottom: 10,
   },
   link: {
     textDecorationStyle: "solid",
-    textDecorationLine: "underline"
-  }
+    textDecorationLine: "underline",
+  },
 });
 
 function About(): React.JSX.Element {
@@ -72,7 +72,9 @@ function About(): React.JSX.Element {
         <Text style={{ fontWeight: "bold" }}>Contribution: </Text>
         <TouchableOpacity
           onPress={() => {
-            Linking.openURL("https://github.com/IMS-IIITH/wiki/wiki/Developer-Documentation");
+            Linking.openURL(
+              "https://github.com/IMS-IIITH/wiki/wiki/Developer-Documentation",
+            );
           }}
         >
           <Text style={styles.link}>Developer Manual</Text>
@@ -90,8 +92,11 @@ function About(): React.JSX.Element {
         </TouchableOpacity>
       </View>
 
-
-      <Text style={styles.subHeading}>This app has been made with ❤️ (and ☕) by Abhiram, Bhav, Hemanth, Jakeer and Samyak. It's being further developed and maintained by them and institute Web Admins.</Text>
+      <Text style={styles.subHeading}>
+        This app has been made with ❤️ (and ☕) by Abhiram, Bhav, Hemanth,
+        Jakeer and Samyak. It's being further developed and maintained by them
+        and institute Web Admins.
+      </Text>
 
       <View style={{ flexDirection: "row", paddingTop: 20 }}>
         <Text style={styles.description}>Contact: </Text>
