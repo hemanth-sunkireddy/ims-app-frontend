@@ -44,27 +44,29 @@ function About(): React.JSX.Element {
           IMS Application for IIIT Hyderabad
         </Text>
         <Text style={styles.description}>
-          {"     "}
-          This project involves the development of a mobile application for
-          Android and iOS platforms dedicated to the IMS website of IIIT
-          Hyderabad. Students can utilise the application to submit requests for
-          leave, view their attendance and transcript.
+          This app was initially developed as a project for the Design
+          and Analysis of Software Systems (DASS) course in the Spring
+          2024 semester, under the guidance of Prof. Raghu Reddy.
+          Currently, it is an Android mobile application (and soon, iOS too)
+          that is dedicated to the IMS website of IIIT Hyderabad.
         </Text>
         <Text style={styles.description}>
-          Furthermore, students can access and view their profile details
-          including address, bank details and general information. Additionally
-          students can add or edit bank details.
+          Students can utilise the application to submit requests for leaves,
+          view their attendance and transcript, and more. Additionally, they
+          can access and view their profile details including general
+          information, their address and bank details. They can also add or edit
+          their bank details until approved.
         </Text>
       </View>
 
       <View style={{ flexDirection: "row", paddingLeft: 20, paddingTop: 20 }}>
-        <Text style={{ fontWeight: "bold" }}>App Codebase: </Text>
+        <Text style={{ fontWeight: "bold" }}>Project Codebase: </Text>
         <TouchableOpacity
           onPress={() => {
-            Linking.openURL("https://github.com/IMS-IIITH/frontend");
+            Linking.openURL("https://github.com/IMS-IIITH/");
           }}
         >
-          <Text style={styles.link}>GitHub repository</Text>
+          <Text style={styles.link}>GitHub organisation</Text>
         </TouchableOpacity>
       </View>
 
@@ -92,21 +94,24 @@ function About(): React.JSX.Element {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.subHeading}>
-        This app has been made with ❤️ (and ☕) by Abhiram, Bhav, Hemanth,
-        Jakeer and Samyak. It's being further developed and maintained by them
-        and institute Web Admins.
-      </Text>
+      <View style={{ ...styles.contentContainer, paddingTop: 50 }}>
+        <Text style={styles.subHeading}>Credits</Text>
+        <Text style={styles.description}>
+          This app was initially developed by by Abhiram, Bhav, Hemanth,
+          Jakeer and Samyak. It's being further developed and maintained
+          by them and the institute Web Admins team.
+        </Text>
 
-      <View style={{ flexDirection: "row", paddingTop: 20 }}>
-        <Text style={styles.description}>Contact: </Text>
-        <TouchableOpacity
-          onPress={() => {
-            Linking.openURL("mailto:webadmin@students.iiit.ac.in");
-          }}
-        >
-          <Text style={styles.link}>webadmin@students.iiit.ac.in</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row", paddingTop: 20 }}>
+          <Text style={styles.description}>Contact: </Text>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL("mailto:webadmin@students.iiit.ac.in");
+            }}
+          >
+            <Text style={styles.link}>webadmin@students.iiit.ac.in</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );

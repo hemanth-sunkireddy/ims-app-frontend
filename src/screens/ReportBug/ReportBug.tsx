@@ -52,10 +52,10 @@ function ReportBug(): React.JSX.Element {
         </Text>
 
         <Text style={styles.subHeading}>Issue Title:</Text>
-        <Text style={styles.description}>maximum 7-8 words</Text>
+        <Text style={styles.description}>Briefly mention the bug here.</Text>
         <Text style={styles.subHeading}>Issue Description:</Text>
         <Text style={styles.description}>
-          Be brief and concise in descring the bug. Try to mention relevant
+          Be brief and concise in describing the bug. Try to mention relevant
           points in bullets. Add screenshots wherever necessary. Add tags to the
           issue to help in prioritising.
         </Text>
