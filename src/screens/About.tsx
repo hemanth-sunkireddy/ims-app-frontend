@@ -44,16 +44,15 @@ function About(): React.JSX.Element {
           IMS Application for IIIT Hyderabad
         </Text>
         <Text style={styles.description}>
-          {"     "}
           This project involves the development of a mobile application for
-          Android and iOS platforms dedicated to the IMS website of IIIT
+          Android (and hopefully soon iOS too) platforms dedicated to the IMS website of IIIT
           Hyderabad. Students can utilise the application to submit requests for
           leave, view their attendance and transcript.
         </Text>
         <Text style={styles.description}>
           Furthermore, students can access and view their profile details
           including address, bank details and general information. Additionally
-          students can add or edit bank details.
+          students can add or edit bank details until approved.
         </Text>
       </View>
 
