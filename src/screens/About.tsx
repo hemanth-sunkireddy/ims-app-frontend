@@ -44,18 +44,18 @@ function About(): React.JSX.Element {
           IMS Application for IIIT Hyderabad
         </Text>
         <Text style={styles.description}>
-          This app was initially developed as a project for the Design
-          and Analysis of Software Systems (DASS) course in the Spring
-          2024 semester, under the guidance of Prof. Raghu Reddy.
-          Currently, it is an Android mobile application (and soon, iOS too)
-          that is dedicated to the IMS website of IIIT Hyderabad.
+          This app was initially developed as a project for the Design and
+          Analysis of Software Systems (DASS) course in the Spring 2024
+          semester, under the guidance of Prof. Raghu Reddy. Currently, it is an
+          Android mobile application (and soon, iOS too) that is dedicated to
+          the IMS website of IIIT Hyderabad.
         </Text>
         <Text style={styles.description}>
           Students can utilise the application to submit requests for leaves,
-          view their attendance and transcript, and more. Additionally, they
-          can access and view their profile details including general
-          information, their address and bank details. They can also add or edit
-          their bank details until approved.
+          view their attendance and transcript, and more. Additionally, they can
+          access and view their profile details including general information,
+          their address and bank details. They can also add or edit their bank
+          details until approved.
         </Text>
       </View>
 
@@ -97,9 +97,9 @@ function About(): React.JSX.Element {
       <View style={{ ...styles.contentContainer, paddingTop: 50 }}>
         <Text style={styles.subHeading}>Credits</Text>
         <Text style={styles.description}>
-          This app was initially developed by by Abhiram, Bhav, Hemanth,
-          Jakeer and Samyak. It's being further developed and maintained
-          by them and the institute Web Admins team.
+          This app was initially developed by by Abhiram, Bhav, Hemanth, Jakeer
+          and Samyak. It's being further developed and maintained by them and
+          the institute Web Admins team.
         </Text>
 
         <View style={{ flexDirection: "row", paddingTop: 20 }}>
