@@ -166,8 +166,7 @@ function EditBankDetails(): React.JSX.Element {
             onDisplayNotification(
               "Error in Submitting bank details, please try again later.",
             );
-          }
-          else {
+          } else {
             Alert.alert("Submitted bank details.");
             onDisplayNotification(
               "Your application for bank details has been sent successfully.",
