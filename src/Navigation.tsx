@@ -13,7 +13,7 @@ import Login from "./screens/Login/Login";
 import Dashboard from "./screens/Dashboard/Dashboard";
 import LeaveApplication from "./screens/ApplyLeave/LeaveApplication";
 import BottomTab from "./components/BottomTab";
-import About from "./screens/About";
+import About from "./screens/About/About";
 import Notification from "./screens/Notifications/Notifications";
 import ProfileDetails from "./screens/MyProfile/ProfilePage";
 import BankDetails from "./screens/MyBank/BankDetails";
