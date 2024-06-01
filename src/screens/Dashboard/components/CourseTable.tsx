@@ -3,7 +3,6 @@ import { Alert, View } from "react-native";
 import { courses_details } from "../../../constants/APIHandler";
 import { getAccessToken } from "../../../backend_requests/AccessToken";
 
-
 export interface COURSE {
   CourseCode: string;
   CourseName: string;
@@ -11,15 +10,15 @@ export interface COURSE {
   Semester: string;
   Year: string;
   Grade: string | null;
-  TotalClasses: number, 
-  absents: number, 
-  present: number,
+  TotalClasses: number;
+  absents: number;
+  present: number;
 }
 
 let allCourses: Record<string, COURSE> = {};
 
 function CourseTable(): React.JSX.Element {
-  const [courses, setCourses] = useState<Record<string, COURSE>>({});;
+  const [courses, setCourses] = useState<Record<string, COURSE>>({});
 
   const fetchCourseDetails = async () => {
     try {
@@ -66,5 +65,5 @@ function CourseTable(): React.JSX.Element {
   return <View />;
 }
 
-export { allCourses};
+export { allCourses };
 export default CourseTable;
