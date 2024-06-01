@@ -9,29 +9,35 @@ import {
   StyleSheet,
 } from "react-native";
 import { Button } from "@rneui/base";
-import SemesterSelector from "../components/SemesterSelector";
-import { transcript_details } from "../constants/APIHandler";
-import { getAccessToken } from "../backend_requests/AccessToken";
-import { selected_year, selected_sem } from "../components/SemesterSelector";
+import SemesterSelector from "../../components/SemesterSelector";
+import { transcript_details } from "../../constants/APIHandler";
+import { getAccessToken } from "../../backend_requests/AccessToken";
+import { selected_year, selected_sem } from "../../components/SemesterSelector";
 
 import {
-  coursedetails,
-  CourseDetails,
-  Course,
-} from "./Dashboard/components/CourseTable";
+  allCourses,
+} from "../Dashboard/components/CourseTable";
 
-interface SemesterData {
-  [semester: string]: {
-    year: string;
-    courses: Course[];
-    CGPA: number;
-    SGPA: number;
+
+interface TRANSCRIPT {
+  CourseCode: string;
+  CourseName: string;
+  Credits: number;
+  Grade: string | null;
+}[];
+
+interface CompleteGPA {
+  [semesterYear: string]: {
+    cgpa: number;
+    sgpa: number;
   };
 }
 
-interface GPAJSON {
-  [semesterName: string]: { cgpa: number; sgpa: number };
+interface FILTEREDGPA {
+  cgpa: number, 
+  sgpa: number,
 }
+
 
 const styles = StyleSheet.create({
   heading: {
@@ -74,12 +80,13 @@ const styles = StyleSheet.create({
   headingText: {
     fontWeight: "bold",
     fontSize: 11,
+    color: 'black'
   },
   input3: {
     height: 100,
     marginVertical: 10,
     borderWidth: 1,
-    borderColor: "black", // Ensure consistent border color
+    borderColor: "black", 
     padding: 13,
     width: "90%",
     alignSelf: "center",
@@ -91,8 +98,9 @@ const styles = StyleSheet.create({
 
 function Transcript(): React.JSX.Element {
   const screenWidth = Dimensions.get("window").width;
-  const [semesterData, setSemesterData] = useState({} as SemesterData);
-  const [gpaData, setGpaData] = useState({} as GPAJSON);
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [completegpa, setCompletegpa] = useState({} as CompleteGPA);
+  const [filteredgpa, setFilteredGPA] = useState({} );
   const [record, setRecord] = useState(false);
   const [loadingText, setLoadingText] = useState("Choose Year and Semester");
 
@@ -115,102 +123,75 @@ function Transcript(): React.JSX.Element {
         console.log("RESPONSE: ", response);
         const responseData = await response.json();
         console.log("RESPONSE JSON From BackEnd: ", responseData);
-        setGpaData(responseData.semesters);
+        setCompletegpa(responseData);
       }
     } catch (e: unknown) {
       setLoadingText("Error in Fetching Transcript, Please try again later");
-      // Alert.alert("GPAData:", e as string);
     }
   };
 
-  // when page loads, fetch transcript API
+
   useEffect(() => {
     fetchGpa();
   }, []);
 
+  
+
   const columnFractions = [0.25, 0.45, 0.15, 0.15];
 
-  const getValidEntries = (): string[] => {
-    const valid_entries = [];
-    const [year1, year2Part] = selected_year.split("-");
-    const year2 = "20" + year2Part;
-    if (selected_sem == "Spring") {
-      valid_entries.push("Spring" + year2);
-    } else if (selected_sem == "Monsoon") {
-      valid_entries.push("Monsoon" + year1);
-    } else {
-      valid_entries.push("Monsoon" + year1);
-      valid_entries.push("Spring" + year2);
-    }
-    return valid_entries;
-  };
-
-  const addCourses = (newSemData: SemesterData) => {
+  const addCourses = () => {
     setRecord(true);
-    const newData = coursedetails as CourseDetails;
+    const fetchedCourses = allCourses;
+    console.log("FETCHED COURSE: ", fetchedCourses);
+    console.log("SELECTED YEAR: ", selected_year);
+    console.log("SELECTED SEM: ", selected_sem);
+    const resultCourses = Object.values(fetchedCourses).filter(course => {
+      return course.Year === selected_year && course.Semester === selected_sem;
+    });
 
-    // initialize the semeseter
-    for (const courseId in newData.Courses) {
-      const course = newData.Courses[courseId];
-      const { Year, Semester } = course;
-      if (
-        Year === selected_year &&
-        (selected_sem === "All" || Semester === selected_sem)
-      ) {
-        // if semester is defined first time
-        if (newSemData[Semester] == undefined) {
-          newSemData[Semester] = {
-            year: selected_year,
-            courses: [course],
-            CGPA: 0,
-            SGPA: 0,
-          };
-        } else {
-          newSemData[Semester].courses.push(course);
-        }
-      }
-    }
+    console.log("RESULT COURSES: ", resultCourses);
+    setFilteredCourses(resultCourses);
   };
 
-  const addGPA = (newSemData: SemesterData) => {
-    const validEntries = getValidEntries();
-    for (const [semesterName, { sgpa, cgpa }] of Object.entries(gpaData)) {
-      if (validEntries.includes(semesterName)) {
-        const semEntry = semesterName.slice(0, -4);
+  
 
-        // fix: GPA list works even if courselist fails.
-        if (newSemData[semEntry] == undefined) {
-          newSemData[semEntry] = {
-            year: selected_year,
-            courses: [],
-            CGPA: cgpa,
-            SGPA: sgpa,
-          };
-        } else {
-          newSemData[semEntry].CGPA = cgpa;
-          newSemData[semEntry].SGPA = sgpa;
-        }
-      }
+  const addGPA = () => {
+    const semesterKeyParts = selected_year.split("-");
+    let formattedSemesterKey;
+    if(selected_sem == "Monsoon"){
+      formattedSemesterKey =  selected_sem + semesterKeyParts[0];
     }
-  };
+    else{
+      formattedSemesterKey =  selected_sem + "20" + semesterKeyParts[1];
+    }
+    
+    console.log("Formatted Semester Key: ", formattedSemesterKey)
+    if (completegpa[formattedSemesterKey]) {
+      const { cgpa, sgpa } = completegpa[formattedSemesterKey];
+      setFilteredGPA({ cgpa, sgpa });
+    } else {
+      setFilteredGPA({ cgpa: 0, sgpa: 0 });
+    }
+};
+
 
   const handleSelection = () => {
     if (selected_year != null && selected_year != "Select...") {
       if (
-        selected_sem == "All" ||
         selected_sem == "Spring" ||
         selected_sem == "Monsoon"
       ) {
-        const newSemData: SemesterData = {};
-        addCourses(newSemData);
-        addGPA(newSemData);
-        setSemesterData(newSemData);
+        addCourses();
+        addGPA();
+        setLoadingText("");
         return;
       }
     }
     return Alert.alert("Alert", "Please fill all the fields", [{ text: "OK" }]);
   };
-  const renderTableCells = (courses: Course[]) => {
+
+  
+  const renderTableCells = (filteredCourses) => {
     const cells = [];
     const headings = ["CourseCode", "CourseName", "Credits", "Grade"];
 
@@ -228,11 +209,13 @@ function Transcript(): React.JSX.Element {
     ));
 
     cells.push(
-      <View style={[styles.row, styles.headingRow]}>{headingRowCells}</View>,
+      <View style={[styles.row, styles.headingRow]} key="headingRow">
+        {headingRowCells}
+      </View>,
     );
 
     // render rows
-    courses.forEach((course: Course, index: number) => {
+    filteredCourses.forEach((course, index) => {
       const rowCells = headings.map((heading, columnIndex) => (
         <View
           key={columnIndex}
@@ -241,7 +224,7 @@ function Transcript(): React.JSX.Element {
             { width: (screenWidth - 30) * columnFractions[columnIndex] },
           ]}
         >
-          <Text>{course[heading]}</Text>
+          <Text style={{ color: "black"}}>{course[heading]}</Text>
         </View>
       ));
 
@@ -252,6 +235,7 @@ function Transcript(): React.JSX.Element {
       );
     });
     return cells;
+
   };
 
   const Selector = () => {
@@ -274,15 +258,17 @@ function Transcript(): React.JSX.Element {
   const EndOfRecord = () => {
     if (record) {
       return (
-        <View style={{ marginBottom: 10, alignItems: "center", marginTop: 8 }}>
-          <Text style={{ fontWeight: "900", fontSize: 15 }}>
+        <View style={{ marginBottom: 30, alignItems: "center", marginTop: 8 }}>
+          <Text style={{ fontWeight: "900", fontSize: 15 , color: "black"}}>
             *End of Record*
           </Text>
         </View>
+
       );
     }
     return null;
   };
+
 
   const PreHeading = (semester: string, year: string) => {
     return (
@@ -292,6 +278,7 @@ function Transcript(): React.JSX.Element {
             fontWeight: "bold",
             fontSize: 20,
             marginVertical: 10,
+            color: 'black',
             marginLeft: screenWidth * 0.03,
           }}
         >
@@ -318,10 +305,10 @@ function Transcript(): React.JSX.Element {
         }}
         key={1}
       >
-        <Text style={{ fontSize: 17, fontWeight: "bold" }}>
+        <Text style={{ fontSize: 17, fontWeight: "bold", color: "black" }}>
           SGPA: {sgpa.toString()}
         </Text>
-        <Text style={{ fontSize: 17, fontWeight: "bold" }}>
+        <Text style={{ fontSize: 17, fontWeight: "bold", color : "black" }}>
           CGPA: {cgpa.toString()}
         </Text>
       </View>
@@ -334,16 +321,14 @@ function Transcript(): React.JSX.Element {
       <Text style={{ fontSize: 20, textAlign: "center", color: "black" }}>
         {loadingText}
       </Text>
-      {Object.entries(semesterData).map(
-        ([semester, { year, courses, CGPA, SGPA }], index) => (
-          <View key={index}>
-            {PreHeading(semester, year)}
-            <View style={[styles.table, { width: screenWidth - 30 }]} key={0}>
-              {renderTableCells(courses)}
-            </View>
-            <GPAInfo sgpa={SGPA} cgpa={CGPA} />
+      {record && (
+        <View>
+          {PreHeading(selected_sem, selected_year)}
+          <View style={[styles.table, { width: screenWidth - 30 }]} key="coursesTable">
+            {renderTableCells(filteredCourses)}
           </View>
-        ),
+          <GPAInfo sgpa={filteredgpa.sgpa} cgpa={filteredgpa.cgpa} />
+        </View>
       )}
       <EndOfRecord />
     </ScrollView>

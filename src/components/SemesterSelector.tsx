@@ -19,7 +19,6 @@ function GeneralDetails(): React.JSX.Element {
   }
 
   const ListofSemesters = [
-    { key: "All", value: "All" },
     { key: "Monsoon", value: "Monsoon" },
     { key: "Spring", value: "Spring" },
   ];
