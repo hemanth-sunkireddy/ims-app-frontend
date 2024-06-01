@@ -6,7 +6,7 @@ import {
   SelectList,
   MultipleSelectList,
 } from "react-native-dropdown-select-list"; // Assuming you have these components
-import { courserows } from "../../Dashboard/components/CourseTable"; // Assuming this is where your course data is stored
+import { allCourses } from "../../Dashboard/components/CourseTable"; // Assuming this is where your course data is stored
 
 import { otherIcons } from "../../../constants/Icons";
 
@@ -33,9 +33,9 @@ function MissedExams({
     { key: "No", value: "No" },
   ];
 
-  // const coursesList = []
-  const coursesList = Object.values(courserows).map((course) => ({
-    key: course.key,
+  // const coursesList = [] // Need to fix this
+  const coursesList = Object.values(allCourses).map((course) => ({
+    key: course.Course,
     value: course.name,
   }));
 
@@ -68,6 +68,8 @@ function MissedExams({
               data={ListOfReasons}
               placeholder="Select..."
               search={false}
+              dropdownTextStyles={{ color: 'black' }}
+              inputStyles={{ color: "black"}}
             />
           </View>
           {missedExams === "Yes" ? (
@@ -104,6 +106,8 @@ function MissedExams({
               data={ReasonsforSports}
               placeholder="Select..."
               search={false}
+              dropdownTextStyles={{ color: 'black' }}
+              inputStyles={{ color: "black"}}
             />
           </View>
         </View>
