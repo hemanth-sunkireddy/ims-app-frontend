@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView, Image, ImageSourcePropType } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Dashboard from "../screens/Dashboard/Dashboard";
-import About from "../screens/About";
+import About from "../screens/About/About";
 import Notification from "../screens/Notifications/Notifications";
 
 import { dashboardIcons, IconSet } from "../constants/Icons";
