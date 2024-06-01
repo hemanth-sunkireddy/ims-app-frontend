@@ -10,7 +10,6 @@ import { allCourses } from "../../Dashboard/components/CourseTable"; // Assuming
 
 import { otherIcons } from "../../../constants/Icons";
 
-
 export interface CourseRow {
   key: string;
   name: string;
@@ -48,14 +47,16 @@ function MissedExams({
 
   const filterPresentCourses = () => {
     const Rowslist: CourseRow[] = [];
-  if (!allCourses) {
-    return;
-  }
-  const presentCourses = Object.values(allCourses).filter(course => course.Grade === null);
-  presentCourses.forEach(course => {
-    Rowslist.push({ key: course.CourseCode, name: course.CourseName });
-  });
-  setPresentCourses(Rowslist);
+    if (!allCourses) {
+      return;
+    }
+    const presentCourses = Object.values(allCourses).filter(
+      (course) => course.Grade === null,
+    );
+    presentCourses.forEach((course) => {
+      Rowslist.push({ key: course.CourseCode, name: course.CourseName });
+    });
+    setPresentCourses(Rowslist);
   };
 
   useEffect(() => {
@@ -66,8 +67,6 @@ function MissedExams({
     // console.log(missedcourses)
     setCOURSESMISSED(missedcourses);
   }, [missedcourses]);
-
-
 
   useEffect(() => {
     filterPresentCourses();
@@ -107,7 +106,10 @@ function MissedExams({
                   setSelected={(value) => {
                     setMissedCourses(value);
                   }}
-                  data={presentcourses.map(course => ({ key: course.key, value: course.name }))}
+                  data={presentcourses.map((course) => ({
+                    key: course.key,
+                    value: course.name,
+                  }))}
                   placeholder="Select..."
                   search={false}
                   dropdownTextStyles={{ color: "black" }}

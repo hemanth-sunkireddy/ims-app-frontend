@@ -52,7 +52,7 @@ function Remarks({ leavejustification, leaveremarks }): React.JSX.Element {
       <View>
         <Text style={LeaveApplicationCss.text}>Application Date</Text>
         <View style={LeaveApplicationCss.input2}>
-          <Text style={{ color: 'black'}}>
+          <Text style={{ color: "black" }}>
             {todayDate.toLocaleDateString("en-IN", {
               year: "numeric",
               month: "2-digit",

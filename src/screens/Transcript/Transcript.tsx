@@ -186,10 +186,7 @@ function Transcript(): React.JSX.Element {
       );
     }
 
-    
     const headings = ["CourseCode", "CourseName", "Credits", "Grade"];
-
-
 
     // render heading row
     const headingRowCells = headings.map((heading, index) => (

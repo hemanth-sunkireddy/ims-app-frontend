@@ -90,7 +90,7 @@ function ViewAttendance({
         rowslist.push({ Key, CourseName, Total, Present, Absent });
       }
     }
-    if(rowslist.length == 0) {
+    if (rowslist.length == 0) {
       setStatusText("No Data Found");
     }
     setCourseList(rowslist);
@@ -127,7 +127,9 @@ function ViewAttendance({
       <TouchableOpacity key={item.Key} onPress={() => handleCourseClick(item)}>
         <DataTable.Row>
           <DataTable.Cell style={{ flex: 10 }}>
-            <Text numberOfLines={2} style={{ color: 'black'}}>{item.CourseName}</Text>
+            <Text numberOfLines={2} style={{ color: "black" }}>
+              {item.CourseName}
+            </Text>
           </DataTable.Cell>
           <DataTable.Cell style={{ flex: 3 }} numeric>
             {item.Total}
@@ -148,13 +150,39 @@ function ViewAttendance({
       <View style={styles.box2}>
         <DataTable>
           <DataTable.Header key="Header">
-            <DataTable.Title style={{ flex: 4 }}><Text style={{ color: 'black', fontSize: 15, fontWeight: 'bold' }} >Course Name</Text></DataTable.Title>
-            <DataTable.Title style={{ marginLeft: 5 }}><Text style={{ color: 'black', fontSize: 12, fontWeight: 'bold' }} >Total</Text></DataTable.Title>
-            <DataTable.Title style={{  }}><Text style={{ color: 'black', fontSize: 12, fontWeight: 'bold' }} >Present</Text></DataTable.Title>
-            <DataTable.Title style={{ marginLeft: 10 }}><Text style={{ color: 'black', fontSize: 12, fontWeight: 'bold'}} >Absent</Text></DataTable.Title>
+            <DataTable.Title style={{ flex: 4 }}>
+              <Text
+                style={{ color: "black", fontSize: 15, fontWeight: "bold" }}
+              >
+                Course Name
+              </Text>
+            </DataTable.Title>
+            <DataTable.Title style={{ marginLeft: 5 }}>
+              <Text
+                style={{ color: "black", fontSize: 12, fontWeight: "bold" }}
+              >
+                Total
+              </Text>
+            </DataTable.Title>
+            <DataTable.Title style={{}}>
+              <Text
+                style={{ color: "black", fontSize: 12, fontWeight: "bold" }}
+              >
+                Present
+              </Text>
+            </DataTable.Title>
+            <DataTable.Title style={{ marginLeft: 10 }}>
+              <Text
+                style={{ color: "black", fontSize: 12, fontWeight: "bold" }}
+              >
+                Absent
+              </Text>
+            </DataTable.Title>
           </DataTable.Header>
           {courseList.length === 0 ? (
-            <Text style={{ color: 'black', textAlign: 'center', fontSize: 15}}>{statusText}</Text>
+            <Text style={{ color: "black", textAlign: "center", fontSize: 15 }}>
+              {statusText}
+            </Text>
           ) : (
             RenderRows()
           )}
