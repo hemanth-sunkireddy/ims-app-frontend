@@ -126,7 +126,7 @@ function FromToDate({
               { alignSelf: "flex-start" },
             ]}
           >
-            <Text>
+            <Text style={{ color: 'black'}}>
               {fromDate.toLocaleDateString("en-IN", {
                 year: "numeric",
                 month: "2-digit",
@@ -166,7 +166,7 @@ function FromToDate({
               { alignSelf: "flex-start" },
             ]}
           >
-            <Text>
+            <Text style={{ color: 'black'}}>
               {toDate.toLocaleDateString("en-IN", {
                 year: "numeric",
                 month: "2-digit",
@@ -186,7 +186,7 @@ function FromToDate({
       <View>
         <Text style={LeaveApplicationCss.text}>Total Days</Text>
         <View style={LeaveApplicationCss.input2}>
-          <Text>{isNaN(totalDays) ? 0 : totalDays}</Text>
+          <Text style={{ color: 'black'}}>{isNaN(totalDays) ? 0 : totalDays}</Text>
         </View>
       </View>
     </View>

@@ -73,6 +73,8 @@ function ReasonForLeave({
             data={ListOfReasons}
             placeholder="Select..."
             search={false}
+            dropdownTextStyles={{ color: 'black' }}
+            inputStyles={{ color: "black"}}
           ></SelectList>
         </View>
         {reasonForLeave === "Sickness" ? (

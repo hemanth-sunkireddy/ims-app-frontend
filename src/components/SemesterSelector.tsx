@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, Text } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
-import { ScreenWidth } from "@rneui/base";
+import { color, ScreenWidth } from "@rneui/base";
 
 export let selected_year = "";
 export let selected_sem = "";
@@ -51,6 +51,8 @@ function GeneralDetails(): React.JSX.Element {
             }}
             data={ListofYears}
             placeholder="Select..."
+            dropdownTextStyles={{ color: 'black' }}
+            inputStyles={{ color: "black"}}
             search={false}
           />
         </View>
@@ -60,6 +62,7 @@ function GeneralDetails(): React.JSX.Element {
           flexDirection: "row",
           marginTop: 10,
           marginLeft: ScreenWidth * 0.03,
+          
         }}
       >
         <Text style={{ marginVertical: 10, fontSize: 18, color: "black" }}>
@@ -72,6 +75,8 @@ function GeneralDetails(): React.JSX.Element {
             }}
             data={ListofSemesters}
             placeholder="Select..."
+            dropdownTextStyles={{ color: 'black' }}
+            inputStyles={{ color: "black"}}
             search={false}
           />
         </View>
