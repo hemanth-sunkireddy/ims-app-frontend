@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 15,
     marginBottom: 20,
-    color: 'black'
+    color: "black",
   },
   link: {
     textDecorationStyle: "solid",
     textDecorationLine: "underline",
-    color: 'black'
+    color: "black",
   },
 });
 
@@ -45,11 +45,11 @@ function ReportBug(): React.JSX.Element {
         <Text style={styles.heading}>Reporting Bugs</Text>
 
         <Text style={styles.description}>
-          We've put significant effort into minimizing errors in our app, 
-          but occasional bugs may still slip through our testing phases. 
-          If you encounter any issues, we encourage you to report them 
-          so we can address them promptly. We would greatly appreciate 
-          it if you could follow this basic format when reporting a bug:
+          We've put significant effort into minimizing errors in our app, but
+          occasional bugs may still slip through our testing phases. If you
+          encounter any issues, we encourage you to report them so we can
+          address them promptly. We would greatly appreciate it if you could
+          follow this basic format when reporting a bug:
         </Text>
 
         <Text style={styles.subHeading}>Issue Title:</Text>
@@ -57,21 +57,21 @@ function ReportBug(): React.JSX.Element {
 
         <Text style={styles.subHeading}>Issue Description:</Text>
         <Text style={styles.description}>
-        When reporting a bug, please be concise and clear.
-        Include screenshots if needed and use tags to help prioritize the issue. 
+          When reporting a bug, please be concise and clear. Include screenshots
+          if needed and use tags to help prioritize the issue.
         </Text>
       </View>
 
       <View style={{ flexDirection: "row", paddingTop: 20, paddingLeft: 20 }}>
-        <Text style={{ fontWeight: "bold", color: 'black' }}>Issues page: </Text>
+        <Text style={{ fontWeight: "bold", color: "black" }}>
+          Issues page:{" "}
+        </Text>
         <TouchableOpacity
           onPress={() => {
             Linking.openURL("https://github.com/IMS-IIITH/frontend/issues");
           }}
         >
-          <Text style={styles.link}>
-            Submit Issue
-          </Text>
+          <Text style={styles.link}>Submit Issue</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

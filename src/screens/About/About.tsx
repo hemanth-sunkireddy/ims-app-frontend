@@ -30,12 +30,12 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     marginBottom: 10,
-    color: 'black',
+    color: "black",
   },
   link: {
     textDecorationStyle: "solid",
     textDecorationLine: "underline",
-    color: 'black'
+    color: "black",
   },
 });
 
@@ -48,15 +48,26 @@ function About(): React.JSX.Element {
             IMS Application for IIIT Hyderabad
           </Text>
           <Text style={styles.description}>
-            This app originated as a project for the Design and Analysis of Software Systems (DASS) course in the Spring 2024 semester, guided by Prof. Raghu Reddy. It is currently an Android mobile application, with an iOS version coming soon, dedicated to the IMS website of IIIT Hyderabad.
+            This app originated as a project for the Design and Analysis of
+            Software Systems (DASS) course in the Spring 2024 semester, guided
+            by Prof. Raghu Reddy. It is currently an Android mobile application,
+            with an iOS version coming soon, dedicated to the IMS website of
+            IIIT Hyderabad.
           </Text>
           <Text style={styles.description}>
-            Students can use the application to submit leave requests, add bank accounts, and view their attendance, transcripts, and profile details, including general information and address. They can also check the status of their leave requests and bank applications. Additionally, students can add or edit their bank details until they receive approval.
+            Students can use the application to submit leave requests, add bank
+            accounts, and view their attendance, transcripts, and profile
+            details, including general information and address. They can also
+            check the status of their leave requests and bank applications.
+            Additionally, students can add or edit their bank details until they
+            receive approval.
           </Text>
         </View>
 
         <View style={{ flexDirection: "row", paddingLeft: 20, paddingTop: 20 }}>
-          <Text style={{ fontWeight: "bold", color: 'black', fontSize: 15 }}>Project Codebase: </Text>
+          <Text style={{ fontWeight: "bold", color: "black", fontSize: 15 }}>
+            Project Codebase:{" "}
+          </Text>
           <TouchableOpacity
             onPress={() => {
               Linking.openURL("https://github.com/IMS-IIITH/");
@@ -67,7 +78,9 @@ function About(): React.JSX.Element {
         </View>
 
         <View style={{ flexDirection: "row", paddingLeft: 20 }}>
-          <Text style={{ fontWeight: "bold", color: 'black', fontSize: 15 }}>Contribution: </Text>
+          <Text style={{ fontWeight: "bold", color: "black", fontSize: 15 }}>
+            Contribution:{" "}
+          </Text>
           <TouchableOpacity
             onPress={() => {
               Linking.openURL(
@@ -80,7 +93,9 @@ function About(): React.JSX.Element {
         </View>
 
         <View style={{ flexDirection: "row", paddingLeft: 20 }}>
-          <Text style={{ fontWeight: "bold", color: 'black', fontSize: 15 }}>Report Issues: </Text>
+          <Text style={{ fontWeight: "bold", color: "black", fontSize: 15 }}>
+            Report Issues:{" "}
+          </Text>
           <TouchableOpacity
             onPress={() => {
               Linking.openURL("https://github.com/IMS-IIITH/frontend/issues");
@@ -94,12 +109,53 @@ function About(): React.JSX.Element {
           <Text style={styles.subHeading}>Credits</Text>
           <Text style={styles.description}>
             This app was initially developed by
-            <Text style={{ color: 'blue' }} onPress={() => Linking.openURL('https://github.com/abhiramtilakiiit')}> Abhiram Tilak</Text>,
-            <Text style={{ color: 'blue' }} onPress={() => Linking.openURL('https://github.com/bhavberi')}> Bhav Beri</Text>,
-            <Text style={{ color: 'blue' }} onPress={() => Linking.openURL('https://github.com/jakeer-hussain')}> Jakeer Hussain</Text>,
-            <Text style={{ color: 'blue' }} onPress={() => Linking.openURL('https://github.com/hemanth-sunkireddy')}> Hemanth Sunkireddy</Text>,
-            and <Text style={{ color: 'blue' }} onPress={() => Linking.openURL('https://github.com/someyuck')}> Samyak Mishra</Text>.
-            It's being further developed and maintained by them and the institute Web Admins team.
+            <Text
+              style={{ color: "blue" }}
+              onPress={() =>
+                Linking.openURL("https://github.com/abhiramtilakiiit")
+              }
+            >
+              {" "}
+              Abhiram Tilak
+            </Text>
+            ,
+            <Text
+              style={{ color: "blue" }}
+              onPress={() => Linking.openURL("https://github.com/bhavberi")}
+            >
+              {" "}
+              Bhav Beri
+            </Text>
+            ,
+            <Text
+              style={{ color: "blue" }}
+              onPress={() =>
+                Linking.openURL("https://github.com/jakeer-hussain")
+              }
+            >
+              {" "}
+              Jakeer Hussain
+            </Text>
+            ,
+            <Text
+              style={{ color: "blue" }}
+              onPress={() =>
+                Linking.openURL("https://github.com/hemanth-sunkireddy")
+              }
+            >
+              {" "}
+              Hemanth Sunkireddy
+            </Text>
+            , and{" "}
+            <Text
+              style={{ color: "blue" }}
+              onPress={() => Linking.openURL("https://github.com/someyuck")}
+            >
+              {" "}
+              Samyak Mishra
+            </Text>
+            . It's being further developed and maintained by them and the
+            institute Web Admins team.
           </Text>
 
           <View style={{ flexDirection: "row", paddingTop: 20 }}>
