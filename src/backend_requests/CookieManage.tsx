@@ -19,18 +19,24 @@ export const getCookie = async (
     // Extracting the value of the cookie from the header
     const cookieArray = cookies.split("; ");
 
-    if(!cookieArray){
+    if (!cookieArray) {
       return false;
     }
 
     // Get the Access Token
     let accessToken = cookieArray[4];
-    if(!accessToken){ return false;}
+    if (!accessToken) {
+      return false;
+    }
     const access_token_value = accessToken.split(", ");
-    if(!access_token_value){ return false;}
+    if (!access_token_value) {
+      return false;
+    }
     const token_dict = access_token_value[1];
     const token_value = token_dict.split("=");
-    if(!token_value){ return false; }
+    if (!token_value) {
+      return false;
+    }
     const ims_app_token_value = token_value[1];
 
     if (!ims_app_token_value) {
