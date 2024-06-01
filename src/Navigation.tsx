@@ -21,7 +21,7 @@ import EditBankDetails from "./screens/MyBank/EditBank";
 import SidebarDisplay from "./components/SideBarDisplay";
 import NoNetwork from "./screens/NoNetwork";
 import MyLeaveRequests from "./screens/PastLeaves/MyLeaveRequests";
-import Transcript from "./screens/Transcript";
+import Transcript from "./screens/Transcript/Transcript";
 import ViewAttendance from "./screens/Attendance/Attendance";
 import CourseAttendanceView from "./screens/Attendance/CourseAttendanceView";
 import LogOut from "./components/LogOut";
