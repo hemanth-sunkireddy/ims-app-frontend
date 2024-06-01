@@ -8,8 +8,8 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import { coursedetails } from "../Dashboard/components/CourseTable";
-import { CourseDetails } from "../Dashboard/components/CourseTable";
+import { allCourses } from "../Dashboard/components/CourseTable";
+import { COURSE } from "../Dashboard/components/CourseTable";
 import global from "../../styles/global";
 import { DataTable } from "react-native-paper";
 import * as types from "../../custom-types";
@@ -74,24 +74,24 @@ function ViewAttendance({
 
   // code for courseList
   const [courseList, setCourseList] = React.useState<CourseItem[]>([]);
-
+  const [statusText, setStatusText] = React.useState("Select Year and Sem");
   const filterCourseList = () => {
     const rowslist: CourseItem[] = [];
-    const details = coursedetails as CourseDetails;
-    const len = Object.keys(details.Courses).length;
+    const allcourses = allCourses;
+    const len = Object.keys(allcourses).length;
     for (let i = 1; i <= len; i += 1) {
-      const course = details.Courses[i.toString()];
+      const course = allcourses[i.toString()];
       const CourseName = course.CourseName;
       const Key = course.CourseCode;
-      const Total = 7 * course.Credits;
-      const Absent = parseInt(details.Attendance[i.toString()].absents);
-      const Present = Total - Absent;
-      if (
-        course.Year === selected_year &&
-        (selected_sem === "All" || course.Semester === selected_sem)
-      ) {
+      const Total = parseInt(course.TotalClasses);
+      const Absent = parseInt(course.absents);
+      const Present = parseInt(course.present);
+      if (course.Year === selected_year && course.Semester === selected_sem) {
         rowslist.push({ Key, CourseName, Total, Present, Absent });
       }
+    }
+    if(rowslist.length == 0) {
+      setStatusText("No Data Found");
     }
     setCourseList(rowslist);
   };
@@ -127,7 +127,7 @@ function ViewAttendance({
       <TouchableOpacity key={item.Key} onPress={() => handleCourseClick(item)}>
         <DataTable.Row>
           <DataTable.Cell style={{ flex: 10 }}>
-            <Text numberOfLines={2}>{item.CourseName}</Text>
+            <Text numberOfLines={2} style={{ color: 'black'}}>{item.CourseName}</Text>
           </DataTable.Cell>
           <DataTable.Cell style={{ flex: 3 }} numeric>
             {item.Total}
@@ -148,13 +148,16 @@ function ViewAttendance({
       <View style={styles.box2}>
         <DataTable>
           <DataTable.Header key="Header">
-            <DataTable.Title style={{ flex: 15 }}>Course Name</DataTable.Title>
-            <DataTable.Title style={{ flex: 3 }}>Total</DataTable.Title>
-            <DataTable.Title style={{ flex: 4 }}>Present</DataTable.Title>
-            <DataTable.Title style={{ flex: 3 }}>Absent</DataTable.Title>
+            <DataTable.Title style={{ flex: 4 }}><Text style={{ color: 'black', fontSize: 15, fontWeight: 'bold' }} >Course Name</Text></DataTable.Title>
+            <DataTable.Title style={{ marginLeft: 5 }}><Text style={{ color: 'black', fontSize: 12, fontWeight: 'bold' }} >Total</Text></DataTable.Title>
+            <DataTable.Title style={{  }}><Text style={{ color: 'black', fontSize: 12, fontWeight: 'bold' }} >Present</Text></DataTable.Title>
+            <DataTable.Title style={{ marginLeft: 10 }}><Text style={{ color: 'black', fontSize: 12, fontWeight: 'bold'}} >Absent</Text></DataTable.Title>
           </DataTable.Header>
-
-          {RenderRows()}
+          {courseList.length === 0 ? (
+            <Text style={{ color: 'black', textAlign: 'center', fontSize: 15}}>{statusText}</Text>
+          ) : (
+            RenderRows()
+          )}
         </DataTable>
       </View>
     );

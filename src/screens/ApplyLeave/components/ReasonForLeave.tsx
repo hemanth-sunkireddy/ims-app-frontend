@@ -88,6 +88,8 @@ function ReasonForLeave({
               }}
               data={PatientCategories}
               placeholder="Select..."
+              dropdownTextStyles={{ color: "black" }}
+              inputStyles={{ color: "black" }}
               search={false}
             ></SelectList>
             <View style={{ marginTop: 20 }}>
@@ -102,6 +104,8 @@ function ReasonForLeave({
                 }}
                 data={DoctorCategories}
                 placeholder="Select..."
+                dropdownTextStyles={{ color: "black" }}
+                inputStyles={{ color: "black" }}
                 search={false}
               ></SelectList>
             </View>
@@ -133,6 +137,8 @@ function ReasonForLeave({
                 data={EventCategories}
                 placeholder="Select..."
                 search={false}
+                dropdownTextStyles={{ color: "black" }}
+                inputStyles={{ color: "black" }}
               ></SelectList>
             </View>
             {EventCategory === "Conference" ? (
@@ -150,6 +156,8 @@ function ReasonForLeave({
                     data={Presentations}
                     placeholder="Select..."
                     search={false}
+                    dropdownTextStyles={{ color: "black" }}
+                    inputStyles={{ color: "black" }}
                   ></SelectList>
                 </View>
               </View>

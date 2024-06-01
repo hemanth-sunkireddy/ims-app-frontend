@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import global from "../../styles/global";
 import { courseCode, courseName } from "./Attendance";
-import { rollno } from "../../backend_requests/UserDetails";
 import { getAccessToken } from "../../backend_requests/AccessToken";
 import * as types from "../../custom-types";
 import { attendance_details } from "../../constants/APIHandler";
@@ -93,22 +92,22 @@ function CourseAttendanceView({
   const fetchAttendance = async () => {
     setIsLoading(true);
     const accessToken = await getAccessToken();
+    const attendance_api = attendance_details + "/" + courseCode;
     try {
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(new Error("Request timed out"));
         }, 10000);
       });
-      const responsePromise = fetch(attendance_details, {
+      const responsePromise = fetch(attendance_api, {
         method: "GET",
         headers: { Cookie: `access_token_ims_app=${accessToken}` },
       });
       const response = await Promise.race([responsePromise, timeoutPromise]);
       const json = await (response as Response).json();
-      console.log(json);
       setAttendance(json_to_list(JSON.parse(JSON.stringify(json))));
     } catch (error) {
-      Alert.alert("Network Error: Couldn't fetch courses");
+      Alert.alert("Couldn't fetch courses");
     }
     setIsLoading(false);
   };

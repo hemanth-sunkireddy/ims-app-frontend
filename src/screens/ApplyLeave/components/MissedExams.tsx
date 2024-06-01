@@ -10,6 +10,12 @@ import { allCourses } from "../../Dashboard/components/CourseTable"; // Assuming
 
 import { otherIcons } from "../../../constants/Icons";
 
+
+export interface CourseRow {
+  key: string;
+  name: string;
+}
+
 const lightIcons = otherIcons.light;
 const redDotIcon = lightIcons.red_dot;
 
@@ -20,6 +26,7 @@ function MissedExams({
 }): React.JSX.Element {
   const [missedExams, setMissedExams] = useState("Missed Exams");
   const [missedcourses, setMissedCourses] = useState([]);
+  const [presentcourses, setPresentCourses] = useState([]);
 
   const ListOfReasons = [
     { key: "Select...", value: "Select..." },
@@ -39,6 +46,18 @@ function MissedExams({
     value: course.name,
   }));
 
+  const filterPresentCourses = () => {
+    const Rowslist: CourseRow[] = [];
+  if (!allCourses) {
+    return;
+  }
+  const presentCourses = Object.values(allCourses).filter(course => course.Grade === null);
+  presentCourses.forEach(course => {
+    Rowslist.push({ key: course.CourseCode, name: course.CourseName });
+  });
+  setPresentCourses(Rowslist);
+  };
+
   useEffect(() => {
     setmissedexams(missedExams);
   }, [missedExams]);
@@ -47,6 +66,12 @@ function MissedExams({
     // console.log(missedcourses)
     setCOURSESMISSED(missedcourses);
   }, [missedcourses]);
+
+
+
+  useEffect(() => {
+    filterPresentCourses();
+  }, []);
 
   return (
     <SafeAreaView>
@@ -82,9 +107,11 @@ function MissedExams({
                   setSelected={(value) => {
                     setMissedCourses(value);
                   }}
-                  data={coursesList}
+                  data={presentcourses.map(course => ({ key: course.key, value: course.name }))}
                   placeholder="Select..."
                   search={false}
+                  dropdownTextStyles={{ color: "black" }}
+                  inputStyles={{ color: "black" }}
                 />
               </View>
             </View>

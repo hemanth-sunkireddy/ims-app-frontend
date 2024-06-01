@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "bold",
     fontSize: 19,
-    color: "black",
+    color: 'black',
     marginLeft: 20,
     marginTop: 15,
   },
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     flexWrap: "wrap",
     borderRadius: 6,
+    color: 'black'
   },
   image: {
     width: 10,

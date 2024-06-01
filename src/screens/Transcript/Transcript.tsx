@@ -110,16 +110,13 @@ function Transcript(): React.JSX.Element {
         method: "GET",
         headers: { Cookie: `access_token_ims_app=${accessToken}` },
       });
-      console.log("RESPONSE: ", response);
       if (!response.ok) {
         console.log(
           "Error in fetching transcript details, please try again later.",
         );
         setLoadingText("Error in Fetching Transcript, Please try again later");
       } else {
-        console.log("RESPONSE: ", response);
         const responseData = await response.json();
-        console.log("RESPONSE JSON From BackEnd: ", responseData);
         setCompletegpa(responseData);
       }
     } catch (e: unknown) {
@@ -179,7 +176,20 @@ function Transcript(): React.JSX.Element {
 
   const renderTableCells = (filteredCourses) => {
     const cells = [];
+
+    if (filteredCourses.length === 0) {
+      // If there are no filtered courses, display "No Data Found"
+      return (
+        <View style={{ marginTop: 20, alignItems: "center" }}>
+          <Text style={{ fontSize: 16, color: "black" }}>No Data Found</Text>
+        </View>
+      );
+    }
+
+    
     const headings = ["CourseCode", "CourseName", "Credits", "Grade"];
+
+
 
     // render heading row
     const headingRowCells = headings.map((heading, index) => (
