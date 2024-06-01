@@ -68,8 +68,8 @@ function MissedExams({
               data={ListOfReasons}
               placeholder="Select..."
               search={false}
-              dropdownTextStyles={{ color: 'black' }}
-              inputStyles={{ color: "black"}}
+              dropdownTextStyles={{ color: "black" }}
+              inputStyles={{ color: "black" }}
             />
           </View>
           {missedExams === "Yes" ? (
@@ -106,8 +106,8 @@ function MissedExams({
               data={ReasonsforSports}
               placeholder="Select..."
               search={false}
-              dropdownTextStyles={{ color: 'black' }}
-              inputStyles={{ color: "black"}}
+              dropdownTextStyles={{ color: "black" }}
+              inputStyles={{ color: "black" }}
             />
           </View>
         </View>

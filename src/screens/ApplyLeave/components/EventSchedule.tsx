@@ -59,7 +59,7 @@ function EventSchedule(props: {
           />
         )}
         <View style={LeaveApplicationCss.input}>
-          <Text style={{ color: 'black'}}>
+          <Text style={{ color: "black" }}>
             {fromDate.toLocaleDateString("en-IN", {
               year: "numeric",
               month: "2-digit",
@@ -89,7 +89,7 @@ function EventSchedule(props: {
           )}
         </View>
         <View style={LeaveApplicationCss.input}>
-          <Text style={{color: 'black'}}>
+          <Text style={{ color: "black" }}>
             {toDate.toLocaleDateString("en-IN", {
               year: "numeric",
               month: "2-digit",

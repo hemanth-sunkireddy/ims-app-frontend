@@ -30,7 +30,7 @@ function Remarks({ leavejustification, leaveremarks }): React.JSX.Element {
           <Image source={redDotIcon} style={LeaveApplicationCss.image} />
         </View>
         <TextInput
-           style={[LeaveApplicationCss.input3, { color: "black" }]}
+          style={[LeaveApplicationCss.input3, { color: "black" }]}
           placeholder="Write your response here."
           multiline={true}
           numberOfLines={5}
@@ -45,13 +45,12 @@ function Remarks({ leavejustification, leaveremarks }): React.JSX.Element {
           style={[LeaveApplicationCss.input3, { color: "black" }]}
           placeholder="Write your response here."
           multiline={true}
-          
           numberOfLines={5}
           onChangeText={handleRemarksChange}
         />
       </View>
       <View>
-        <Text style={LeaveApplicationCss.text }>Application Date</Text>
+        <Text style={LeaveApplicationCss.text}>Application Date</Text>
         <View style={LeaveApplicationCss.input2}>
           <Text>
             {todayDate.toLocaleDateString("en-IN", {

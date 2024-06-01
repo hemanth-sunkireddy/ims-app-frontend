@@ -122,7 +122,9 @@ function DocumentAdd({
               { alignSelf: "flex-start" },
             ]}
           >
-            <Text style={{color: 'black'}}>{selectedFile ? selectedFile : "File Name"}</Text>
+            <Text style={{ color: "black" }}>
+              {selectedFile ? selectedFile : "File Name"}
+            </Text>
           </View>
           <TouchableOpacity onPress={() => selectDoc(1)}>
             <Image
@@ -153,7 +155,9 @@ function DocumentAdd({
               { alignSelf: "flex-start" },
             ]}
           >
-            <Text style={{ color: 'black'}}>{selectedFile2 ? selectedFile2 : "File Name"}</Text>
+            <Text style={{ color: "black" }}>
+              {selectedFile2 ? selectedFile2 : "File Name"}
+            </Text>
           </View>
           <TouchableOpacity onPress={() => selectDoc(2)}>
             <Image

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     width: "90%", // Set width to 80% of the container width
     alignSelf: "center", // Center the input horizontally
     borderRadius: 6,
-    color: "black"
+    color: "black",
   },
   text: {
     fontWeight: "bold",
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     alignSelf: "center", // Center the input horizontally
     borderRadius: 6,
     backgroundColor: "#D9D9D9",
-    color: 'black'
+    color: "black",
   },
   input3: {
     height: 100,
