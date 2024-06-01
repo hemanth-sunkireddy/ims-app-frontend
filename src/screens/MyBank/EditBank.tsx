@@ -64,7 +64,7 @@ const mandatoryFields = [
   "selectBank",
   "accountHolderName",
   "accountNumber",
-  "base64Data"
+  "base64Data",
 ];
 
 let fieldsToNotShow: Array<string> = [];
