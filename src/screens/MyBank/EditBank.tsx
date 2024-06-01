@@ -57,7 +57,6 @@ const fieldNames: { [key: string]: string } = {
   ifscCode: "IFSC Code",
   bankAddress: "Bank Address",
   remarks: "Remarks",
-  passbookOrCanceledCheque: "Passbook / Canceled Cheque Leaf",
   base64Data: "Passbook / Canceled Cheque Leaf",
 };
 
@@ -65,7 +64,7 @@ const mandatoryFields = [
   "selectBank",
   "accountHolderName",
   "accountNumber",
-  "passbookOrCanceledCheque",
+  "base64Data"
 ];
 
 let fieldsToNotShow: Array<string> = [];
@@ -229,15 +228,11 @@ function EditBankDetails(): React.JSX.Element {
   function clearPDF() {
     setDetails(() => {
       const newDetails = { ...details };
-      // newDetails["passbookOrCanceledCheque"] = {
-      // "filename": null,
-      // "size": null,
       newDetails.base64Data = null;
       setPDFName("");
       setPDFSize(0);
       setPDFURI("");
       setFileContent("");
-      // };
       return newDetails;
     });
   }
@@ -276,7 +271,6 @@ function EditBankDetails(): React.JSX.Element {
     .filter(isNotRollNumber)
     .filter(shouldBeShown)
     .map((value, index) => {
-      // if (value === "passbookOrCanceledCheque") {
       if (value === "base64Data") {
         return (
           <SafeAreaView key={index} style={card.container}>
@@ -290,7 +284,6 @@ function EditBankDetails(): React.JSX.Element {
             <SafeAreaView style={bank.bankPDFContainer}>
               <Card containerStyle={bank.bankPDFNameCard}>
                 <Text style={bank.bankPDFName}>
-                  {/* {details.passbookOrCanceledCheque.filename ? details.passbookOrCanceledCheque.filename : "No file selected."} */}
                   {pdfName ? pdfName : "No file selected."}
                 </Text>
               </Card>
