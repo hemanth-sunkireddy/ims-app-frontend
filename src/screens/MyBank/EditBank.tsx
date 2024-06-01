@@ -160,16 +160,25 @@ function EditBankDetails(): React.JSX.Element {
         .then((response) => response)
         .then((_json) => {
           // console.log("response: ", _json);
-          Alert.alert("Submitted bank details.");
-          onDisplayNotification(
-            "Your application for bank details has been sent successfully.",
-          );
+          const status_code = _json.status;
+          if (status_code == 422) {
+            Alert.alert("Your Application Not submitted, Unprocessable Entry.");
+            onDisplayNotification(
+              "Error in Submitting bank details, please try again later.",
+            );
+          }
+          else {
+            Alert.alert("Submitted bank details.");
+            onDisplayNotification(
+              "Your application for bank details has been sent successfully.",
+            );
+          }
         })
         .catch((error) => {
           // console.log("Error during Bank Details POST API: ", error);
           Alert.alert("An error occured while submitting.", error.toString());
           onDisplayNotification(
-            "Your application for bank details was not sent successfully. Please try again later.",
+            "Error in submitting bank details. Please try again later.",
           );
         });
     }
