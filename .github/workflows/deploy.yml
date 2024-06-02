@@ -62,24 +62,27 @@ jobs:
             ${{steps.sign_app.signedReleaseFile0}}
             ${{steps.sign_app.signedReleaseFile1}}
 
-      - name: Get latest semver tag
-        id: semvers
-        uses: gittools/actions/semvers/getSemVers@v1
-
-      - name: Increment semver tag
-        id: increment-semver
-        uses: gittools/actions/semvers/incrementSemVer@v1
+      - name: Get Previous tag
+        id: previoustag
+        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
-          version: ${{ steps.semvers.outputs.v_latest }}
-          incrementPatch: true
+          fallback: 0.0.0
+
+      - name: Get next version
+        id: next
+        uses: 'WyriHaximus/github-action-next-release-version@1.0.0'
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
 
       - name: App Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ github.token }}"
-          automatic_release_tag: "${{ steps.increment-semver.outputs.v_next }}"
+          automatic_release_tag: "${{ steps.next.outputs.version }}"
           prerelease: true
-          title: "IMS-App release"
+          title: "IMS-App release ${{steps.next.outputs.version}}"
           files: |
             ${{ steps.sign_app.signedReleaseFile0 }}
             ${{ steps.sign_app.signedReleaseFile1 }}
