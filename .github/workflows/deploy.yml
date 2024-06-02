@@ -1,6 +1,7 @@
 name: "Deploy and Release Android app"
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - deploy
