@@ -1,6 +1,4 @@
-import { DOMAIN } from "@env";
-
-const domain = DOMAIN;
+const domain = "app-domain";
 
 const auth_route = domain + "/user/login";
 
