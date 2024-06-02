@@ -65,7 +65,6 @@ yarn-error.log
 # testing
 /coverage
 
-package-lock.json
 .vscode
 .idea
-.env 
+.env
