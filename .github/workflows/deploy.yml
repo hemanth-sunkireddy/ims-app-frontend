@@ -1,54 +1,76 @@
 name: "Deploy and Release Android app"
 
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - deploy
+    tags:
+      - '*'
+
+permissions:
+  contents: write
 
 jobs:
   build:
+    if: startsWith(github.ref, 'refs/tags/')
+
+    env:
+      JAVA_VERSION: '17'
+      NODE_VERSION: '20'
+    
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: deploy
 
       - name: Install Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
-          java-version: 17
+          java-version: ${{ env.JAVA_VERSION }}
           distribution: adopt
           cache: gradle
           token: ${{github.token}}
 
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Setup Gradle Cache
+        uses: gradle/actions/setup-gradle@v3
         with:
-          node-version: '18'
+          gradle-home-cache-cleanup: true
+
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: Run npm Install
         run: |
              npm i
 
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-caches-
+
       - name: Build application
         run: |
-             cd android
-             ./gradlew assembleRelease
-             ./gradlew bundleRelease
+          cd android
+          ./gradlew assembleRelease
+          ./gradlew bundleRelease
+          mv app/build/outputs/bundle/release/*.aab app/build/outputs/apk/release
+          cd ..
 
       - name: Sign app APK
-        uses: r0adkll/sign-android-release@v1
+        uses: filippoLeporati93/android-release-signer@v1
         id: sign_app
         with:
-          releaseDirectory: |
-            android/app/build/outputs/apk/release
-            android/app/build/outputs/bundle/release
+          releaseDirectory: android/app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -59,30 +81,15 @@ jobs:
         with:
           name: app
           path: |
-            ${{steps.sign_app.signedReleaseFile0}}
-            ${{steps.sign_app.signedReleaseFile1}}
+            ${{ env.SIGNED_RELEASE_FILE_0 }}
+            ${{ env.SIGNED_RELEASE_FILE_1 }}
 
-      - name: Get Previous tag
-        id: previoustag
-        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          fallback: 0.0.0
-
-      - name: Get next version
-        id: next
-        uses: 'WyriHaximus/github-action-next-release-version@1.0.0'
-        with:
-          version: ${{ steps.previoustag.outputs.tag }}
-
-      - name: App Release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ github.token }}"
-          automatic_release_tag: "${{ steps.next.outputs.version }}"
-          prerelease: true
-          title: "IMS-App release ${{steps.next.outputs.version}}"
           files: |
-            ${{ steps.sign_app.signedReleaseFile0 }}
-            ${{ steps.sign_app.signedReleaseFile1 }}
+            ${{ env.SIGNED_RELEASE_FILE_0 }}
+            ${{ env.SIGNED_RELEASE_FILE_1 }}
+          prerelease: ${{ contains(github.ref, 'pre') }}
+          make_latest: legacy
+          generate_release_notes: true
