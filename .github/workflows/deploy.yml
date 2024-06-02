@@ -55,8 +55,8 @@ jobs:
         with:
           name: app
           path: |
-	    ${{steps.sign_app.signedReleaseFile0}}
-	    ${{steps.sign_app.signedReleaseFile1}}
+            ${{steps.sign_app.signedReleaseFile0}}
+            ${{steps.sign_app.signedReleaseFile1}}
 
       - name: App Release
         uses: "marvinpinto/action-automatic-releases@latest"
