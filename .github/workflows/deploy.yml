@@ -8,10 +8,11 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        ref: deploy
 
       - name: Install Java
         uses: actions/setup-java@v3
@@ -19,6 +20,7 @@ jobs:
           java-version: 17
           distribution: adopt
           cache: gradle
+          token: ${{github.token}}
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
