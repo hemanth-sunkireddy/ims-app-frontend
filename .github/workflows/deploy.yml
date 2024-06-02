@@ -11,8 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-        ref: deploy
+        uses: actions/checkout@v4
+        with:
+          ref: deploy
 
       - name: Install Java
         uses: actions/setup-java@v3
