@@ -3,7 +3,7 @@ name: "Deploy and Release Android app"
 on:
   push:
     branches:
-      - main
+      - deploy
 
 jobs:
   build:
