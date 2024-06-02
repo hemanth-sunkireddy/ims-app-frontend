@@ -43,8 +43,8 @@ jobs:
         id: sign_app
         with:
           releaseDirectory: |
-            app/build/outputs/apk/release
-            app/build/outputs/bundle/release
+            android/app/build/outputs/apk/release
+            android/app/build/outputs/bundle/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -58,11 +58,22 @@ jobs:
             ${{steps.sign_app.signedReleaseFile0}}
             ${{steps.sign_app.signedReleaseFile1}}
 
+      - name: Get latest semver tag
+        id: semvers
+        uses: gittools/actions/semvers/getSemVers@v1
+
+      - name: Increment semver tag
+        id: increment-semver
+        uses: gittools/actions/semvers/incrementSemVer@v1
+        with:
+          version: ${{ steps.semvers.outputs.v_latest }}
+          incrementPatch: true
+
       - name: App Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ github.token }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "${{ steps.increment-semver.outputs.v_next }}"
           prerelease: true
           title: "IMS-App release"
           files: |
