@@ -57,7 +57,7 @@ export const authenticate_user = async (
       setErrorText(
         response.status + " " + response.statusText + " " + "Not Found",
       );
-    } else if (response.status == 404) {
+    } else {
       setErrorText(
         response.status +
           " " +
