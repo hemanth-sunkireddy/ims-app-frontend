@@ -1,9 +1,7 @@
 import CookieManager from "@react-native-cookies/cookies";
-import {domain} from "../constants/APIHandler";
+import { domain } from "../constants/APIHandler";
 
-export const getCookie = async (
-  request: Response,
-): Promise<boolean> => {
+export const getCookie = async (request: Response): Promise<boolean> => {
   try {
     if (!request) {
       throw new Error("Invalid request object");

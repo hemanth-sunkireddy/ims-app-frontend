@@ -36,7 +36,10 @@ function MyLeaveRequests(): React.JSX.Element {
           });
           if (!response.ok) {
             setError(
-              "Error in Fetching Past Leave Requests." + response.status + " " + response.statusText,
+              "Error in Fetching Past Leave Requests." +
+                response.status +
+                " " +
+                response.statusText,
             );
           }
           const responseData = await response.json();
@@ -54,7 +57,7 @@ function MyLeaveRequests(): React.JSX.Element {
         } catch (fetchError) {
           setError(
             "Internal Server Error in fetching Past Leave Requests." +
-            fetchError,
+              fetchError,
           );
         }
         setLoading(false);
