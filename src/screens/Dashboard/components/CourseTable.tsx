@@ -30,21 +30,18 @@ function CourseTable(): React.JSX.Element {
 
       const accessToken = await getAccessToken();
       if (accessToken) {
-        console.log("Cookies Fetched Success.");
         const responsePromise = fetch(courses_details, {
           method: "GET",
           headers: { Cookie: `access_token_ims_app=${accessToken}` },
         });
         const response = await Promise.race([responsePromise, timeoutPromise]);
-        console.log("RESPONSE: ", response);
         const json = await (response as Response).json();
-        console.log("JSON FORMAT: ", json);
         setCourses(json);
-      } else {
-        console.log("Error in Receiving Cookies.");
       }
     } catch (error) {
-      console.log("Could not fetch Courses data in the Dashboard");
+      Alert.alert("Alert", "Could not fetch Courses.", [
+        { text: "OK" },
+      ]);
     }
   };
 
@@ -53,13 +50,8 @@ function CourseTable(): React.JSX.Element {
   }, []);
 
   useEffect(() => {
-    console.log("Course From Backend: ", courses);
     allCourses = courses;
   }, [courses]);
-
-  useEffect(() => {
-    console.log("All Courses: ", allCourses);
-  }, [allCourses]);
 
   // just to trigger useEffect
   return <View />;

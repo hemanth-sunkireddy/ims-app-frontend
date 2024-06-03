@@ -10,7 +10,6 @@ import { name as appName } from "./app.json";
 
 notifee.onBackgroundEvent(async ({ type, detail }) => {
   const { notification, pressAction } = detail;
-  // console.log(type, notification, pressAction);
 
   // Check if the user pressed the "Mark as read" action
   if (type === EventType.ACTION_PRESS && pressAction.id === "mark-as-read") {

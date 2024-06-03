@@ -38,7 +38,7 @@ export const authenticate_user = async (
       setErrorText(response.status + " " + "Invalid Username or Password");
     }
     else if (response.status === 200) {
-      const cookie_status = await getCookie(response, domain);
+      const cookie_status = await getCookie(response);
       if (cookie_status == false) {
         setErrorText(
           "Authentication Success, Cookie assign failed, Please Click Login again",

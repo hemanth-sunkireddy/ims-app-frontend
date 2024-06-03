@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -26,7 +19,6 @@ import ViewAttendance from "./screens/Attendance/Attendance";
 import CourseAttendanceView from "./screens/Attendance/CourseAttendanceView";
 import LogOut from "./components/LogOut";
 import ReportBug from "./screens/ReportBug/ReportBug";
-
 import * as types from "./custom-types";
 import { otherIcons, IconSet } from "./constants/Icons";
 
