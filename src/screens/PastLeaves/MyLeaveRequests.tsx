@@ -23,29 +23,21 @@ function MyLeaveRequests(): React.JSX.Element {
   const getLeaveRequest = async () => {
     try {
       const accessToken = await getAccessToken();
-      console.log("ACCESS TOKEN RECEIVED from past leave: ", accessToken);
       if (!accessToken) {
-        console.log("Error In receiving Access Token");
         setError(
           "Error in Receiving Access Token of the user. Please try again after sometime.",
         );
         setLoading(false);
       } else {
-        console.log("Received Cookie Successful for Leave");
         try {
           const response = await fetch(past_leave_status, {
             method: "GET",
             headers: { Cookie: `access_token_ims_app=${accessToken}` },
           });
-          console.log("RESPONSE FROM GET PAST LEAVE: ", response);
           if (!response.ok) {
-            console.log(
-              "Cookie received success, Error in Fetching Past Leave Requests.",
-            );
             setError(
-              "Cookie received success, Error in Fetching Past Leave Requests.",
+              "Error in Fetching Past Leave Requests." + response.status + " " + response.statusText,
             );
-            throw new Error("Failed to fetch data");
           }
           const responseData = await response.json();
           try {
@@ -56,14 +48,13 @@ function MyLeaveRequests(): React.JSX.Element {
               setLeaveRequests(applications);
             }
           } catch (innerError) {
-            console.error("Error processing inner response data:", innerError);
-            setError("Error processing inner response data.");
+            const error_message = innerError as Error;
+            setError("Error processing inner response data." + error_message);
           }
         } catch (fetchError) {
-          console.error("Internal server Error:", fetchError);
           setError(
             "Internal Server Error in fetching Past Leave Requests." +
-              fetchError,
+            fetchError,
           );
         }
         setLoading(false);
@@ -71,7 +62,6 @@ function MyLeaveRequests(): React.JSX.Element {
     } catch (e) {
       setLoading(false);
       setError("Error in Receiving Cookies, Please try again after sometime.");
-      console.log("Error in receiving Cookies");
     }
   };
 

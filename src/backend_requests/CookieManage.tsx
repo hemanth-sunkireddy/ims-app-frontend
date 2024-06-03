@@ -1,8 +1,8 @@
 import CookieManager from "@react-native-cookies/cookies";
+import {domain} from "../constants/APIHandler";
 
 export const getCookie = async (
   request: Response,
-  uri_for_auth: string,
 ): Promise<boolean> => {
   try {
     if (!request) {
@@ -49,7 +49,7 @@ export const getCookie = async (
 
     console.log("ACCESS TOKEN: ", ims_app_token_value);
 
-    await CookieManager.set(uri_for_auth, {
+    await CookieManager.set(domain, {
       name: "access_token_ims_app",
       value: ims_app_token_value,
       path: "/",
@@ -59,7 +59,7 @@ export const getCookie = async (
     console.log("Status of assigning cookie to the user: ", "Success");
 
     // Get cookie of the user for verification
-    const cookie = await CookieManager.get(uri_for_auth, false);
+    const cookie = await CookieManager.get(domain, false);
     if (cookie) {
       console.log("Verifying cookie of the user: ", cookie);
       console.log("Assigned cookie to the user successfully...");
