@@ -11,9 +11,7 @@ import { authenticate_user } from "../../backend_requests/AuthUser";
 import { get_user_details } from "../../backend_requests/UserDetails";
 import { askFILEACCESSPERMISSION } from "../../device_permissions/FilePermission";
 
-function Login({
-  navigation,
-}: types.LoginScreenProps): React.JSX.Element {
+function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
   const [Email, onChangeEmail] = React.useState("");
   const [_Password, onChangePassword] = React.useState("");
   const [isloading, setIsLoading] = React.useState(false);
@@ -68,7 +66,9 @@ function Login({
       <SafeAreaView style={{ marginTop: 140 }}>
         <TreeLogo />
         <View style={{ alignItems: "center" }}>
-          <Text style={{ color: "red", fontSize: 20, textAlign: 'center' }}>{errorText}</Text>
+          <Text style={{ color: "red", fontSize: 20, textAlign: "center" }}>
+            {errorText}
+          </Text>
           <Text style={{ color: "#2D0C8B", fontSize: 20 }}>{successText}</Text>
         </View>
         <Credentials

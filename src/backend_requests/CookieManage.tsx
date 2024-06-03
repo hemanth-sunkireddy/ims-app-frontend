@@ -25,7 +25,7 @@ export const getCookie = async (
 
     // Get the Access Token
     let accessToken = cookieArray[4];
-    console.log("Access Token: ", accessToken)
+    console.log("Access Token: ", accessToken);
     if (!accessToken) {
       return false;
     }
@@ -37,7 +37,7 @@ export const getCookie = async (
     const token_dict = access_token_value[1];
     const token_value = token_dict.split("=");
     console.log("TOKEN DICT: ", token_dict);
-    console.log("TOKEN VALUE: ", token_value)
+    console.log("TOKEN VALUE: ", token_value);
     if (!token_value) {
       return false;
     }
@@ -68,8 +68,7 @@ export const getCookie = async (
       console.log("FAILED IN COOKIE FETCH: ", cookie);
       return false;
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Failed to handle cookies: ", error);
     return false;
   }

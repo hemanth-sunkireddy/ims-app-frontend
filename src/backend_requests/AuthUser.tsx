@@ -30,14 +30,15 @@ export const authenticate_user = async (
       body: formData,
     });
 
-    const response = await Promise.race([responsePromise, timeoutPromise]) as Response;
+    const response = (await Promise.race([
+      responsePromise,
+      timeoutPromise,
+    ])) as Response;
     if (response.status === 422) {
       setErrorText(response.status + " " + "unprocessable Entry");
-    }
-    else if (response.status === 400) {
+    } else if (response.status === 400) {
       setErrorText(response.status + " " + "Invalid Username or Password");
-    }
-    else if (response.status === 200) {
+    } else if (response.status === 200) {
       const cookie_status = await getCookie(response, domain);
       if (cookie_status == false) {
         setErrorText(
@@ -48,14 +49,12 @@ export const authenticate_user = async (
       }
       setIsLoading(false);
       return true;
+    } else {
+      setErrorText(response.status + +" " + response.statusText);
     }
-    else {
-      setErrorText(response.status + + " " + response.statusText);
-    }
-    setIsLoading(false)
+    setIsLoading(false);
     return false;
-  }
-  catch (e) {
+  } catch (e) {
     setIsLoading(false);
     const eror_message = (e as Error).message;
     setErrorText("Error: " + eror_message);

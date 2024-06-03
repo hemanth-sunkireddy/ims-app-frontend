@@ -9,15 +9,13 @@ import { otherIcons, IconSet } from "../constants/Icons";
 const lightIcons: IconSet = otherIcons.light;
 const iiitIcon = lightIcons.iiit_big;
 
-function Welcome({
-  navigation,
-}: types.WelcomeScreenProps): React.JSX.Element {
+function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
   async function askNotificationPermission() {
     await notifee.requestPermission();
   }
 
   useEffect(() => {
-    askNotificationPermission(); 
+    askNotificationPermission();
   }, []);
 
   return (
