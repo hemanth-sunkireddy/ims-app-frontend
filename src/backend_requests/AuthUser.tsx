@@ -19,7 +19,7 @@ export const authenticate_user = async (
       }, 5000);
     });
 
-    const responsePromise = fetch(auth_route, {
+    const responsePromise =await fetch(auth_route, {
       method: "POST",
       headers: {
         Accept: "*/*",
@@ -49,8 +49,14 @@ export const authenticate_user = async (
       }
       setIsLoading(false);
       return true;
-    } else {
-      setErrorText(response.status + +" " + response.statusText);
+    } else if (response.status == 304){
+      setErrorText(response.status +" " + response.statusText + " " + "Already Logged In");
+    }
+    else if (response.status == 404){
+      setErrorText(response.status + " " + response.statusText + " " + "Not Found");
+    }
+    else if (response.status == 404){
+      setErrorText(response.status + " " + response.statusText + " " + "Internal Server Error");
     }
     setIsLoading(false);
     return false;
