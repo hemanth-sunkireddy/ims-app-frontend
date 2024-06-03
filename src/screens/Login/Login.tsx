@@ -2,11 +2,9 @@ import React, { useEffect } from "react";
 import { SafeAreaView, View, Text, ActivityIndicator } from "react-native";
 import { Button } from "@rneui/base";
 import * as types from "../../custom-types";
-
 import TreeLogo from "./components/TreeLogo";
 import Credentials from "./components/Credentials";
 import UpdatePassword from "./components/UpdatePassword";
-
 import styles from "./Styles/LoginStyles";
 import Connectionstatus from "../../components/Connectionstatus";
 import { authenticate_user } from "../../backend_requests/AuthUser";
@@ -14,7 +12,6 @@ import { get_user_details } from "../../backend_requests/UserDetails";
 import { askFILEACCESSPERMISSION } from "../../device_permissions/FilePermission";
 
 function Login({
-  _route,
   navigation,
 }: types.LoginScreenProps): React.JSX.Element {
   const [Email, onChangeEmail] = React.useState("");
@@ -27,7 +24,6 @@ function Login({
     try {
       setErrorText("");
       setIsLoading(true);
-      console.log("Checking Authentication...");
       const auth_status = await authenticate_user(
         Email,
         _Password,
@@ -39,13 +35,11 @@ function Login({
         setIsLoading(true);
         try {
           setSuccessText("Authentication Success, Getting User Details..");
-          console.log("Getting User Details...");
           const user_details_status = await get_user_details();
           if (user_details_status == true) {
             setSuccessText(
               "User Details Fetched Success. Redirecting to Dashboard",
             );
-            console.log("Recieved User Details Successfully...");
             navigation.navigate("SidebarDisplay");
           } else {
             setErrorText(
@@ -58,16 +52,14 @@ function Login({
           );
           console.log("ERROR In Getting User Details");
         }
-      } else {
-        console.log("Invalid Username or password");
       }
-    } catch (err) {
-      console.log("ERROR IN AUTHENTICATION");
+    } catch (error) {
+      const eror_message = (error as Error).message;
+      setErrorText("Error: " + eror_message);
     }
   };
 
   useEffect(() => {
-    // askNotificationPermission(); // Call the function when the component mounts
     askFILEACCESSPERMISSION();
   }, []);
 
@@ -76,7 +68,7 @@ function Login({
       <SafeAreaView style={{ marginTop: 140 }}>
         <TreeLogo />
         <View style={{ alignItems: "center" }}>
-          <Text style={{ color: "red", fontSize: 20 }}>{errorText}</Text>
+          <Text style={{ color: "red", fontSize: 20, textAlign: 'center' }}>{errorText}</Text>
           <Text style={{ color: "#2D0C8B", fontSize: 20 }}>{successText}</Text>
         </View>
         <Credentials

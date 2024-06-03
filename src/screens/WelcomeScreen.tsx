@@ -2,27 +2,22 @@ import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@rneui/base";
 import notifee from "@notifee/react-native";
-
 import { Text, View, Image } from "react-native";
 import * as types from "../custom-types";
 import Connectionstatus from "../components/Connectionstatus";
 import { otherIcons, IconSet } from "../constants/Icons";
-
 const lightIcons: IconSet = otherIcons.light;
 const iiitIcon = lightIcons.iiit_big;
 
 function Welcome({
-  _route,
   navigation,
 }: types.WelcomeScreenProps): React.JSX.Element {
   async function askNotificationPermission() {
-    // Request permissions (required for iOS) of Notifications
-    // console.log("Please get to know")
     await notifee.requestPermission();
   }
 
   useEffect(() => {
-    askNotificationPermission(); // Call the function when the component mounts
+    askNotificationPermission(); 
   }, []);
 
   return (
