@@ -84,7 +84,7 @@ function About(): React.JSX.Element {
           <TouchableOpacity
             onPress={() => {
               Linking.openURL(
-                "https://github.com/IMS-IIITH/wiki/wiki/Developer-Documentation",
+                "https://github.com/IMS-IIITH/docs/wiki/",
               );
             }}
           >
