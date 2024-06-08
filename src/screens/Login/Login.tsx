@@ -75,8 +75,8 @@ function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
         <Credentials
           onChangeEmail={onChangeEmail}
           onChangePassword={onChangePassword}
-          togglePasswordView={() => setShowPassword(prev => !prev)}
-          displayPassword = {showPassword}
+          togglePasswordView={() => setShowPassword((prev) => !prev)}
+          displayPassword={showPassword}
         />
         <UpdatePassword />
         <View style={{ alignItems: "center" }}>
