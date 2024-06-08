@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Welcome from "./screens/WelcomeScreen";
+import Welcome from "./screens/Welcome/Welcome";
 import Login from "./screens/Login/Login";
 import Dashboard from "./screens/Dashboard/Dashboard";
 import LeaveApplication from "./screens/ApplyLeave/LeaveApplication";

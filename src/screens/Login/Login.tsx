@@ -17,6 +17,7 @@ function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
   const [isloading, setIsLoading] = React.useState(false);
   const [errorText, setErrorText] = React.useState("");
   const [successText, setSuccessText] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(true);
 
   const handleLoginPress = async () => {
     try {
@@ -74,6 +75,8 @@ function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
         <Credentials
           onChangeEmail={onChangeEmail}
           onChangePassword={onChangePassword}
+          togglePasswordView={() => setShowPassword(prev => !prev)}
+          displayPassword = {showPassword}
         />
         <UpdatePassword />
         <View style={{ alignItems: "center" }}>

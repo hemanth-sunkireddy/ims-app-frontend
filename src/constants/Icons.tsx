@@ -9,7 +9,7 @@ export const dashboardIcons = {
     home: require("../assets/icons/home.png"),
     notification: require("../assets/icons/notification.png"),
     about: require("../assets/icons/about.png"),
-
+    showpass: require("../assets/icons/hide.png"),
     general: require("../assets/icons/general.png"),
     bank: require("../assets/icons/bank.png"),
     leaves: require("../assets/icons/leaves.png"),
@@ -44,7 +44,7 @@ export const sidebarIcons = dashboardIcons.light;
 export const otherIcons = {
   light: {
     calendar: require("../assets/icons/calendar.png"),
-    iiit_big: require("../assets/icons/iiit.png"),
+    iiit_big: require("../assets/iiit.png"),
     back: require("../assets/icons/back.png"),
     cross: require("../assets/icons/cross.png"),
     edit: require("../assets/icons/edit.png"),

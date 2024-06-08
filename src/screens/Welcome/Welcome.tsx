@@ -3,9 +3,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@rneui/base";
 import notifee from "@notifee/react-native";
 import { Text, View, Image } from "react-native";
-import * as types from "../custom-types";
-import Connectionstatus from "../components/Connectionstatus";
-import { otherIcons, IconSet } from "../constants/Icons";
+import * as types from "../../custom-types";
+import Connectionstatus from "../../components/Connectionstatus";
+import { otherIcons, IconSet } from "../../constants/Icons";
 const lightIcons: IconSet = otherIcons.light;
 const iiitIcon = lightIcons.iiit_big;
 
