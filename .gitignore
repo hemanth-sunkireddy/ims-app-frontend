@@ -68,3 +68,5 @@ yarn-error.log
 .vscode
 .idea
 .env
+
+package-lock.json
