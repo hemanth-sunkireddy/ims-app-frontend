@@ -1,6 +1,5 @@
 import { auth_route } from "../constants/APIHandler";
 import { getCookie } from "./CookieManage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const authenticate_user = async (
   Email: string,
@@ -14,10 +13,10 @@ export const authenticate_user = async (
     formData.append("username", Email);
     formData.append("password", _Password);
 
-    const timeoutPromise = new Promise((_, reject) => {
+    const timeoutPromise = new Promise((reject) => {
       setTimeout(() => {
         reject(new Error("Request timed out"));
-      }, 5000);
+      }, 3000);
     });
 
     const responsePromise = await fetch(auth_route, {
@@ -35,11 +34,14 @@ export const authenticate_user = async (
       responsePromise,
       timeoutPromise,
     ])) as Response;
+
     if (response.status === 422) {
       setErrorText(response.status + " " + "unprocessable Entry");
     } else if (response.status === 400) {
-      setErrorText(response.status + " " + "Invalid Username or Password");
+      setErrorText(response.status);
     } else if (response.status === 200) {
+      const responseData = await (response as Response).json();
+      console.log("RESPONSE DATA: ", responseData.detail);
       const cookie_status = await getCookie(response);
       if (cookie_status == false) {
         setErrorText(
@@ -48,9 +50,6 @@ export const authenticate_user = async (
         setIsLoading(false);
         return false;
       }
-
-      await AsyncStorage.setItem("last_login", new Date().toString());
-      setIsLoading(false);
       return true;
     } else if (response.status == 304) {
       setErrorText(

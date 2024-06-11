@@ -4,6 +4,8 @@ import { domain } from "../constants/APIHandler";
 export const getAccessToken = async (): Promise<string | null> => {
   try {
     const cookies = await CookieManager.get(domain);
+    console.log("COOKIE: ", cookies);
+    console.log("HOW ARE YOU")
     const accessToken = cookies["access_token_ims_app"]?.value;
     if (accessToken) {
       return accessToken;

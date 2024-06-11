@@ -1,5 +1,6 @@
 import CookieManager from "@react-native-cookies/cookies";
 import { domain } from "../constants/APIHandler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const getCookie = async (request: Response): Promise<boolean> => {
   try {
@@ -11,48 +12,67 @@ export const getCookie = async (request: Response): Promise<boolean> => {
     if (!cookies) {
       return false;
     }
-
-    // Extracting the value of the cookie from the header
     const cookieArray = cookies.split("; ");
     if (!cookieArray) {
       return false;
     }
+    let expire_exist = 0;
+    cookieArray.forEach(pair => {
+      const [key, value] = pair.split("=");
+      if (key === "expires") expire_exist++;
+    });
 
-    // Get the Access Token
-    let accessToken = cookieArray[0];
-    if (!accessToken) {
-      return false;
-    }
-    const token_value = accessToken.split("=");
-    if (!token_value) {
-      return false;
-    }
-    const ims_app_token_value = token_value[1];
-    if (!ims_app_token_value) {
-      return false;
-    }
+    console.log("EXPIRE EXISTS: ", expire_exist);
+    let ims_app_token_value = "";
+    if (expire_exist === 1) {
+      let accessToken = cookieArray[4];
+      if (!accessToken) { return false; }
+      const access_token_value = accessToken.split(", ");
+      if (!access_token_value) { return false; }
+      const token_dict = access_token_value[1];
+      const token_value = token_dict.split("=");
+      if (!token_value) { return false; }
+      ims_app_token_value = token_value[1];
 
-    // console.log("ACCESS TOKEN: ", ims_app_token_value);
-
+      if (!ims_app_token_value) {
+        return false;
+      }
+    }
+    else {
+      let accessToken = cookieArray[0];
+      if (!accessToken) {
+        return false;
+      }
+      const token_value = accessToken.split("=");
+      if (!token_value) {
+        return false;
+      }
+      ims_app_token_value = token_value[1];
+      if (!ims_app_token_value) {
+        return false;
+      }
+    }
+    console.log("TOKEN VALUE: ", ims_app_token_value);
+    const todayDate = new Date();
+    const dateAfter20Days = new Date(todayDate);
+    dateAfter20Days.setDate(todayDate.getDate() + 20);
     await CookieManager.set(domain, {
       name: "access_token_ims_app",
       value: ims_app_token_value,
       path: "/",
-      httpOnly: false,
+      httpOnly: false, 
     });
 
-    // Get cookie of the user for verification
+    await AsyncStorage.setItem("last_login", new Date().toString());
+
     const cookie = await CookieManager.get(domain, false);
     if (cookie) {
-      console.log("Verifying cookie of the user: ", cookie);
-      console.log("Assigned cookie to the user successfully...");
+      console.log("HOPE CHECK COOKIE PART: ", cookie);
       return true;
     } else {
-      console.log("FAILED IN COOKIE FETCH: ", cookie);
       return false;
     }
   } catch (error) {
-    console.error("Failed to handle cookies: ", error);
     return false;
   }
 };

@@ -31,25 +31,18 @@ function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
       );
       if (auth_status === true) {
         // After Successful Authentication, Get User Details
-        setIsLoading(true);
         try {
           setSuccessText("Authentication Success, Getting User Details..");
-          const user_details_status = await get_user_details();
+          const user_details_status = await get_user_details(setErrorText, setSuccessText);
+          setIsLoading(false);
           if (user_details_status == true) {
-            setSuccessText(
-              "User Details Fetched Success. Redirecting to Dashboard",
-            );
             navigation.navigate("SidebarDisplay");
-          } else {
-            setErrorText(
-              "Authentication, Cookie assign succcess,  Error In Getting User Details..., Please Login again",
-            );
           }
         } catch (err) {
           setErrorText(
-            "Auth, Cookie assign succes, Error in getting User Details, Please Login in again.",
+            "Error in getting User Details.",
           );
-          console.log("ERROR In Getting User Details");
+          setIsLoading(false);
         }
       }
     } catch (error) {
