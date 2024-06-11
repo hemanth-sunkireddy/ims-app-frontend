@@ -16,7 +16,7 @@ function Connectionstatus() {
       setNetworkState(state);
 
       // Navigate based on the network state
-      // console.log(state.type)
+      console.log(state.type)
       if (state.type === "none") {
         // Navigate to NoInternet page when there is no internet connection
         navigation.navigate("NoInternet");

@@ -44,9 +44,7 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
       if (accessToken) {
         const user_details_status = await get_user_details(setErrorText, setSuccessText);
         if (user_details_status == true) {
-          console.log("USER DETAILS FETCHED SUCCESSFULLY.");
           const token = await getAccessToken();
-          console.log("TOKEN: ", token)
           AsyncStorage.getItem("last_login").then(async (value) => {
             if (value !== null) {
               const lastLoginDate = new Date(value);
@@ -55,26 +53,23 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
                 (currentDate.getTime() - lastLoginDate.getTime()) /
                   (1000 * 60 * 60 * 24),
               );
-              console.log(daysDifference);
               if (daysDifference > daysDifferenceThreshold) {
                 const cookie_status = await extend_cookie();
               }
               navigation.navigate("SidebarDisplay");
             }
             else{
-              navigation.navigate("LoginScreen");
+              setErrorText("Unable to get last login date");
+              setIsLoading(false);
             }
           });
-          navigation.navigate("SidebarDisplay");
         } else {
-          console.log("FAILED TO GET USER DETAILS");
-          navigation.navigate("LoginScreen");
+          setIsLoading(false);
         }
       }
 
     } catch (error) {
-      console.log("ERROR: ", error);
-      navigation.navigate("LoginScreen");
+      setIsLoading(false);
     }
   };
 
@@ -135,7 +130,6 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
           )}
         </Button>
       </View>
-      <Connectionstatus />
     </SafeAreaView>
   );
 }

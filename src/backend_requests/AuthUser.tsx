@@ -41,7 +41,6 @@ export const authenticate_user = async (
       setErrorText(response.status);
     } else if (response.status === 200) {
       const responseData = await (response as Response).json();
-      console.log("RESPONSE DATA: ", responseData.detail);
       const cookie_status = await getCookie(response);
       if (cookie_status == false) {
         setErrorText(

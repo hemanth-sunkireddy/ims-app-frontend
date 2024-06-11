@@ -22,7 +22,6 @@ export const getCookie = async (request: Response): Promise<boolean> => {
       if (key === "expires") expire_exist++;
     });
 
-    console.log("EXPIRE EXISTS: ", expire_exist);
     let ims_app_token_value = "";
     if (expire_exist === 1) {
       let accessToken = cookieArray[4];
@@ -52,7 +51,6 @@ export const getCookie = async (request: Response): Promise<boolean> => {
         return false;
       }
     }
-    console.log("TOKEN VALUE: ", ims_app_token_value);
     const todayDate = new Date();
     const dateAfter20Days = new Date(todayDate);
     dateAfter20Days.setDate(todayDate.getDate() + 20);
@@ -67,7 +65,6 @@ export const getCookie = async (request: Response): Promise<boolean> => {
 
     const cookie = await CookieManager.get(domain, false);
     if (cookie) {
-      console.log("HOPE CHECK COOKIE PART: ", cookie);
       return true;
     } else {
       return false;

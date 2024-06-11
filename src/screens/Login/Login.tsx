@@ -45,6 +45,7 @@ function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
           setIsLoading(false);
         }
       }
+     
     } catch (error) {
       const eror_message = (error as Error).message;
       setErrorText("Error: " + eror_message);

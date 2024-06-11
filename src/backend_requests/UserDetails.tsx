@@ -11,7 +11,6 @@ let userType: UserTypes = UserTypes.Default;
 export const get_user_details = async (setErrorText: (text: string) => void, setSuccessText: (text: string) => void): Promise<boolean> => {
   try {
     const accessToken = await getAccessToken();
-    console.log("COMING HERE: ");
     if (accessToken) {
       const responsePromise = await fetch(user_details, {
         method: "GET",
@@ -25,13 +24,11 @@ export const get_user_details = async (setErrorText: (text: string) => void, set
       });
 
       const response= await Promise.race([responsePromise, timeoutPromise]);
-      console.log("RESPOSNE OF USER DETAILS: ", response);
       if(response.status === 200) {
         const responseData = await (response as Response).json();
         userMail = responseData.email;
         userName = responseData.name;
         rollno = responseData.rollNumber;
-        console.log("USER TYPE: ", responseData.userType);
         if (
           responseData.userType === "Academics Students" &&
           responseData.role === "Student"
@@ -61,9 +58,8 @@ export const get_user_details = async (setErrorText: (text: string) => void, set
       return false;
     }
   } catch (e) {
-    console.log("FOUND");
     const eror_message = (e as Error).message;
-    setErrorText("Error: " + eror_message);
+    setErrorText("Error: " + eror_message.toString());
     return false;
   }
 };
