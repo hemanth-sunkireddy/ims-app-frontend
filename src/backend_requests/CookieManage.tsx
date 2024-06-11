@@ -11,7 +11,7 @@ export const getCookie = async (request: Response): Promise<boolean> => {
     if (!cookies) {
       return false;
     }
-    
+
     // Extracting the value of the cookie from the header
     const cookieArray = cookies.split("; ");
     if (!cookieArray) {
