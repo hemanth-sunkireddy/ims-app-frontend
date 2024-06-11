@@ -8,6 +8,7 @@ import {
   Alert,
   ScrollView,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import { Card } from "@rneui/themed";
 import { bank_details } from "../../constants/APIHandler";
@@ -58,6 +59,7 @@ function BankDetails({
   const details = JSON.parse(JSON.stringify(detailsJSON));
   const [detailsState, setDetails] = React.useState(details);
   const [isFetchFine, setIsFetchFine] = React.useState(true);
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
   const fetchBankDetails = async () => {
     try {
@@ -80,6 +82,7 @@ function BankDetails({
       console.log("RESPONSE JSON: ", json_response);
 
       setIsFetchFine(true);
+      setIsLoaded(true);
       setDetails(JSON.parse(JSON.stringify(json_response))); // Optional: Deep copy if needed
     } catch (error) {
       console.error("Fetch Error:", error);
@@ -209,8 +212,17 @@ function BankDetails({
 
   return (
     <SafeAreaView style={global.container}>
-      {headerComponent}
-      <ScrollView>{objectList}</ScrollView>
+      {isLoaded ? (
+        <>
+          {headerComponent}
+          <ScrollView>{objectList}</ScrollView>
+        </>
+      ) : (
+        <View style={global.loadingContainer}>
+          <ActivityIndicator size="large" color="blue" />
+          <Text style={global.loadingText}>Loading...</Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
