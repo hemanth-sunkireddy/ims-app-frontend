@@ -1,6 +1,7 @@
 const domain = "https://ims-app.iiit.ac.in";
 
 const auth_route = domain + "/user/login";
+const cookie_extend_route = domain + "/user/extend_cookie";
 
 const user_details = domain + "/user/details";
 
@@ -25,6 +26,7 @@ const course_attendance = domain + "/data/attendance/";
 export {
   domain,
   auth_route,
+  cookie_extend_route,
   user_details,
   profile_details,
   bank_details,

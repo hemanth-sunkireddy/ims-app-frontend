@@ -1,5 +1,6 @@
 import { auth_route } from "../constants/APIHandler";
 import { getCookie } from "./CookieManage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const authenticate_user = async (
   Email: string,
@@ -47,6 +48,8 @@ export const authenticate_user = async (
         setIsLoading(false);
         return false;
       }
+
+      await AsyncStorage.setItem("last_login", new Date().toString());
       setIsLoading(false);
       return true;
     } else if (response.status == 304) {

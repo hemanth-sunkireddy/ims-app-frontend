@@ -7,9 +7,12 @@ import * as types from "../../custom-types";
 import Connectionstatus from "../../components/Connectionstatus";
 import { otherIcons, IconSet } from "../../constants/Icons";
 import { get_user_details } from "../../backend_requests/UserDetails";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {extend_cookie} from "../../backend_requests/RefreshToken";
 
 const lightIcons: IconSet = otherIcons.light;
 const iiitIcon = lightIcons.iiit_big;
+const daysDifferenceThreshold = 20;
 
 function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
   async function askNotificationPermission() {
@@ -24,6 +27,18 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
     try {
       const user_details_status = await get_user_details();
       if (user_details_status == true) {
+        AsyncStorage.getItem("last_login").then(async (value) => {
+          if (value !== null) {
+            const lastLoginDate = new Date(value);
+            const currentDate = new Date();
+            const daysDifference = Math.floor((currentDate.getTime() - lastLoginDate.getTime()) / (1000 * 60 * 60 * 24));
+            console.log(daysDifference)
+            if (daysDifference > daysDifferenceThreshold) {
+              const cookie_status = await extend_cookie();
+            }
+            navigation.navigate("SidebarDisplay");
+          }
+        });
         navigation.navigate("SidebarDisplay");
       } else {
         navigation.navigate("LoginScreen");
