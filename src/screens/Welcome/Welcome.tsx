@@ -8,7 +8,7 @@ import Connectionstatus from "../../components/Connectionstatus";
 import { otherIcons, IconSet } from "../../constants/Icons";
 import { get_user_details } from "../../backend_requests/UserDetails";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {extend_cookie} from "../../backend_requests/RefreshToken";
+import { extend_cookie } from "../../backend_requests/RefreshToken";
 
 const lightIcons: IconSet = otherIcons.light;
 const iiitIcon = lightIcons.iiit_big;
@@ -31,8 +31,11 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
           if (value !== null) {
             const lastLoginDate = new Date(value);
             const currentDate = new Date();
-            const daysDifference = Math.floor((currentDate.getTime() - lastLoginDate.getTime()) / (1000 * 60 * 60 * 24));
-            console.log(daysDifference)
+            const daysDifference = Math.floor(
+              (currentDate.getTime() - lastLoginDate.getTime()) /
+                (1000 * 60 * 60 * 24),
+            );
+            console.log(daysDifference);
             if (daysDifference > daysDifferenceThreshold) {
               const cookie_status = await extend_cookie();
             }
