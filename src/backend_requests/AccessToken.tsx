@@ -6,7 +6,6 @@ export const getAccessToken = async (): Promise<string | null> => {
     const cookies = await CookieManager.get(domain);
     const accessToken = cookies["access_token_ims_app"]?.value;
     if (accessToken) {
-      console.log("ACCESS TOKEN: ", accessToken);
       return accessToken;
     } else {
       console.log("Access token not found in cookies");

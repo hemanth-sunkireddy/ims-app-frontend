@@ -13,7 +13,6 @@ export const get_user_details = async (): Promise<boolean> => {
     const accessToken = await getAccessToken();
     if (accessToken) {
       const uri = user_details;
-      console.log(" GET DETAILS API: ", uri);
       const responsePromise = await fetch(uri, {
         method: "GET",
         headers: { Cookie: `access_token_ims_app=${accessToken}` },

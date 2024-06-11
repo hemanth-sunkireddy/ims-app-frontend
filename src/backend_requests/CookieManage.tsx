@@ -32,7 +32,7 @@ export const getCookie = async (request: Response): Promise<boolean> => {
       return false;
     }
 
-    console.log("ACCESS TOKEN: ", ims_app_token_value);
+    // console.log("ACCESS TOKEN: ", ims_app_token_value);
 
     await CookieManager.set(domain, {
       name: "access_token_ims_app",
