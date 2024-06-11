@@ -8,39 +8,26 @@ export const getCookie = async (request: Response): Promise<boolean> => {
     }
 
     const cookies = request.headers.get("set-cookie");
-    console.log("REQUEST HEADERS: ", request.headers);
-
     if (!cookies) {
       return false;
     }
-    console.log("COOKIES: ", cookies);
+    
     // Extracting the value of the cookie from the header
     const cookieArray = cookies.split("; ");
-    console.log("cookie Array: ", cookieArray);
     if (!cookieArray) {
       return false;
     }
 
     // Get the Access Token
-    let accessToken = cookieArray[4];
-    console.log("Access Token: ", accessToken);
+    let accessToken = cookieArray[0];
     if (!accessToken) {
       return false;
     }
-    const access_token_value = accessToken.split(", ");
-    console.log("Access Token Value: ", access_token_value);
-    if (!access_token_value) {
-      return false;
-    }
-    const token_dict = access_token_value[1];
-    const token_value = token_dict.split("=");
-    console.log("TOKEN DICT: ", token_dict);
-    console.log("TOKEN VALUE: ", token_value);
+    const token_value = accessToken.split("=");
     if (!token_value) {
       return false;
     }
     const ims_app_token_value = token_value[1];
-    console.log("IMS APP TOKEN VALUE: ", ims_app_token_value);
     if (!ims_app_token_value) {
       return false;
     }
@@ -53,8 +40,6 @@ export const getCookie = async (request: Response): Promise<boolean> => {
       path: "/",
       httpOnly: false,
     });
-
-    console.log("Status of assigning cookie to the user: ", "Success");
 
     // Get cookie of the user for verification
     const cookie = await CookieManager.get(domain, false);

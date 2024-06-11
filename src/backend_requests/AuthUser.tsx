@@ -1,4 +1,4 @@
-import { auth_route, domain } from "../constants/APIHandler";
+import { auth_route } from "../constants/APIHandler";
 import { getCookie } from "./CookieManage";
 
 export const authenticate_user = async (
