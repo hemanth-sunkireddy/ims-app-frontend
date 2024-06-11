@@ -6,6 +6,8 @@ import { Text, View, Image } from "react-native";
 import * as types from "../../custom-types";
 import Connectionstatus from "../../components/Connectionstatus";
 import { otherIcons, IconSet } from "../../constants/Icons";
+import { get_user_details } from "../../backend_requests/UserDetails";
+
 const lightIcons: IconSet = otherIcons.light;
 const iiitIcon = lightIcons.iiit_big;
 
@@ -17,6 +19,19 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
   useEffect(() => {
     askNotificationPermission();
   }, []);
+
+  const handleButtonPress = async () => {
+    try {
+      const user_details_status = await get_user_details();
+      if (user_details_status == true) {
+        navigation.navigate("SidebarDisplay");
+      } else {
+        navigation.navigate("LoginScreen");
+      }
+    } catch (error) {
+      navigation.navigate("LoginScreen");
+    }
+  };
 
   return (
     <SafeAreaView>
@@ -52,7 +67,7 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
         <Button
           title="Get Started"
           containerStyle={{ width: 250, height: 50 }}
-          onPress={() => navigation.navigate("LoginScreen")}
+          onPress={handleButtonPress}
           color="#2D0C8B"
         />
       </View>
