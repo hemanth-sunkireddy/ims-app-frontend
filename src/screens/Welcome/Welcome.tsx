@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@rneui/base";
 import notifee from "@notifee/react-native";
@@ -7,14 +7,20 @@ import * as types from "../../custom-types";
 import Connectionstatus from "../../components/Connectionstatus";
 import { otherIcons, IconSet } from "../../constants/Icons";
 import { get_user_details } from "../../backend_requests/UserDetails";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAccessToken } from "../../backend_requests/AccessToken";
 import { extend_cookie } from "../../backend_requests/RefreshToken";
+import { ActivityIndicator } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const lightIcons: IconSet = otherIcons.light;
 const iiitIcon = lightIcons.iiit_big;
 const daysDifferenceThreshold = 20;
 
 function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
+  const [isloading, setIsLoading] = React.useState(false);
+  const [errorText, setErrorText] = useState("");
+  const [successText, setSuccessText] = useState("");
+
   async function askNotificationPermission() {
     await notifee.requestPermission();
   }
@@ -25,29 +31,45 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
 
   const handleButtonPress = async () => {
     try {
-      const user_details_status = await get_user_details();
-      if (user_details_status == true) {
-        AsyncStorage.getItem("last_login").then(async (value) => {
-          if (value !== null) {
-            const lastLoginDate = new Date(value);
-            const currentDate = new Date();
-            const daysDifference = Math.floor(
-              (currentDate.getTime() - lastLoginDate.getTime()) /
-                (1000 * 60 * 60 * 24),
-            );
-            console.log(daysDifference);
-            if (daysDifference > daysDifferenceThreshold) {
-              const cookie_status = await extend_cookie();
-            }
-            navigation.navigate("SidebarDisplay");
-          }
-        });
-        navigation.navigate("SidebarDisplay");
-      } else {
-        navigation.navigate("LoginScreen");
+      setIsLoading(true);
+      const accessToken = await getAccessToken();
+      if(!accessToken) {
+        setSuccessText("Redirecting for initial login process");
+        setTimeout(() => {
+          setIsLoading(false);
+          navigation.navigate("LoginScreen");
+        }, 3000);
       }
+     
+      if (accessToken) {
+        const user_details_status = await get_user_details(setErrorText, setSuccessText);
+        if (user_details_status == true) {
+          const token = await getAccessToken();
+          AsyncStorage.getItem("last_login").then(async (value) => {
+            if (value !== null) {
+              const lastLoginDate = new Date(value);
+              const currentDate = new Date();
+              const daysDifference = Math.floor(
+                (currentDate.getTime() - lastLoginDate.getTime()) /
+                  (1000 * 60 * 60 * 24),
+              );
+              if (daysDifference > daysDifferenceThreshold) {
+                const cookie_status = await extend_cookie();
+              }
+              navigation.navigate("SidebarDisplay");
+            }
+            else{
+              setErrorText("Unable to get last login date");
+              setIsLoading(false);
+            }
+          });
+        } else {
+          setIsLoading(false);
+        }
+      }
+
     } catch (error) {
-      navigation.navigate("LoginScreen");
+      setIsLoading(false);
     }
   };
 
@@ -74,22 +96,40 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
           alignSelf: "center",
         }}
       />
+      <View style={{ alignItems: "center" }}>
+        <Text style={{ color: "red", fontSize: 20, textAlign: "center", marginTop: 10 }}>
+          {errorText}
+        </Text>
+        <Text style={{ color: "#2D0C8B", fontSize: 20 }}>{successText}</Text>
+      </View>
       <View
         style={{
           alignContent: "center",
           justifyContent: "center",
           alignItems: "center",
-          paddingVertical: 60,
+          paddingVertical: 20,
         }}
       >
         <Button
-          title="Get Started"
           containerStyle={{ width: 250, height: 50 }}
           onPress={handleButtonPress}
+          disabled={isloading}
           color="#2D0C8B"
-        />
+        >
+          {isloading ? (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <ActivityIndicator
+                size="small"
+                color="white"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={{ color: "white", fontSize: 15 }}>Loading...</Text>
+            </View>
+          ) : (
+            <Text style={{ color: "white", fontSize: 15 }}>Get Started</Text>
+          )}
+        </Button>
       </View>
-      <Connectionstatus />
     </SafeAreaView>
   );
 }

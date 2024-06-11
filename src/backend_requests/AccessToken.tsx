@@ -8,11 +8,9 @@ export const getAccessToken = async (): Promise<string | null> => {
     if (accessToken) {
       return accessToken;
     } else {
-      console.log("Access token not found in cookies");
       return null;
     }
   } catch (error) {
-    console.log("Error retrieving access token from cookies", error);
     return null;
   }
 };

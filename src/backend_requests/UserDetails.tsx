@@ -6,14 +6,13 @@ import { getAccessToken } from "./AccessToken";
 let userMail = "";
 let userName = "";
 let rollno = "";
-let userType: UserTypes = UserTypes.Default; // should not be default post login
+let userType: UserTypes = UserTypes.Default; 
 
-export const get_user_details = async (): Promise<boolean> => {
+export const get_user_details = async (setErrorText: (text: string) => void, setSuccessText: (text: string) => void): Promise<boolean> => {
   try {
     const accessToken = await getAccessToken();
     if (accessToken) {
-      const uri = user_details;
-      const responsePromise = await fetch(uri, {
+      const responsePromise = await fetch(user_details, {
         method: "GET",
         headers: { Cookie: `access_token_ims_app=${accessToken}` },
       });
@@ -21,23 +20,15 @@ export const get_user_details = async (): Promise<boolean> => {
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(new Error("Request timed out"));
-        }, 5000);
+        }, 3000);
       });
 
-      const response = await Promise.race([responsePromise, timeoutPromise]);
-      console.log("RESPONSE FROM GET USER DETAILS API: ", response);
-      if (!(response as Response).ok) {
-        console.log("Error In Recieving User Details");
-        return false;
-      }
-
-      const responseData = await (response as Response).json();
-      console.log("DATA OF RESPONSE JSON: ", responseData);
-      if (response.status === 200) {
+      const response= await Promise.race([responsePromise, timeoutPromise]);
+      if(response.status === 200) {
+        const responseData = await (response as Response).json();
         userMail = responseData.email;
         userName = responseData.name;
         rollno = responseData.rollNumber;
-        console.log("USER TYPE: ", responseData.userType);
         if (
           responseData.userType === "Academics Students" &&
           responseData.role === "Student"
@@ -54,17 +45,21 @@ export const get_user_details = async (): Promise<boolean> => {
         ) {
           userType = UserTypes.Staff;
         }
+        setSuccessText(response.status + " " + " Redirecting to Dashboard...");
         return true;
       } else {
-        console.log("Auth Success, Error in Getting User Details");
+        setSuccessText("");
+        setErrorText(response.status + " " + "Error in getting user details");
         return false;
       }
-    } else {
-      console.log("Error in Getting ACCESS TOKEN");
+    }
+    else {
+      setErrorText("Error: Access token not retrieved");
       return false;
     }
   } catch (e) {
-    console.log("ERROR in Getting user Details");
+    const eror_message = (e as Error).message;
+    setErrorText("Error: " + eror_message.toString());
     return false;
   }
 };
