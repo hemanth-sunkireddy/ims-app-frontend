@@ -34,16 +34,19 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
       setErrorText("");
       setSuccessText("");
       const accessToken = await getAccessToken();
-      if(!accessToken) {
+      if (!accessToken) {
         setSuccessText("Redirecting for initial login process");
         setTimeout(() => {
           setIsLoading(false);
           navigation.navigate("LoginScreen");
         }, 1000);
       }
-     
+
       if (accessToken) {
-        const user_details_status = await get_user_details(setErrorText, setSuccessText);
+        const user_details_status = await get_user_details(
+          setErrorText,
+          setSuccessText,
+        );
         if (user_details_status == true) {
           AsyncStorage.getItem("last_login").then(async (value) => {
             if (value !== null) {
@@ -57,8 +60,7 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
                 const cookie_status = await extend_cookie();
               }
               navigation.navigate("SidebarDisplay");
-            }
-            else{
+            } else {
               setErrorText("Unable to get last login date");
               setIsLoading(false);
             }
@@ -96,7 +98,14 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
         }}
       />
       <View style={{ alignItems: "center" }}>
-        <Text style={{ color: "red", fontSize: 20, textAlign: "center", marginTop: 10 }}>
+        <Text
+          style={{
+            color: "red",
+            fontSize: 20,
+            textAlign: "center",
+            marginTop: 10,
+          }}
+        >
           {errorText}
         </Text>
         <Text style={{ color: "#2D0C8B", fontSize: 20 }}>{successText}</Text>

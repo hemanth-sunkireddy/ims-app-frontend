@@ -73,7 +73,6 @@ function ProfileDetails(): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchProfileDetails = async () => {
-
     const accessToken = await getAccessToken();
     if (accessToken) {
       await fetch(profile_details, {
@@ -87,7 +86,7 @@ function ProfileDetails(): React.JSX.Element {
         .then((json) => {
           console.log("Parsed JSON:", json);
           setIsFetchFine(true);
-          setDetails(JSON.parse(JSON.stringify(json))); 
+          setDetails(JSON.parse(JSON.stringify(json)));
           setTimeout(() => {
             setIsLoading(false);
           }, 1000);
@@ -98,7 +97,9 @@ function ProfileDetails(): React.JSX.Element {
           setIsLoading(false);
         });
     } else {
-      setErrorText("Error in receiving cookies. Please try again after sometime");
+      setErrorText(
+        "Error in receiving cookies. Please try again after sometime",
+      );
       setIsFetchFine(false);
       setIsLoading(false);
     }
@@ -108,14 +109,10 @@ function ProfileDetails(): React.JSX.Element {
     fetchProfileDetails();
   }, []);
 
-  
-
   if (isFetchFine === false) {
     return (
       <SafeAreaView style={global.container}>
-        <Text style={bank.noDetailsText}>
-          {errorText}
-        </Text>
+        <Text style={bank.noDetailsText}>{errorText}</Text>
       </SafeAreaView>
     );
   }
@@ -135,12 +132,9 @@ function ProfileDetails(): React.JSX.Element {
         </Text>
       </SafeAreaView>
     );
-  }
-  else {
+  } else {
     return (
-
       <SafeAreaView style={global.container}>
-
         <ScrollView>
           {!isLoading && (
             <>
@@ -150,17 +144,25 @@ function ProfileDetails(): React.JSX.Element {
                   <Text style={profile.fieldHeader}>
                     {fieldNames.general.rollNumber}
                   </Text>
-                  <Text style={profile.text}>{detailsState.general.rollNumber}</Text>
+                  <Text style={profile.text}>
+                    {detailsState.general.rollNumber}
+                  </Text>
                 </SafeAreaView>
 
                 <SafeAreaView style={profile.container}>
-                  <Text style={profile.fieldHeader}>{fieldNames.general.name}</Text>
+                  <Text style={profile.fieldHeader}>
+                    {fieldNames.general.name}
+                  </Text>
                   <Text style={profile.text}>{detailsState.general.name}</Text>
                 </SafeAreaView>
 
                 <SafeAreaView style={profile.container}>
-                  <Text style={profile.fieldHeader}>{fieldNames.general.userID}</Text>
-                  <Text style={profile.text}>{detailsState.general.userID}</Text>
+                  <Text style={profile.fieldHeader}>
+                    {fieldNames.general.userID}
+                  </Text>
+                  <Text style={profile.text}>
+                    {detailsState.general.userID}
+                  </Text>
                 </SafeAreaView>
 
                 <SafeAreaView style={profile.coupleContainer}>
@@ -174,11 +176,17 @@ function ProfileDetails(): React.JSX.Element {
                     <Text style={profile.fieldHeader}>
                       {fieldNames.general.degree}
                     </Text>
-                    <Text style={profile.text}>{detailsState.general.degree}</Text>
+                    <Text style={profile.text}>
+                      {detailsState.general.degree}
+                    </Text>
                   </SafeAreaView>
 
                   <SafeAreaView
-                    style={{ ...profile.container, flex: 0.4, alignSelf: "flex-end" }}
+                    style={{
+                      ...profile.container,
+                      flex: 0.4,
+                      alignSelf: "flex-end",
+                    }}
                   >
                     <Text style={profile.fieldHeader}>
                       {fieldNames.general.department}
@@ -208,7 +216,11 @@ function ProfileDetails(): React.JSX.Element {
                   </SafeAreaView>
 
                   <SafeAreaView
-                    style={{ ...profile.container, flex: 0.4, alignSelf: "flex-end" }}
+                    style={{
+                      ...profile.container,
+                      flex: 0.4,
+                      alignSelf: "flex-end",
+                    }}
                   >
                     <Text style={profile.fieldHeader}>
                       {fieldNames.general.dateOfBirth}
@@ -230,11 +242,17 @@ function ProfileDetails(): React.JSX.Element {
                     <Text style={profile.fieldHeader}>
                       {fieldNames.general.gender}
                     </Text>
-                    <Text style={profile.text}>{detailsState.general.gender}</Text>
+                    <Text style={profile.text}>
+                      {detailsState.general.gender}
+                    </Text>
                   </SafeAreaView>
 
                   <SafeAreaView
-                    style={{ ...profile.container, flex: 0.4, alignSelf: "flex-end" }}
+                    style={{
+                      ...profile.container,
+                      flex: 0.4,
+                      alignSelf: "flex-end",
+                    }}
                   >
                     <Text style={profile.fieldHeader}>
                       {fieldNames.general.aadhaarNumber}
@@ -256,11 +274,17 @@ function ProfileDetails(): React.JSX.Element {
                     <Text style={profile.fieldHeader}>
                       {fieldNames.general.category}
                     </Text>
-                    <Text style={profile.text}>{detailsState.general.category}</Text>
+                    <Text style={profile.text}>
+                      {detailsState.general.category}
+                    </Text>
                   </SafeAreaView>
 
                   <SafeAreaView
-                    style={{ ...profile.container, flex: 0.4, alignSelf: "flex-end" }}
+                    style={{
+                      ...profile.container,
+                      flex: 0.4,
+                      alignSelf: "flex-end",
+                    }}
                   >
                     <Text style={profile.fieldHeader}>
                       {fieldNames.general.admissionType}
@@ -288,17 +312,25 @@ function ProfileDetails(): React.JSX.Element {
                   </SafeAreaView>
 
                   <SafeAreaView
-                    style={{ ...profile.container, flex: 0.4, alignSelf: "flex-end" }}
+                    style={{
+                      ...profile.container,
+                      flex: 0.4,
+                      alignSelf: "flex-end",
+                    }}
                   >
                     <Text style={profile.fieldHeader}>
                       {fieldNames.general.mobile}
                     </Text>
-                    <Text style={profile.text}>{detailsState.general.mobile}</Text>
+                    <Text style={profile.text}>
+                      {detailsState.general.mobile}
+                    </Text>
                   </SafeAreaView>
                 </SafeAreaView>
 
                 <SafeAreaView style={profile.container}>
-                  <Text style={profile.fieldHeader}>{fieldNames.general.email}</Text>
+                  <Text style={profile.fieldHeader}>
+                    {fieldNames.general.email}
+                  </Text>
                   <Text style={profile.text}>{detailsState.general.email}</Text>
                 </SafeAreaView>
 
@@ -319,7 +351,11 @@ function ProfileDetails(): React.JSX.Element {
                   </SafeAreaView>
 
                   <SafeAreaView
-                    style={{ ...profile.container, flex: 0.4, alignSelf: "flex-end" }}
+                    style={{
+                      ...profile.container,
+                      flex: 0.4,
+                      alignSelf: "flex-end",
+                    }}
                   >
                     <Text style={profile.fieldHeader}>
                       {fieldNames.general.motherName}
@@ -337,24 +373,34 @@ function ProfileDetails(): React.JSX.Element {
 
               <SafeAreaView style={profile.safeAreaContainer}>
                 <SafeAreaView style={profile.container}>
-                  <Text style={profile.fieldHeader}>{fieldNames.address.street}</Text>
-                  <Text style={profile.text}>{detailsState.address.street}</Text>
+                  <Text style={profile.fieldHeader}>
+                    {fieldNames.address.street}
+                  </Text>
+                  <Text style={profile.text}>
+                    {detailsState.address.street}
+                  </Text>
                 </SafeAreaView>
 
                 <SafeAreaView style={profile.container}>
                   <Text style={profile.fieldHeader}>
                     {fieldNames.address.location}
                   </Text>
-                  <Text style={profile.text}>{detailsState.address.location}</Text>
+                  <Text style={profile.text}>
+                    {detailsState.address.location}
+                  </Text>
                 </SafeAreaView>
 
                 <SafeAreaView style={profile.container}>
-                  <Text style={profile.fieldHeader}>{fieldNames.address.city}</Text>
+                  <Text style={profile.fieldHeader}>
+                    {fieldNames.address.city}
+                  </Text>
                   <Text style={profile.text}>{detailsState.address.city}</Text>
                 </SafeAreaView>
 
                 <SafeAreaView style={profile.container}>
-                  <Text style={profile.fieldHeader}>{fieldNames.address.state}</Text>
+                  <Text style={profile.fieldHeader}>
+                    {fieldNames.address.state}
+                  </Text>
                   <Text style={profile.text}>{detailsState.address.state}</Text>
                 </SafeAreaView>
 
@@ -369,16 +415,24 @@ function ProfileDetails(): React.JSX.Element {
                     <Text style={profile.fieldHeader}>
                       {fieldNames.address.country}
                     </Text>
-                    <Text style={profile.text}>{detailsState.address.country}</Text>
+                    <Text style={profile.text}>
+                      {detailsState.address.country}
+                    </Text>
                   </SafeAreaView>
 
                   <SafeAreaView
-                    style={{ ...profile.container, flex: 0.3, alignSelf: "flex-end" }}
+                    style={{
+                      ...profile.container,
+                      flex: 0.3,
+                      alignSelf: "flex-end",
+                    }}
                   >
                     <Text style={profile.fieldHeader}>
                       {fieldNames.address.zipCode}
                     </Text>
-                    <Text style={profile.text}>{detailsState.address.zipCode}</Text>
+                    <Text style={profile.text}>
+                      {detailsState.address.zipCode}
+                    </Text>
                   </SafeAreaView>
                 </SafeAreaView>
               </SafeAreaView>
@@ -388,7 +442,6 @@ function ProfileDetails(): React.JSX.Element {
       </SafeAreaView>
     );
   }
-
 }
 
 export default ProfileDetails;

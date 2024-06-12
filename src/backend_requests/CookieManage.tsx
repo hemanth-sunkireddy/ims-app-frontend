@@ -17,7 +17,7 @@ export const getCookie = async (request: Response): Promise<boolean> => {
       return false;
     }
     let expire_exist = 0;
-    cookieArray.forEach(pair => {
+    cookieArray.forEach((pair) => {
       const [key, value] = pair.split("=");
       if (key === "expires") expire_exist++;
     });
@@ -25,19 +25,24 @@ export const getCookie = async (request: Response): Promise<boolean> => {
     let ims_app_token_value = "";
     if (expire_exist === 1) {
       let accessToken = cookieArray[4];
-      if (!accessToken) { return false; }
+      if (!accessToken) {
+        return false;
+      }
       const access_token_value = accessToken.split(", ");
-      if (!access_token_value) { return false; }
+      if (!access_token_value) {
+        return false;
+      }
       const token_dict = access_token_value[1];
       const token_value = token_dict.split("=");
-      if (!token_value) { return false; }
+      if (!token_value) {
+        return false;
+      }
       ims_app_token_value = token_value[1];
 
       if (!ims_app_token_value) {
         return false;
       }
-    }
-    else {
+    } else {
       let accessToken = cookieArray[0];
       if (!accessToken) {
         return false;
@@ -58,7 +63,7 @@ export const getCookie = async (request: Response): Promise<boolean> => {
       name: "access_token_ims_app",
       value: ims_app_token_value,
       path: "/",
-      httpOnly: false, 
+      httpOnly: false,
     });
 
     await AsyncStorage.setItem("last_login", new Date().toString());
