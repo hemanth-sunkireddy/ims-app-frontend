@@ -37,7 +37,7 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
         setTimeout(() => {
           setIsLoading(false);
           navigation.navigate("LoginScreen");
-        }, 3000);
+        }, 1000);
       }
      
       if (accessToken) {
