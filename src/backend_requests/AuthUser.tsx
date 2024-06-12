@@ -13,16 +13,15 @@ export const authenticate_user = async (
     formData.append("password", _Password);
 
     const response = await fetch(auth_route, {
-        method: "POST",
-        headers: {
-          Accept: "*/*",
-          Connection: "keep-alive",
-          "Accept-Encoding": "gzip, deflate, br",
-          "Content-Type": "multipart/form-data",
-        },
-        body: formData,
-      })
-      
+      method: "POST",
+      headers: {
+        Accept: "*/*",
+        Connection: "keep-alive",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "multipart/form-data",
+      },
+      body: formData,
+    });
 
     if (!response) {
       setErrorText("Request timed out");
@@ -37,9 +36,7 @@ export const authenticate_user = async (
     } else if (response.status === 200) {
       const cookie_status = await getCookie(response);
       if (cookie_status == false) {
-        setErrorText(
-          "Authentication Success, Cookie assign failed",
-        );
+        setErrorText("Authentication Success, Cookie assign failed");
         setIsLoading(false);
         return false;
       }
