@@ -101,18 +101,38 @@ function ViewAttendance({
   };
 
   useEffect(() => {
-    const len = Object.keys(allCourses).length;
-    if (len === 0) {
-      setError(true);
-      setErrorText("Error Fetching Courses");
-    }
-    setIsLoading(false);
+    setTimeout(() => {
+      const len = Object.keys(allCourses).length;
+      if (len === 0) {
+        setError(true);
+        setErrorText("Error Fetching Courses");
+      }
+      setIsLoading(false);
+    }, 3000);
   }, []);
 
   const handleCourseClick = (item: CourseItem) => {
     courseCode = item.Key;
     courseName = item.CourseName;
     navigation.navigate("CourseAttendance");
+  };
+
+  const PreHeading = (semester: string, year: string) => {
+    return (
+      <View style={{ marginTop: 10 }}>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 20,
+            marginVertical: 10,
+            color: "black",
+            marginLeft: 4,
+          }}
+        >
+          {semester + " " + year}
+        </Text>
+      </View>
+    );
   };
 
   const Selector = () => {
@@ -157,6 +177,7 @@ function ViewAttendance({
   const CourseList = () => {
     return (
       <View style={styles.box2}>
+        {PreHeading(selected_sem, selected_year)}
         <DataTable>
           <DataTable.Header key="Header">
             <DataTable.Title style={{ flex: 4 }}>

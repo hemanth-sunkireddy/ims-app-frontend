@@ -144,16 +144,17 @@ function Transcript(): React.JSX.Element {
   };
 
   useEffect(() => {
-    const len = Object.keys(allCourses).length;
-    if (len === 0) {
-      setError(true);
-      setErrorText("Error Fetching Courses");
-      setTimeout(() => {
+    setTimeout(() => {
+      const len = Object.keys(allCourses).length;
+      if (len === 0) {
+        setError(true);
+        setErrorText("Error Fetching Courses");
         setIsLoading(false);
-      }, 1000);
-    } else {
-      fetchGpa();
-    }
+      } else {
+        fetchGpa();
+      }
+    }, 3000);
+
   }, []);
 
   const columnFractions = [0.25, 0.45, 0.15, 0.15];
