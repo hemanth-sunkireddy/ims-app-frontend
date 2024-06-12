@@ -8,43 +8,37 @@ export const authenticate_user = async (
   setIsLoading: (text: boolean) => void,
 ): Promise<boolean> => {
   try {
-    // Creating Form Data Which is defined in Backend
     const formData = new FormData();
     formData.append("username", Email);
     formData.append("password", _Password);
 
-    const timeoutPromise = new Promise((reject) => {
-      setTimeout(() => {
-        reject(new Error("Request timed out"));
-      }, 3000);
-    });
+    const response = await fetch(auth_route, {
+        method: "POST",
+        headers: {
+          Accept: "*/*",
+          Connection: "keep-alive",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+      })
+      
 
-    const responsePromise = await fetch(auth_route, {
-      method: "POST",
-      headers: {
-        Accept: "*/*",
-        Connection: "keep-alive",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Content-Type": "multipart/form-data",
-      },
-      body: formData,
-    });
-
-    const response = (await Promise.race([
-      responsePromise,
-      timeoutPromise,
-    ])) as Response;
+    if (!response) {
+      setErrorText("Request timed out");
+      setIsLoading(false);
+      return false;
+    }
 
     if (response.status === 422) {
       setErrorText(response.status + " " + "unprocessable Entry");
     } else if (response.status === 400) {
       setErrorText(response.status);
     } else if (response.status === 200) {
-      const responseData = await (response as Response).json();
       const cookie_status = await getCookie(response);
       if (cookie_status == false) {
         setErrorText(
-          "Authentication Success, Cookie assign failed, Please Click Login again",
+          "Authentication Success, Cookie assign failed",
         );
         setIsLoading(false);
         return false;
