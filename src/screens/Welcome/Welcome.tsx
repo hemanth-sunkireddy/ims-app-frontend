@@ -70,6 +70,8 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
         }
       }
     } catch (error) {
+      const error_message = (error as Error).message;
+      setErrorText(error_message)
       setIsLoading(false);
     }
   };

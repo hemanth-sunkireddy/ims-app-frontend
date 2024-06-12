@@ -101,9 +101,7 @@ function ViewAttendance({
   };
 
   useEffect(() => {
-    console.log("COURSES: ", allCourses);
     const len = Object.keys(allCourses).length;
-    console.log(len);
     if (len === 0) {
       setError(true);
       setErrorText("Error Fetching Courses");

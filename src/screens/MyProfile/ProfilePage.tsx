@@ -83,7 +83,6 @@ function ProfileDetails(): React.JSX.Element {
 
         if (response.status === 200) {
           const response_data = await response.json();
-          console.log("Parsed JSON:", response_data);
           setIsFetchFine(true);
           setDetails(JSON.parse(JSON.stringify(response_data)));
           setTimeout(() => {
@@ -95,7 +94,8 @@ function ProfileDetails(): React.JSX.Element {
         }
       } catch (error) {
         setIsFetchFine(false);
-        setErrorText("Error: " + error);
+        const error_message = (error as Error).message;
+        setErrorText("Error: " + error_message);
       }
     } else {
       setErrorText(

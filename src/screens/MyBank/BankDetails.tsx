@@ -86,7 +86,8 @@ function BankDetails({
       }
     } catch (error) {
       setIsFetchFine(false);
-      setErrorText("Error: ", error);
+      const error_message = (error as Error).message;
+      setErrorText("Error: " + error_message);
     }
   };
 
