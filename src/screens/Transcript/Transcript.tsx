@@ -7,6 +7,7 @@ import {
   ScrollView,
   Alert,
   StyleSheet,
+  ActivityIndicator
 } from "react-native";
 import { Button } from "@rneui/base";
 import SemesterSelector from "../../components/SemesterSelector";
@@ -99,28 +100,39 @@ function Transcript(): React.JSX.Element {
   const [completegpa, setCompletegpa] = useState({} as CompleteGPA);
   const [filteredgpa, setFilteredGPA] = useState({});
   const [record, setRecord] = useState(false);
+  const [loading, setIsLoading] = useState(true);
   const [loadingText, setLoadingText] = useState("Choose Year and Semester");
+  const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState("");
 
   const fetchGpa = async () => {
     try {
       const url = transcript_details;
-      const accessToken = getAccessToken();
-      console.log("ACCESS TOKEN FOR TRANSCRIPT: ", accessToken);
+      const accessToken = await getAccessToken();
+      if(!accessToken) {
+        setError(true);
+        setErrorText("Error in recieving tokens");
+        setIsLoading(false);
+        return;
+      }
       const response = await fetch(url, {
         method: "GET",
         headers: { Cookie: `access_token_ims_app=${accessToken}` },
       });
-      if (!response.ok) {
-        console.log(
-          "Error in fetching transcript details, please try again later.",
-        );
-        setLoadingText("Error in Fetching Transcript, Please try again later");
-      } else {
+      console.log(response.status);
+      if (response.status != 200) {
+        setError(true);
+        setErrorText(response.status);
+        setIsLoading(false);
+      } else if (response.status === 200) {
+        setIsLoading(false);
         const responseData = await response.json();
         setCompletegpa(responseData);
       }
-    } catch (e: unknown) {
-      setLoadingText("Error in Fetching Transcript, Please try again later");
+    } catch (error) {
+      setError(false);
+      setErrorText(error);
+      setIsLoading(false);
     }
   };
 
@@ -305,27 +317,53 @@ function Transcript(): React.JSX.Element {
     );
   };
 
-  return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <Selector />
-      <Text style={{ fontSize: 20, textAlign: "center", color: "black" }}>
-        {loadingText}
-      </Text>
-      {record && (
-        <View>
-          {PreHeading(selected_sem, selected_year)}
-          <View
-            style={[styles.table, { width: screenWidth - 30 }]}
-            key="coursesTable"
-          >
-            {renderTableCells(filteredCourses)}
+  if(loading === true){
+    return(
+      <SafeAreaView>
+        <View style={{ alignItems: "center", marginVertical: 30 }}>
+            <ActivityIndicator size="large" color="grey" />
+            <Text style={{ color: "black", fontSize: 20 }}>
+              Getting Details, Please Wait...
+            </Text>
           </View>
-          <GPAInfo sgpa={filteredgpa.sgpa} cgpa={filteredgpa.cgpa} />
-        </View>
-      )}
-      <EndOfRecord />
-    </ScrollView>
-  );
+      </SafeAreaView>
+    )
+  }
+
+  if(error === true){
+    return(
+      <SafeAreaView>
+        <ScrollView>
+          <Text style={{ color: 'black', textAlign: "center", fontSize: 20, fontWeight: 'bold'}}>
+            {errorText} 
+          </Text>
+        </ScrollView>
+      </SafeAreaView>
+    )
+  }
+  else {
+    return (
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <Selector />
+        <Text style={{ fontSize: 20, textAlign: "center", color: "black" }}>
+          {loadingText}
+        </Text>
+        {record && (
+          <View>
+            {PreHeading(selected_sem, selected_year)}
+            <View
+              style={[styles.table, { width: screenWidth - 30 }]}
+              key="coursesTable"
+            >
+              {renderTableCells(filteredCourses)}
+            </View>
+            <GPAInfo sgpa={filteredgpa.sgpa} cgpa={filteredgpa.cgpa} />
+          </View>
+        )}
+        <EndOfRecord />
+      </ScrollView>
+    );
+  }
 }
 
 export default Transcript;
