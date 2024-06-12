@@ -48,13 +48,11 @@ export const get_user_details = async (
         }
         setSuccessText(response.status + " " + " Redirecting to Dashboard...");
         return true;
-      } 
-      else if(response.status === 401) {
+      } else if (response.status === 401) {
         setSuccessText("");
         setErrorText(response.status + " " + "Unauthroized");
         return false;
-      }
-      else {
+      } else {
         setSuccessText("");
         setErrorText(response.status + " " + "Error in getting user details");
         return false;

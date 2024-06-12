@@ -77,13 +77,12 @@ function BankDetails({
       });
 
       console.log("Response:", response);
-      if(response.status === 200) {
+      if (response.status === 200) {
         setIsFetchFine(true);
         setIsLoaded(true);
-        const json_response = await response.json()
-        setDetails(JSON.parse(JSON.stringify(json_response))); 
-      }
-      else{
+        const json_response = await response.json();
+        setDetails(JSON.parse(JSON.stringify(json_response)));
+      } else {
         setIsFetchFine(false);
         setErrorText(response.status);
       }
@@ -150,9 +149,7 @@ function BankDetails({
   if (isFetchFine === false) {
     return (
       <SafeAreaView style={global.container}>
-        <Text style={bank.noDetailsText}>
-          {errorText} 
-        </Text>
+        <Text style={bank.noDetailsText}>{errorText}</Text>
       </SafeAreaView>
     );
   }
@@ -221,10 +218,12 @@ function BankDetails({
         </>
       ) : (
         <>
-        <View style={{ alignItems: "center", marginVertical: 30 }}>
-          <ActivityIndicator size="large" color="grey" />
-          <Text style={{ color: 'black', fontSize: 20}}>Getting Details, Please Wait...</Text>
-        </View>
+          <View style={{ alignItems: "center", marginVertical: 30 }}>
+            <ActivityIndicator size="large" color="grey" />
+            <Text style={{ color: "black", fontSize: 20 }}>
+              Getting Details, Please Wait...
+            </Text>
+          </View>
         </>
       )}
     </SafeAreaView>
