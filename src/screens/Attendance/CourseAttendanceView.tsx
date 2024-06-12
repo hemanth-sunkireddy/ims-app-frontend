@@ -43,16 +43,16 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: 'black'
+    color: "black",
   },
   marked: {
     flex: 1,
     paddingRight: 40,
-    color: 'black'
+    color: "black",
   },
   markedText: {
     fontSize: 18,
-    color: 'black'
+    color: "black",
   },
   headRow: {
     marginTop: 30,
@@ -115,8 +115,7 @@ function CourseAttendanceView({
         setTimeout(() => {
           setIsLoading(false);
         }, 3000);
-      }
-      else {
+      } else {
         setError(true);
         setErrorText(response.status);
         setIsLoading(false);
@@ -165,9 +164,7 @@ function CourseAttendanceView({
   if (error) {
     return (
       <View style={{ padding: 20 }}>
-        <Text
-          style={{ color: "black", marginLeft: 10, fontSize: 20 }}
-        >
+        <Text style={{ color: "black", marginLeft: 10, fontSize: 20 }}>
           {errorText}
         </Text>
       </View>
