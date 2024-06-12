@@ -4,7 +4,6 @@ import { Button } from "@rneui/base";
 import notifee from "@notifee/react-native";
 import { Text, View, Image } from "react-native";
 import * as types from "../../custom-types";
-import Connectionstatus from "../../components/Connectionstatus";
 import { otherIcons, IconSet } from "../../constants/Icons";
 import { get_user_details } from "../../backend_requests/UserDetails";
 import { getAccessToken } from "../../backend_requests/AccessToken";
@@ -44,7 +43,6 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
       if (accessToken) {
         const user_details_status = await get_user_details(setErrorText, setSuccessText);
         if (user_details_status == true) {
-          const token = await getAccessToken();
           AsyncStorage.getItem("last_login").then(async (value) => {
             if (value !== null) {
               const lastLoginDate = new Date(value);
@@ -67,7 +65,6 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
           setIsLoading(false);
         }
       }
-
     } catch (error) {
       setIsLoading(false);
     }
