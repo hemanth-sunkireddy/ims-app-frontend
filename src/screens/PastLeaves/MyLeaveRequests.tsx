@@ -25,9 +25,7 @@ function MyLeaveRequests(): React.JSX.Element {
     try {
       const accessToken = await getAccessToken();
       if (!accessToken) {
-        setError(
-          "Error in recieving token",
-        );
+        setError("Error in recieving token");
         setLoading(false);
       } else {
         try {
@@ -36,19 +34,14 @@ function MyLeaveRequests(): React.JSX.Element {
             headers: { Cookie: `access_token_ims_app=${accessToken}` },
           });
           if (response.status != 200) {
-            setError(
-              "Error " +
-              response.status
-            );
+            setError("Error " + response.status);
             setLoading(false);
-          }
-          else{
+          } else {
             const responseData = await response.json();
             try {
               if (responseData) {
-                const applications: LeaveRequest[] = Object.values(
-                  responseData,
-                );
+                const applications: LeaveRequest[] =
+                  Object.values(responseData);
                 setLeaveRequests(applications);
               }
               setLoading(false);
@@ -59,10 +52,7 @@ function MyLeaveRequests(): React.JSX.Element {
             }
           }
         } catch (fetchError) {
-          setError(
-            "Error " +
-            fetchError,
-          );
+          setError("Error " + fetchError);
           setLoading(false);
         }
       }
@@ -85,7 +75,7 @@ function MyLeaveRequests(): React.JSX.Element {
               marginVertical: 10,
               fontSize: 20,
               color: "black",
-              textAlign: "center",  
+              textAlign: "center",
             }}
           >
             Getting Details, Please Wait...
@@ -105,35 +95,61 @@ function MyLeaveRequests(): React.JSX.Element {
             </Text>
             {leaveRequests.map((request, index) => (
               <Card key={index} containerStyle={{ marginTop: 15 }}>
-                <Card.Title><Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15}}>Status: {request.LeaveStatus}</Text></Card.Title>
+                <Card.Title>
+                  <Text
+                    style={{ color: "black", fontWeight: "bold", fontSize: 15 }}
+                  >
+                    Status: {request.LeaveStatus}
+                  </Text>
+                </Card.Title>
                 <Card.Divider />
-                <View style={ myleavestyles.leaveRequestPair}>
-                  <Text style={  myleavestyles.leaveRequestKey }>Leave Id:</Text>
-                  <Text style={myleavestyles.leaveRequestValue}>{request.LeaveID}</Text>
-                </View>
-                <View style={ myleavestyles.leaveRequestPair}>
-                  <Text style={  myleavestyles.leaveRequestKey}>From Date:</Text>
-                  <Text style={myleavestyles.leaveRequestValue}>{request.fromdate}</Text>
-                </View>
-                <View style={ myleavestyles.leaveRequestPair}>
-                  <Text style={ myleavestyles.leaveRequestKey}>To Date:</Text>
-                  <Text style={ myleavestyles.leaveRequestValue}>{request.todate}</Text>
+                <View style={myleavestyles.leaveRequestPair}>
+                  <Text style={myleavestyles.leaveRequestKey}>Leave Id:</Text>
+                  <Text style={myleavestyles.leaveRequestValue}>
+                    {request.LeaveID}
+                  </Text>
                 </View>
                 <View style={myleavestyles.leaveRequestPair}>
-                  <Text style={  myleavestyles.leaveRequestKey }>Total Days:</Text>
-                  <Text style={myleavestyles.leaveRequestValue}>{request.TotalDays}</Text>
+                  <Text style={myleavestyles.leaveRequestKey}>From Date:</Text>
+                  <Text style={myleavestyles.leaveRequestValue}>
+                    {request.fromdate}
+                  </Text>
                 </View>
                 <View style={myleavestyles.leaveRequestPair}>
-                  <Text style={  myleavestyles.leaveRequestKey }>Submit Date:</Text>
-                  <Text style={myleavestyles.leaveRequestValue}>{request.SubmitDate}</Text>
+                  <Text style={myleavestyles.leaveRequestKey}>To Date:</Text>
+                  <Text style={myleavestyles.leaveRequestValue}>
+                    {request.todate}
+                  </Text>
                 </View>
-                <View style={ myleavestyles.leaveRequestPair}>
-                  <Text style={  myleavestyles.leaveRequestKey }>Application With:</Text>
-                  <Text style={myleavestyles.leaveRequestValue}>{request.application_with}</Text>
+                <View style={myleavestyles.leaveRequestPair}>
+                  <Text style={myleavestyles.leaveRequestKey}>Total Days:</Text>
+                  <Text style={myleavestyles.leaveRequestValue}>
+                    {request.TotalDays}
+                  </Text>
                 </View>
-                <View style={ myleavestyles.leaveRequestPair}>
-                  <Text style={ myleavestyles.leaveRequestKey}>Reason for Leave:</Text>
-                  <Text style={ myleavestyles.leaveRequestValue}>{request.ReasonForLeave}</Text>
+                <View style={myleavestyles.leaveRequestPair}>
+                  <Text style={myleavestyles.leaveRequestKey}>
+                    Submit Date:
+                  </Text>
+                  <Text style={myleavestyles.leaveRequestValue}>
+                    {request.SubmitDate}
+                  </Text>
+                </View>
+                <View style={myleavestyles.leaveRequestPair}>
+                  <Text style={myleavestyles.leaveRequestKey}>
+                    Application With:
+                  </Text>
+                  <Text style={myleavestyles.leaveRequestValue}>
+                    {request.application_with}
+                  </Text>
+                </View>
+                <View style={myleavestyles.leaveRequestPair}>
+                  <Text style={myleavestyles.leaveRequestKey}>
+                    Reason for Leave:
+                  </Text>
+                  <Text style={myleavestyles.leaveRequestValue}>
+                    {request.ReasonForLeave}
+                  </Text>
                 </View>
               </Card>
             ))}

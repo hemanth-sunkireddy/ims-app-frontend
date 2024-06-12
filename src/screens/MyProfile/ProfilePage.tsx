@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {SafeAreaView, Text, ScrollView } from "react-native";
+import { SafeAreaView, Text, ScrollView } from "react-native";
 import global from "../../styles/global";
 import profile from "../../styles/profile";
 import { profile_details } from "../../constants/APIHandler";
