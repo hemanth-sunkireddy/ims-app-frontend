@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -43,13 +43,16 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 18,
     fontWeight: "bold",
+    color: 'black'
   },
   marked: {
     flex: 1,
     paddingRight: 40,
+    color: 'black'
   },
   markedText: {
     fontSize: 18,
+    color: 'black'
   },
   headRow: {
     marginTop: 30,
@@ -72,10 +75,11 @@ const styles = StyleSheet.create({
 });
 
 function CourseAttendanceView({
-  _route,
   navigation,
 }: types.CourseAttendanceProps): React.JSX.Element {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const [error, setError] = useState(false);
 
   const json_to_list = (AttJson: AttendanceJSON) => {
     if (
@@ -92,24 +96,37 @@ function CourseAttendanceView({
   const fetchAttendance = async () => {
     setIsLoading(true);
     const accessToken = await getAccessToken();
+    if (!accessToken) {
+      setError(true);
+      setErrorText("Error in recieving Cookies.");
+      setIsLoading(false);
+      return;
+    }
     const attendance_api = attendance_details + "/" + courseCode;
     try {
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => {
-          reject(new Error("Request timed out"));
-        }, 10000);
-      });
-      const responsePromise = fetch(attendance_api, {
+      const response = await fetch(attendance_api, {
         method: "GET",
         headers: { Cookie: `access_token_ims_app=${accessToken}` },
       });
-      const response = await Promise.race([responsePromise, timeoutPromise]);
-      const json = await (response as Response).json();
-      setAttendance(json_to_list(JSON.parse(JSON.stringify(json))));
+
+      if (response.status === 200) {
+        const json = await (response as Response).json();
+        setAttendance(json_to_list(JSON.parse(JSON.stringify(json))));
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
+      }
+      else {
+        setError(true);
+        setErrorText(response.status);
+        setIsLoading(false);
+      }
     } catch (error) {
-      Alert.alert("Couldn't fetch courses");
+      const error_message = (error as Error).message;
+      setErrorText(error_message);
+      setError(true);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -144,6 +161,18 @@ function CourseAttendanceView({
       </View>
     );
   };
+
+  if (error) {
+    return (
+      <View style={{ padding: 20 }}>
+        <Text
+          style={{ color: "black", marginLeft: 10, fontSize: 20 }}
+        >
+          {errorText}
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={global.container}>
