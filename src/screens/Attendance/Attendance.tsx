@@ -7,7 +7,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { allCourses } from "../Dashboard/components/CourseTable";
 import global from "../../styles/global";
@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
 function ViewAttendance({
   navigation,
 }: types.MyAttendanceProps): React.JSX.Element {
-
   const currentYear = new Date().getFullYear();
   const year_data = [];
   for (let i = currentYear; i >= 2016; i--) {
@@ -75,7 +74,6 @@ function ViewAttendance({
   const [loading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
-
 
   const filterCourseList = () => {
     const rowslist: CourseItem[] = [];
@@ -112,7 +110,6 @@ function ViewAttendance({
     }
     setIsLoading(false);
   }, []);
-
 
   const handleCourseClick = (item: CourseItem) => {
     courseCode = item.Key;
@@ -234,8 +231,7 @@ function ViewAttendance({
         </ScrollView>
       </SafeAreaView>
     );
-  } 
-  else {
+  } else {
     return (
       <SafeAreaView style={global.container}>
         <ScrollView>
