@@ -3,6 +3,7 @@ import { View, SafeAreaView, Text, ScrollView } from "react-native";
 import { Card } from "@rneui/themed";
 import { past_leave_status } from "../../constants/APIHandler";
 import { getAccessToken } from "../../backend_requests/AccessToken";
+import myleavestyles from "../../styles/myleave";
 
 interface LeaveRequest {
   LeaveID: string;
@@ -25,7 +26,7 @@ function MyLeaveRequests(): React.JSX.Element {
       const accessToken = await getAccessToken();
       if (!accessToken) {
         setError(
-          "Error in Receiving Access Token of the user. Please try again after sometime.",
+          "Error in recieving token",
         );
         setLoading(false);
       } else {
@@ -34,37 +35,40 @@ function MyLeaveRequests(): React.JSX.Element {
             method: "GET",
             headers: { Cookie: `access_token_ims_app=${accessToken}` },
           });
-          if (!response.ok) {
+          if (response.status != 200) {
             setError(
-              "Error in Fetching Past Leave Requests." +
-                response.status +
-                " " +
-                response.statusText,
+              "Error " +
+              response.status
             );
+            setLoading(false);
           }
-          const responseData = await response.json();
-          try {
-            if (responseData && responseData.Applications) {
-              const applications: LeaveRequest[] = Object.values(
-                responseData.Applications,
-              );
-              setLeaveRequests(applications);
+          else{
+            const responseData = await response.json();
+            try {
+              if (responseData) {
+                const applications: LeaveRequest[] = Object.values(
+                  responseData,
+                );
+                setLeaveRequests(applications);
+              }
+              setLoading(false);
+            } catch (innerError) {
+              const error_message = innerError as Error;
+              setError("Error in processing" + error_message);
+              setLoading(false);
             }
-          } catch (innerError) {
-            const error_message = innerError as Error;
-            setError("Error processing inner response data." + error_message);
           }
         } catch (fetchError) {
           setError(
-            "Internal Server Error in fetching Past Leave Requests." +
-              fetchError,
+            "Error " +
+            fetchError,
           );
+          setLoading(false);
         }
-        setLoading(false);
       }
     } catch (e) {
       setLoading(false);
-      setError("Error in Receiving Cookies, Please try again after sometime.");
+      setError("Error in recieving cookies");
     }
   };
 
@@ -81,7 +85,7 @@ function MyLeaveRequests(): React.JSX.Element {
               marginVertical: 10,
               fontSize: 20,
               color: "black",
-              marginLeft: 50,
+              textAlign: "center",  
             }}
           >
             Getting Details, Please Wait...
@@ -94,21 +98,43 @@ function MyLeaveRequests(): React.JSX.Element {
                 marginVertical: 10,
                 fontSize: 20,
                 color: "black",
-                marginLeft: 50,
+                textAlign: "center",
               }}
             >
-              Total Number of Applications: {leaveRequests.length}
+              Total Applications: {leaveRequests.length}
             </Text>
             {leaveRequests.map((request, index) => (
               <Card key={index} containerStyle={{ marginTop: 15 }}>
-                <Card.Title>Status: {request.LeaveStatus}</Card.Title>
+                <Card.Title><Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15}}>Status: {request.LeaveStatus}</Text></Card.Title>
                 <Card.Divider />
-                <Text>Total Days: {request.TotalDays}</Text>
-                <Text>Submit Date: {request.SubmitDate}</Text>
-                <Text>Application With: {request.application_with}</Text>
-                <Text>From Date: {request.fromdate}</Text>
-                <Text>To Date: {request.todate}</Text>
-                <Text>Reason for Leave: {request.ReasonForLeave}</Text>
+                <View style={ myleavestyles.leaveRequestPair}>
+                  <Text style={  myleavestyles.leaveRequestKey }>Leave Id:</Text>
+                  <Text style={myleavestyles.leaveRequestValue}>{request.LeaveID}</Text>
+                </View>
+                <View style={ myleavestyles.leaveRequestPair}>
+                  <Text style={  myleavestyles.leaveRequestKey}>From Date:</Text>
+                  <Text style={myleavestyles.leaveRequestValue}>{request.fromdate}</Text>
+                </View>
+                <View style={ myleavestyles.leaveRequestPair}>
+                  <Text style={ myleavestyles.leaveRequestKey}>To Date:</Text>
+                  <Text style={ myleavestyles.leaveRequestValue}>{request.todate}</Text>
+                </View>
+                <View style={myleavestyles.leaveRequestPair}>
+                  <Text style={  myleavestyles.leaveRequestKey }>Total Days:</Text>
+                  <Text style={myleavestyles.leaveRequestValue}>{request.TotalDays}</Text>
+                </View>
+                <View style={myleavestyles.leaveRequestPair}>
+                  <Text style={  myleavestyles.leaveRequestKey }>Submit Date:</Text>
+                  <Text style={myleavestyles.leaveRequestValue}>{request.SubmitDate}</Text>
+                </View>
+                <View style={ myleavestyles.leaveRequestPair}>
+                  <Text style={  myleavestyles.leaveRequestKey }>Application With:</Text>
+                  <Text style={myleavestyles.leaveRequestValue}>{request.application_with}</Text>
+                </View>
+                <View style={ myleavestyles.leaveRequestPair}>
+                  <Text style={ myleavestyles.leaveRequestKey}>Reason for Leave:</Text>
+                  <Text style={ myleavestyles.leaveRequestValue}>{request.ReasonForLeave}</Text>
+                </View>
               </Card>
             ))}
           </>
