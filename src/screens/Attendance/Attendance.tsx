@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@rneui/base";
 import {
   TouchableOpacity,
@@ -7,9 +7,9 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  ActivityIndicator
 } from "react-native";
 import { allCourses } from "../Dashboard/components/CourseTable";
-import { COURSE } from "../Dashboard/components/CourseTable";
 import global from "../../styles/global";
 import { DataTable } from "react-native-paper";
 import * as types from "../../custom-types";
@@ -61,10 +61,8 @@ const styles = StyleSheet.create({
 });
 
 function ViewAttendance({
-  _route,
   navigation,
 }: types.MyAttendanceProps): React.JSX.Element {
-  // code for SelectionList
 
   const currentYear = new Date().getFullYear();
   const year_data = [];
@@ -72,9 +70,13 @@ function ViewAttendance({
     year_data.push({ key: `${i}`, value: `${i}-${(i + 1) % 100}` });
   }
 
-  // code for courseList
-  const [courseList, setCourseList] = React.useState<CourseItem[]>([]);
-  const [statusText, setStatusText] = React.useState("Select Year and Sem");
+  const [courseList, setCourseList] = useState<CourseItem[]>([]);
+  const [statusText, setStatusText] = useState("Select Year and Sem");
+  const [loading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState("");
+
+
   const filterCourseList = () => {
     const rowslist: CourseItem[] = [];
     const allcourses = allCourses;
@@ -99,6 +101,18 @@ function ViewAttendance({
   const setSemester = () => {
     filterCourseList();
   };
+
+  useEffect(() => {
+    console.log("COURSES: ", allCourses);
+    const len = Object.keys(allCourses).length;
+    console.log(len);
+    if (len === 0) {
+      setError(true);
+      setErrorText("Error Fetching Courses");
+    }
+    setIsLoading(false);
+  }, []);
+
 
   const handleCourseClick = (item: CourseItem) => {
     courseCode = item.Key;
@@ -190,15 +204,47 @@ function ViewAttendance({
       </View>
     );
   };
+  if (loading === true) {
+    return (
+      <SafeAreaView>
+        <View style={{ alignItems: "center", marginVertical: 30 }}>
+          <ActivityIndicator size="large" color="grey" />
+          <Text style={{ color: "black", fontSize: 20 }}>
+            Getting Details, Please Wait...
+          </Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
-  return (
-    <SafeAreaView style={global.container}>
-      <ScrollView>
-        <Selector />
-        <CourseList />
-      </ScrollView>
-    </SafeAreaView>
-  );
+  if (error === true) {
+    return (
+      <SafeAreaView>
+        <ScrollView>
+          <Text
+            style={{
+              color: "black",
+              textAlign: "center",
+              fontSize: 20,
+              fontWeight: "bold",
+            }}
+          >
+            {errorText}
+          </Text>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  } 
+  else {
+    return (
+      <SafeAreaView style={global.container}>
+        <ScrollView>
+          <Selector />
+          <CourseList />
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 }
 
 export { courseCode, courseName };

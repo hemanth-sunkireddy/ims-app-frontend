@@ -39,7 +39,7 @@ function CourseTable(): React.JSX.Element {
         setCourses(json);
       }
     } catch (error) {
-      Alert.alert("Alert", "Could not fetch Courses.", [{ text: "OK" }]);
+      // This error case is handled in attendance and transcript. Here no need to perform any action.
     }
   };
 
