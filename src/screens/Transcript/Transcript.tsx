@@ -129,8 +129,7 @@ function Transcript(): React.JSX.Element {
           const responseData = await response.json();
           setCompletegpa(responseData);
         }
-      }
-      catch (error) {
+      } catch (error) {
         setError(true);
         const error_message = (error as Error).message;
         setErrorText(error_message);
@@ -152,8 +151,7 @@ function Transcript(): React.JSX.Element {
       setTimeout(() => {
         setIsLoading(false);
       }, 1000);
-    }
-    else {
+    } else {
       fetchGpa();
     }
   }, []);

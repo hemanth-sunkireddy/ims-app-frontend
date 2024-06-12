@@ -30,10 +30,7 @@ function Connectionstatus() {
     prevScreenRef.current = route.name;
   }, [route.name]);
 
-  return (
-    <SafeAreaView>
-    </SafeAreaView>
-  );
+  return <SafeAreaView></SafeAreaView>;
 }
 
 export default Connectionstatus;
