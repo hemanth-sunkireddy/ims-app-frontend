@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   Text,
@@ -117,13 +117,9 @@ function BankDetails({
         style={bank.bankHeaderEdit}
         onPress={() => {
           // TODO: fix one attribute
-          if (isFetchFine === false){
-            Alert.alert(
-              "",
-              "Server Error.",
-            );
-          }
-          else if (
+          if (isFetchFine === false) {
+            Alert.alert("", "Server Error.");
+          } else if (
             detailsState.hasBankDetails === false ||
             detailsState.bankDetails.applicationStatus !== "Approved"
           ) {
@@ -135,12 +131,8 @@ function BankDetails({
               "",
               "You are not allowed to add another record. Contact Academic office for any change in Bank Account Details.",
             );
-          }
-          else{
-            Alert.alert(
-              "",
-              "Server Error.",
-            );
+          } else {
+            Alert.alert("", "Server Error.");
           }
         }}
       >
@@ -157,7 +149,6 @@ function BankDetails({
 
   if (isFetchFine === false) {
     return (
-      
       <SafeAreaView style={global.container}>
         {headerComponent}
         <Text style={bank.noDetailsText}>{errorText}</Text>

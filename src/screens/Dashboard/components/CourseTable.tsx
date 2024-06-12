@@ -40,7 +40,6 @@ function CourseTable(): React.JSX.Element {
       }
     } catch (error) {
       Alert.alert("Alert", "Could not fetch Courses.", [{ text: "OK" }]);
-
     }
   };
 

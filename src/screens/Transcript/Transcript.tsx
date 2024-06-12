@@ -7,7 +7,7 @@ import {
   ScrollView,
   Alert,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { Button } from "@rneui/base";
 import SemesterSelector from "../../components/SemesterSelector";
@@ -109,7 +109,7 @@ function Transcript(): React.JSX.Element {
     try {
       const url = transcript_details;
       const accessToken = await getAccessToken();
-      if(!accessToken) {
+      if (!accessToken) {
         setError(true);
         setErrorText("Error in recieving tokens");
         setIsLoading(false);
@@ -317,31 +317,37 @@ function Transcript(): React.JSX.Element {
     );
   };
 
-  if(loading === true){
-    return(
+  if (loading === true) {
+    return (
       <SafeAreaView>
         <View style={{ alignItems: "center", marginVertical: 30 }}>
-            <ActivityIndicator size="large" color="grey" />
-            <Text style={{ color: "black", fontSize: 20 }}>
-              Getting Details, Please Wait...
-            </Text>
-          </View>
+          <ActivityIndicator size="large" color="grey" />
+          <Text style={{ color: "black", fontSize: 20 }}>
+            Getting Details, Please Wait...
+          </Text>
+        </View>
       </SafeAreaView>
-    )
+    );
   }
 
-  if(error === true){
-    return(
+  if (error === true) {
+    return (
       <SafeAreaView>
         <ScrollView>
-          <Text style={{ color: 'black', textAlign: "center", fontSize: 20, fontWeight: 'bold'}}>
-            {errorText} 
+          <Text
+            style={{
+              color: "black",
+              textAlign: "center",
+              fontSize: 20,
+              fontWeight: "bold",
+            }}
+          >
+            {errorText}
           </Text>
         </ScrollView>
       </SafeAreaView>
-    )
-  }
-  else {
+    );
+  } else {
     return (
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Selector />
