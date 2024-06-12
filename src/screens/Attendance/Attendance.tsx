@@ -256,6 +256,11 @@ function ViewAttendance({
         <ScrollView>
           <Selector />
           <CourseList />
+          {courseList.length != 0 &&
+            <Text style={{ color: 'black', fontSize: 15, textAlign: "center", marginTop: 10, fontWeight: "bold" }}>
+              Click a course for full attendance details
+            </Text>
+          }
         </ScrollView>
       </SafeAreaView>
     );
