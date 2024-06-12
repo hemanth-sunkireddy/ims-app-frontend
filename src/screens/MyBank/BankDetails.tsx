@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import {
   SafeAreaView,
   Text,
@@ -57,10 +57,10 @@ function BankDetails({
 }: types.BankDetailsProps): React.JSX.Element {
   const detailsJSON = bankDetailsJSON;
   const details = JSON.parse(JSON.stringify(detailsJSON));
-  const [detailsState, setDetails] = React.useState(details);
-  const [isFetchFine, setIsFetchFine] = React.useState(true);
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  const [errorText, setErrorText] = React.useState("");
+  const [detailsState, setDetails] = useState(details);
+  const [isFetchFine, setIsFetchFine] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [errorText, setErrorText] = useState("");
 
   const fetchBankDetails = async () => {
     try {
@@ -117,7 +117,13 @@ function BankDetails({
         style={bank.bankHeaderEdit}
         onPress={() => {
           // TODO: fix one attribute
-          if (
+          if (isFetchFine === false){
+            Alert.alert(
+              "",
+              "Server Error.",
+            );
+          }
+          else if (
             detailsState.hasBankDetails === false ||
             detailsState.bankDetails.applicationStatus !== "Approved"
           ) {
@@ -128,6 +134,12 @@ function BankDetails({
             Alert.alert(
               "",
               "You are not allowed to add another record. Contact Academic office for any change in Bank Account Details.",
+            );
+          }
+          else{
+            Alert.alert(
+              "",
+              "Server Error.",
             );
           }
         }}
@@ -145,7 +157,9 @@ function BankDetails({
 
   if (isFetchFine === false) {
     return (
+      
       <SafeAreaView style={global.container}>
+        {headerComponent}
         <Text style={bank.noDetailsText}>{errorText}</Text>
       </SafeAreaView>
     );
