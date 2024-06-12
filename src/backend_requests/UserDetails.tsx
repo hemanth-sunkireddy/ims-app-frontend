@@ -18,7 +18,6 @@ export const get_user_details = async (
         method: "GET",
         headers: { Cookie: `access_token_ims_app=${accessToken}` },
       });
-
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(new Error("Request timed out"));
@@ -49,7 +48,13 @@ export const get_user_details = async (
         }
         setSuccessText(response.status + " " + " Redirecting to Dashboard...");
         return true;
-      } else {
+      } 
+      else if(response.status === 401) {
+        setSuccessText("");
+        setErrorText(response.status + " " + "Unauthroized");
+        return false;
+      }
+      else {
         setSuccessText("");
         setErrorText(response.status + " " + "Error in getting user details");
         return false;

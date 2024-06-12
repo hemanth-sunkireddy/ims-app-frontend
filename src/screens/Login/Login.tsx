@@ -49,11 +49,10 @@ function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
             setIsLoading(false);
           }
         }
-      } else {
-        const user_details_status = await get_user_details(
-          setErrorText,
-          setSuccessText,
-        );
+      }
+      else{
+        setSuccessText("Getting User Details...");  
+        const user_details_status = await get_user_details(setErrorText, setSuccessText);
         if (user_details_status == true) {
           navigation.navigate("SidebarDisplay");
         } else {
