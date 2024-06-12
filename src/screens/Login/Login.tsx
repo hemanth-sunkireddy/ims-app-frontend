@@ -35,26 +35,28 @@ function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
         if (auth_status === true) {
           try {
             setSuccessText("Authentication Success, Getting User Details..");
-            const user_details_status = await get_user_details(setErrorText, setSuccessText);
+            const user_details_status = await get_user_details(
+              setErrorText,
+              setSuccessText,
+            );
             setIsLoading(false);
             if (user_details_status == true) {
               navigation.navigate("SidebarDisplay");
             }
           } catch (err) {
             const error_message = (err as Error).message;
-            setErrorText(
-              "Error " + error_message,
-            );
+            setErrorText("Error " + error_message);
             setIsLoading(false);
           }
         }
-      }
-      else{
-        const user_details_status = await get_user_details(setErrorText, setSuccessText);
+      } else {
+        const user_details_status = await get_user_details(
+          setErrorText,
+          setSuccessText,
+        );
         if (user_details_status == true) {
           navigation.navigate("SidebarDisplay");
-        }
-        else{
+        } else {
           setIsLoading(false);
         }
       }

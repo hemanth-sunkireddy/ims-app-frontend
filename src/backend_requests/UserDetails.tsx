@@ -5,9 +5,12 @@ import { getAccessToken } from "./AccessToken";
 let userMail = "";
 let userName = "";
 let rollno = "";
-let userType: UserTypes = UserTypes.Default; 
+let userType: UserTypes = UserTypes.Default;
 
-export const get_user_details = async (setErrorText: (text: string) => void, setSuccessText: (text: string) => void): Promise<boolean> => {
+export const get_user_details = async (
+  setErrorText: (text: string) => void,
+  setSuccessText: (text: string) => void,
+): Promise<boolean> => {
   try {
     const accessToken = await getAccessToken();
     if (accessToken) {
@@ -22,8 +25,8 @@ export const get_user_details = async (setErrorText: (text: string) => void, set
         }, 3000);
       });
 
-      const response= await Promise.race([responsePromise, timeoutPromise]);
-      if(response.status === 200) {
+      const response = await Promise.race([responsePromise, timeoutPromise]);
+      if (response.status === 200) {
         const responseData = await (response as Response).json();
         userMail = responseData.email;
         userName = responseData.name;
@@ -51,8 +54,7 @@ export const get_user_details = async (setErrorText: (text: string) => void, set
         setErrorText(response.status + " " + "Error in getting user details");
         return false;
       }
-    }
-    else {
+    } else {
       setErrorText("Error: Access token not retrieved");
       return false;
     }
