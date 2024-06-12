@@ -31,6 +31,8 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
   const handleButtonPress = async () => {
     try {
       setIsLoading(true);
+      setErrorText("");
+      setSuccessText("");
       const accessToken = await getAccessToken();
       if (!accessToken) {
         setSuccessText("Redirecting for initial login process");

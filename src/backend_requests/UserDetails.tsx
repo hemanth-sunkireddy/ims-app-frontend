@@ -22,7 +22,7 @@ export const get_user_details = async (
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(new Error("Request timed out"));
-        }, 3000);
+        }, 1000);
       });
 
       const response = await Promise.race([responsePromise, timeoutPromise]);
