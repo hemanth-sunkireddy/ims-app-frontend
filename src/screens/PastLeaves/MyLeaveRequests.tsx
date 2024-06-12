@@ -51,8 +51,9 @@ function MyLeaveRequests(): React.JSX.Element {
               setLoading(false);
             }
           }
-        } catch (fetchError) {
-          setError("Error " + fetchError);
+        } catch (error) {
+          const error_message = (error as Error).message;
+          setError("Error " + error_message);
           setLoading(false);
         }
       }

@@ -107,37 +107,55 @@ function Transcript(): React.JSX.Element {
 
   const fetchGpa = async () => {
     try {
-      const url = transcript_details;
       const accessToken = await getAccessToken();
+
       if (!accessToken) {
         setError(true);
         setErrorText("Error in recieving tokens");
         setIsLoading(false);
         return;
       }
-      const response = await fetch(url, {
-        method: "GET",
-        headers: { Cookie: `access_token_ims_app=${accessToken}` },
-      });
-      console.log(response.status);
-      if (response.status != 200) {
+      try {
+        const response = await fetch(transcript_details, {
+          method: "GET",
+          headers: { Cookie: `access_token_ims_app=${accessToken}` },
+        });
+        if (response.status != 200) {
+          setError(true);
+          setErrorText(response.status + "Error in Fetching GPA");
+          setIsLoading(false);
+        } else if (response.status === 200) {
+          setIsLoading(false);
+          const responseData = await response.json();
+          setCompletegpa(responseData);
+        }
+      }
+      catch (error) {
         setError(true);
-        setErrorText(response.status);
+        const error_message = (error as Error).message;
+        setErrorText(error_message);
         setIsLoading(false);
-      } else if (response.status === 200) {
-        setIsLoading(false);
-        const responseData = await response.json();
-        setCompletegpa(responseData);
       }
     } catch (error) {
       setError(false);
-      setErrorText(error);
+      const error_message = (error as Error).message;
+      setErrorText(error_message);
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchGpa();
+    const len = Object.keys(allCourses).length;
+    if (len === 0) {
+      setError(true);
+      setErrorText("Error Fetching Courses");
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
+    else {
+      fetchGpa();
+    }
   }, []);
 
   const columnFractions = [0.25, 0.45, 0.15, 0.15];
@@ -145,14 +163,9 @@ function Transcript(): React.JSX.Element {
   const addCourses = () => {
     setRecord(true);
     const fetchedCourses = allCourses;
-    console.log("FETCHED COURSE: ", fetchedCourses);
-    console.log("SELECTED YEAR: ", selected_year);
-    console.log("SELECTED SEM: ", selected_sem);
     const resultCourses = Object.values(fetchedCourses).filter((course) => {
       return course.Year === selected_year && course.Semester === selected_sem;
     });
-
-    console.log("RESULT COURSES: ", resultCourses);
     setFilteredCourses(resultCourses);
   };
 
@@ -164,8 +177,6 @@ function Transcript(): React.JSX.Element {
     } else {
       formattedSemesterKey = selected_sem + "20" + semesterKeyParts[1];
     }
-
-    console.log("Formatted Semester Key: ", formattedSemesterKey);
     if (completegpa[formattedSemesterKey]) {
       const { cgpa, sgpa } = completegpa[formattedSemesterKey];
       setFilteredGPA({ cgpa, sgpa });

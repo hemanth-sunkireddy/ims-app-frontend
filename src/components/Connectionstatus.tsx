@@ -11,17 +11,11 @@ function Connectionstatus() {
   const prevScreenRef = useRef(null);
 
   useEffect(() => {
-    // console.log('Component rendered');
     const unsubscribe = NetInfo.addEventListener((state: NetInfoState) => {
       setNetworkState(state);
-
-      // Navigate based on the network state
-      console.log(state.type);
       if (state.type === "none") {
-        // Navigate to NoInternet page when there is no internet connection
         navigation.navigate("NoInternet");
       } else if (prevScreenRef.current) {
-        // Navigate back to the previous screen when the internet connection is restored
         navigation.navigate(prevScreenRef.current);
       }
     });
@@ -32,14 +26,12 @@ function Connectionstatus() {
     };
   }, [navigation]);
 
-  // Store the name of the previous screen in the ref
   useEffect(() => {
     prevScreenRef.current = route.name;
   }, [route.name]);
 
   return (
     <SafeAreaView>
-      {/* You can add any UI components here if needed */}
     </SafeAreaView>
   );
 }
