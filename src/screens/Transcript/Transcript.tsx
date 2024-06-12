@@ -154,7 +154,6 @@ function Transcript(): React.JSX.Element {
         fetchGpa();
       }
     }, 3000);
-
   }, []);
 
   const columnFractions = [0.25, 0.45, 0.15, 0.15];
