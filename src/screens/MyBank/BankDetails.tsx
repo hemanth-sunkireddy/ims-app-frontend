@@ -60,6 +60,7 @@ function BankDetails({
   const [detailsState, setDetails] = React.useState(details);
   const [isFetchFine, setIsFetchFine] = React.useState(true);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [errorText, setErrorText] = React.useState("");
 
   const fetchBankDetails = async () => {
     try {
@@ -76,14 +77,16 @@ function BankDetails({
       });
 
       console.log("Response:", response);
-
-      const json_response = await response.json();
-
-      console.log("RESPONSE JSON: ", json_response);
-
-      setIsFetchFine(true);
-      setIsLoaded(true);
-      setDetails(JSON.parse(JSON.stringify(json_response))); // Optional: Deep copy if needed
+      if(response.status === 200) {
+        setIsFetchFine(true);
+        setIsLoaded(true);
+        const json_response = await response.json()
+        setDetails(JSON.parse(JSON.stringify(json_response))); 
+      }
+      else{
+        setIsFetchFine(false);
+        setErrorText(response.status);
+      }
     } catch (error) {
       console.error("Fetch Error:", error);
       setIsFetchFine(false);
@@ -147,9 +150,8 @@ function BankDetails({
   if (isFetchFine === false) {
     return (
       <SafeAreaView style={global.container}>
-        {headerComponent}
         <Text style={bank.noDetailsText}>
-          Could not fetch details successfully. Please try again later.
+          {errorText} 
         </Text>
       </SafeAreaView>
     );
@@ -218,10 +220,12 @@ function BankDetails({
           <ScrollView>{objectList}</ScrollView>
         </>
       ) : (
-        <View style={global.loadingContainer}>
-          <ActivityIndicator size="large" color="blue" />
-          <Text style={global.loadingText}>Loading...</Text>
+        <>
+        <View style={{ alignItems: "center", marginVertical: 30 }}>
+          <ActivityIndicator size="large" color="grey" />
+          <Text style={{ color: 'black', fontSize: 20}}>Getting Details, Please Wait...</Text>
         </View>
+        </>
       )}
     </SafeAreaView>
   );
