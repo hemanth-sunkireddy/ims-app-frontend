@@ -75,33 +75,35 @@ function ProfileDetails(): React.JSX.Element {
   const fetchProfileDetails = async () => {
     const accessToken = await getAccessToken();
     if (accessToken) {
-      await fetch(profile_details, {
+      try{
+      const response = await fetch(profile_details, {
         method: "GET",
         headers: { Cookie: `access_token_ims_app=${accessToken}` },
-      })
-        .then((response) => {
-          console.log("Response:", response);
-          return response.json();
-        })
-        .then((json) => {
-          console.log("Parsed JSON:", json);
+      });
+      
+      if (response.status === 200) {
+        const response_data = await response.json();
+        console.log("Parsed JSON:", response_data);
           setIsFetchFine(true);
-          setDetails(JSON.parse(JSON.stringify(json)));
+          setDetails(JSON.parse(JSON.stringify(response_data)));
           setTimeout(() => {
             setIsLoading(false);
           }, 1000);
-        })
-        .catch((error) => {
-          setErrorText("Error in receiving profile details" + error);
-          setIsFetchFine(false);
-          setIsLoading(false);
-        });
+      } else {
+        setIsFetchFine(false);
+        setErrorText(response.status);
+      }
+    }
+    catch(error){
+      setIsFetchFine(false);
+      setErrorText("Error: " + error);
+    }
+       
     } else {
       setErrorText(
         "Error in receiving cookies. Please try again after sometime",
       );
       setIsFetchFine(false);
-      setIsLoading(false);
     }
   };
 

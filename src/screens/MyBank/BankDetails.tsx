@@ -66,8 +66,8 @@ function BankDetails({
     try {
       const accessToken = await getAccessToken();
       if (!accessToken) {
-        console.log("Error in Fetching Cookie of the user");
-
+        setIsFetchFine(false);
+        setErrorText("Error in recieving token");
         return;
       }
 
@@ -75,8 +75,6 @@ function BankDetails({
         method: "GET",
         headers: { Cookie: `access_token_ims_app=${accessToken}` },
       });
-
-      console.log("Response:", response);
       if (response.status === 200) {
         setIsFetchFine(true);
         setIsLoaded(true);
@@ -87,9 +85,8 @@ function BankDetails({
         setErrorText(response.status);
       }
     } catch (error) {
-      console.error("Fetch Error:", error);
       setIsFetchFine(false);
-      Alert.alert("Error:", error.toString());
+      setErrorText("Error: ", error);
     }
   };
 

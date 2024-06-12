@@ -35,7 +35,7 @@ const CustomHeader = () => {
           marginLeft: 80,
         }}
       >
-        IMS - IIIT Hyderabad
+        IMS - IIIT H
       </Text>
       <View style={{ flex: 1, alignItems: "flex-end" }}>
         <Image
