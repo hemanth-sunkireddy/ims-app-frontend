@@ -2,7 +2,6 @@ import { UserTypes } from "../custom-types";
 import { user_details } from "../constants/APIHandler";
 import { getAccessToken } from "./AccessToken";
 
-// better to pass to navigation params but easier this way
 let userMail = "";
 let userName = "";
 let rollno = "";

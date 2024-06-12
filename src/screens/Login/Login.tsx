@@ -10,6 +10,7 @@ import Connectionstatus from "../../components/Connectionstatus";
 import { authenticate_user } from "../../backend_requests/AuthUser";
 import { get_user_details } from "../../backend_requests/UserDetails";
 import { askFILEACCESSPERMISSION } from "../../device_permissions/FilePermission";
+import { getAccessToken } from "../../backend_requests/AccessToken";
 
 function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
   const [Email, onChangeEmail] = React.useState("");
@@ -23,32 +24,43 @@ function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
     try {
       setErrorText("");
       setIsLoading(true);
-      const auth_status = await authenticate_user(
-        Email,
-        _Password,
-        setErrorText,
-        setIsLoading,
-      );
-      if (auth_status === true) {
-        // After Successful Authentication, Get User Details
-        try {
-          setSuccessText("Authentication Success, Getting User Details..");
-          const user_details_status = await get_user_details(setErrorText, setSuccessText);
-          setIsLoading(false);
-          if (user_details_status == true) {
-            navigation.navigate("SidebarDisplay");
+      const accessToken = await getAccessToken();
+      if (!accessToken) {
+        const auth_status = await authenticate_user(
+          Email,
+          _Password,
+          setErrorText,
+          setIsLoading,
+        );
+        if (auth_status === true) {
+          try {
+            setSuccessText("Authentication Success, Getting User Details..");
+            const user_details_status = await get_user_details(setErrorText, setSuccessText);
+            setIsLoading(false);
+            if (user_details_status == true) {
+              navigation.navigate("SidebarDisplay");
+            }
+          } catch (err) {
+            const error_message = (err as Error).message;
+            setErrorText(
+              "Error " + error_message,
+            );
+            setIsLoading(false);
           }
-        } catch (err) {
-          setErrorText(
-            "Error in getting User Details.",
-          );
+        }
+      }
+      else{
+        const user_details_status = await get_user_details(setErrorText, setSuccessText);
+        if (user_details_status == true) {
+          navigation.navigate("SidebarDisplay");
+        }
+        else{
           setIsLoading(false);
         }
       }
-     
     } catch (error) {
-      const eror_message = (error as Error).message;
-      setErrorText("Error: " + eror_message);
+      const error_message = (error as Error).message;
+      setErrorText("Error: " + error_message);
     }
   };
 
