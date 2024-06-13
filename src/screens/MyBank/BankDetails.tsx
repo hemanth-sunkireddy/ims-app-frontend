@@ -77,9 +77,11 @@ function BankDetails({
       });
       if (response.status === 200) {
         setIsFetchFine(true);
-        setIsLoaded(true);
+
         const json_response = await response.json();
         setDetails(JSON.parse(JSON.stringify(json_response)));
+        
+        setIsLoaded(true);
       } else {
         setIsFetchFine(false);
         setErrorText(response.status);
