@@ -12,53 +12,27 @@ export const getCookie = async (request: Response): Promise<boolean> => {
     if (!cookies) {
       return false;
     }
+
+    // Extracting the value of the cookie from the header
     const cookieArray = cookies.split("; ");
     if (!cookieArray) {
       return false;
     }
-    let expire_exist = 0;
-    cookieArray.forEach((pair) => {
-      const [key, value] = pair.split("=");
-      if (key === "expires") expire_exist++;
+
+    let cookieDict: { [key: string]: string } = {};
+    cookieArray.forEach((cookie) => {
+      const cookieSplit = cookie.split("=");
+      if (cookieSplit.length === 2) {
+        cookieDict[cookieSplit[0]] = cookieSplit[1];
+      }
     });
 
-    let ims_app_token_value = "";
-    if (expire_exist === 1) {
-      let accessToken = cookieArray[4];
-      if (!accessToken) {
-        return false;
-      }
-      const access_token_value = accessToken.split(", ");
-      if (!access_token_value) {
-        return false;
-      }
-      const token_dict = access_token_value[1];
-      const token_value = token_dict.split("=");
-      if (!token_value) {
-        return false;
-      }
-      ims_app_token_value = token_value[1];
-
-      if (!ims_app_token_value) {
-        return false;
-      }
-    } else {
-      let accessToken = cookieArray[0];
-      if (!accessToken) {
-        return false;
-      }
-      const token_value = accessToken.split("=");
-      if (!token_value) {
-        return false;
-      }
-      ims_app_token_value = token_value[1];
-      if (!ims_app_token_value) {
-        return false;
-      }
+    // Get the Access Token
+    let ims_app_token_value = cookieDict["access_token_ims_app"];
+    if (!ims_app_token_value) {
+      return false;
     }
-    const todayDate = new Date();
-    const dateAfter20Days = new Date(todayDate);
-    dateAfter20Days.setDate(todayDate.getDate() + 20);
+
     await CookieManager.set(domain, {
       name: "access_token_ims_app",
       value: ims_app_token_value,
