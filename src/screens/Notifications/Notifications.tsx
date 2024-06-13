@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, SafeAreaView, ScrollView, Text } from "react-native";
 import notifee from "@notifee/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { onDisplayNotification } from "../../components/SendNotification";
 
 function Notification(): React.JSX.Element {
   const [presentState, setpresentState] = useState("");
@@ -23,31 +24,6 @@ function Notification(): React.JSX.Element {
     getStoredStatus();
   }, []);
 
-  async function onDisplayNotification() {
-    // Request permissions (required for iOS)
-    await notifee.requestPermission();
-
-    // Create a channel (required for Android)
-    const channelId = await notifee.createChannel({
-      id: "default",
-      name: "Default Channel",
-    });
-
-    // Display a notification
-    await notifee.displayNotification({
-      title: "Your Leave Application Status Updated",
-      body: "Click for more details",
-      android: {
-        channelId,
-        // smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
-        // pressAction is needed if you want the notification to open the app when pressed
-        pressAction: {
-          id: "default",
-        },
-      },
-    });
-  }
-
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem("initial_status");
@@ -56,7 +32,7 @@ function Notification(): React.JSX.Element {
 
       if (value !== presentState) {
         setStoredState(value); // Update stored state displayed on the screen
-        onDisplayNotification();
+        onDisplayNotification("Your Leave Application Status Updated");
       }
     } catch (e) {
       // console.log(e);
@@ -78,7 +54,7 @@ function Notification(): React.JSX.Element {
 
       // Trigger notification if status is different from the stored value
       if (status !== (await AsyncStorage.getItem("initial_status"))) {
-        onDisplayNotification();
+        onDisplayNotification("Your Leave Application Status Updated");
       }
     } catch (e) {
       // console.log(e);

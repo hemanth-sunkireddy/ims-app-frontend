@@ -31,7 +31,7 @@ function MyLeaveRequests(): React.JSX.Element {
   const getLeaveRequest = async () => {
     const accessToken = await getAccessToken();
     if (!accessToken) {
-      setError("Error in recieving cookies");
+      setError("Error in recieving cookies.");
       setIsLoading(false);
     } else {
       try {

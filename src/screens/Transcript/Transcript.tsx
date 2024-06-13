@@ -111,7 +111,7 @@ function Transcript(): React.JSX.Element {
 
       if (!accessToken) {
         setError(true);
-        setErrorText("Error in recieving tokens");
+        setErrorText("Error in recieving cookies.");
         setIsLoading(false);
         return;
       }
