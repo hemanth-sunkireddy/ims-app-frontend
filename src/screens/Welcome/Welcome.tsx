@@ -10,6 +10,8 @@ import { getAccessToken } from "../../backend_requests/AccessToken";
 import { extend_cookie } from "../../backend_requests/RefreshToken";
 import { ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 const lightIcons: IconSet = otherIcons.light;
 const iiitIcon = lightIcons.iiit_big;
@@ -24,9 +26,14 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
     await notifee.requestPermission();
   }
 
+  useFocusEffect(
+    useCallback(() => {
+      setSuccessText("");
+      setErrorText("");
+    }, [])
+  );
+
   useEffect(() => {
-    setSuccessText("");
-    setErrorText("");
     askNotificationPermission();
   }, []);
 
