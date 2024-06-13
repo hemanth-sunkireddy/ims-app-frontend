@@ -6,7 +6,6 @@ import TreeLogo from "./components/TreeLogo";
 import Credentials from "./components/Credentials";
 import UpdatePassword from "./components/UpdatePassword";
 import styles from "./Styles/LoginStyles";
-import Connectionstatus from "../../components/Connectionstatus";
 import { authenticate_user } from "../../backend_requests/AuthUser";
 import { get_user_details } from "../../backend_requests/UserDetails";
 import { askFILEACCESSPERMISSION } from "../../device_permissions/FilePermission";
@@ -90,7 +89,6 @@ function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
           </Button>
         </View>
       </SafeAreaView>
-      <Connectionstatus />
     </SafeAreaView>
   );
 }
