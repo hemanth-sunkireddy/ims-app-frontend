@@ -103,7 +103,7 @@ function Transcript(): React.JSX.Element {
     defaultYearOption = `${currentYear}-${(currentYear + 1) % 100}`;
     defaultSemOption = "Monsoon";
   } else {
-    defaultYearOption = `${currentYear - 1}-${(currentYear) % 100}`;
+    defaultYearOption = `${currentYear - 1}-${currentYear % 100}`;
     defaultSemOption = "Spring";
   }
 

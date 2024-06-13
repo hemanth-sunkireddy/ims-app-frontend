@@ -12,11 +12,10 @@ function GeneralDetails(defaultValues: JSON): React.JSX.Element {
 
   const currentYearOption = `${currentYear}-${(currentYear + 1) % 100}`;
 
-  if (currentMonth <= 7)
-    currentYear = currentYear - 1;
+  if (currentMonth <= 7) currentYear = currentYear - 1;
 
   const ListofYears = [];
-  for (let i = currentYear; i > currentYear-5; i--) {
+  for (let i = currentYear; i > currentYear - 5; i--) {
     ListofYears.push({
       key: `${i}-${(i + 1) % 100}`,
       value: `${i}-${(i + 1) % 100}`,
@@ -28,23 +27,20 @@ function GeneralDetails(defaultValues: JSON): React.JSX.Element {
     { key: "Monsoon", value: "Monsoon" },
     { key: "Spring", value: "Spring" },
   ];
-  const ListofSemestersHalf = [
-    { key: "Monsoon", value: "Monsoon" },
-  ];
+  const ListofSemestersHalf = [{ key: "Monsoon", value: "Monsoon" }];
 
   let defaultYear: string = String(defaultValues["defaultYear"]);
   let defaultSem: string = String(defaultValues["defaultSem"]);
 
-  if (!ListofYears.some(value => value.key === defaultYear)) {
+  if (!ListofYears.some((value) => value.key === defaultYear)) {
     defaultYear = "Select...";
   }
   if (currentMonth > 7 && defaultYear == currentYearOption) {
-    if (!ListofSemestersHalf.some(value => value.key === defaultSem)) {
+    if (!ListofSemestersHalf.some((value) => value.key === defaultSem)) {
       defaultSem = "Select...";
     }
-  }
-  else {
-    if (!ListofSemestersFull.some(value => value.key === defaultSem)) {
+  } else {
+    if (!ListofSemestersFull.some((value) => value.key === defaultSem)) {
       defaultSem = "Select...";
     }
   }
@@ -97,28 +93,28 @@ function GeneralDetails(defaultValues: JSON): React.JSX.Element {
         </Text>
         <View style={{ marginHorizontal: 20, width: 150 }}>
           {currentMonth > 7 && selectedYear == currentYearOption ? (
-          <SelectList
-            setSelected={(value: string) => {
-              setSemester(value);
-            }}
-            data={ListofSemestersHalf}
-            placeholder="Select..."
-            dropdownTextStyles={{ color: "black" }}
-            inputStyles={{ color: "black" }}
-            search={false}
-            defaultOption={{ key: defaultSem, value: defaultSem }}
+            <SelectList
+              setSelected={(value: string) => {
+                setSemester(value);
+              }}
+              data={ListofSemestersHalf}
+              placeholder="Select..."
+              dropdownTextStyles={{ color: "black" }}
+              inputStyles={{ color: "black" }}
+              search={false}
+              defaultOption={{ key: defaultSem, value: defaultSem }}
             />
           ) : (
-          <SelectList
-            setSelected={(value: string) => {
-              setSemester(value);
-            }}
-            data={ListofSemestersFull}
-            placeholder="Select..."
-            dropdownTextStyles={{ color: "black" }}
-            inputStyles={{ color: "black" }}
-            search={false}
-            defaultOption={{ key: defaultSem, value: defaultSem }}
+            <SelectList
+              setSelected={(value: string) => {
+                setSemester(value);
+              }}
+              data={ListofSemestersFull}
+              placeholder="Select..."
+              dropdownTextStyles={{ color: "black" }}
+              inputStyles={{ color: "black" }}
+              search={false}
+              defaultOption={{ key: defaultSem, value: defaultSem }}
             />
           )}
         </View>
