@@ -32,7 +32,7 @@ export const authenticate_user = async (
     if (response.status === 422) {
       setErrorText(response.status + " " + "unprocessable Entry");
     } else if (response.status === 400) {
-      setErrorText(response.status);
+      setErrorText(response.status + " " + "Invalid credentials");
     } else if (response.status === 200) {
       const cookie_status = await getCookie(response);
       if (cookie_status == false) {
