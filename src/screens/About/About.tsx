@@ -54,12 +54,13 @@ function About(): React.JSX.Element {
             <Text style={styles.description}>
               This app originated as a project for the Design and Analysis of
               Software Systems (DASS) course in the Spring 2024 semester, guided
-              by Prof. Raghu Reddy. 
+              by Prof. Raghu Reddy.
             </Text>
-            <Text style={styles.description}> It is currently developed as an
-              Android mobile application, with an iOS version coming soon,
-              dedicated to the IMS (Institute Management System) of IIIT
-              Hyderabad.
+            <Text style={styles.description}>
+              {" "}
+              It is currently developed as an Android mobile application, with
+              an iOS version coming soon, dedicated to the IMS (Institute
+              Management System) of IIIT Hyderabad.
             </Text>
             <Text style={styles.description}>
               Students can use the application to submit leave requests, add
@@ -68,9 +69,10 @@ function About(): React.JSX.Element {
               check the status of their leave requests and bank applications.
               Additionally, students can add or edit their bank details until
               they receive approval.
-              </Text>
-              <Text style={styles.description}> More features are planned for the
-              upcoming versions.
+            </Text>
+            <Text style={styles.description}>
+              {" "}
+              More features are planned for the upcoming versions.
             </Text>
           </View>
 
