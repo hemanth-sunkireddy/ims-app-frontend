@@ -10,6 +10,8 @@ function GeneralDetails(defaultValues: JSON): React.JSX.Element {
   let currentYear = new Date().getFullYear();
   let currentMonth = new Date().getMonth();
 
+  const currentYearOption = `${currentYear}-${(currentYear + 1) % 100}`;
+
   if (currentMonth <= 7)
     currentYear = currentYear - 1;
 
@@ -22,9 +24,12 @@ function GeneralDetails(defaultValues: JSON): React.JSX.Element {
   }
   ListofYears.unshift({ key: "Select...", value: "Select..." });
 
-  const ListofSemesters = [
+  const ListofSemestersFull = [
     { key: "Monsoon", value: "Monsoon" },
     { key: "Spring", value: "Spring" },
+  ];
+  const ListofSemestersHalf = [
+    { key: "Monsoon", value: "Monsoon" },
   ];
 
   let defaultYear: string = String(defaultValues["defaultYear"]);
@@ -33,8 +38,15 @@ function GeneralDetails(defaultValues: JSON): React.JSX.Element {
   if (!ListofYears.some(value => value.key === defaultYear)) {
     defaultYear = "Select...";
   }
-  if (!ListofSemesters.some(value => value.key === defaultSem)) {
-    defaultSem = "Select...";
+  if (currentMonth > 7 && defaultYear == currentYearOption) {
+    if (!ListofSemestersHalf.some(value => value.key === defaultSem)) {
+      defaultSem = "Select...";
+    }
+  }
+  else {
+    if (!ListofSemestersFull.some(value => value.key === defaultSem)) {
+      defaultSem = "Select...";
+    }
   }
 
   const [selectedYear, setSelectedYear] = useState(defaultYear);
@@ -84,17 +96,31 @@ function GeneralDetails(defaultValues: JSON): React.JSX.Element {
           Semester :
         </Text>
         <View style={{ marginHorizontal: 20, width: 150 }}>
+          {currentMonth > 7 && selectedYear == currentYearOption ? (
           <SelectList
             setSelected={(value: string) => {
               setSemester(value);
             }}
-            data={ListofSemesters}
+            data={ListofSemestersHalf}
             placeholder="Select..."
             dropdownTextStyles={{ color: "black" }}
             inputStyles={{ color: "black" }}
             search={false}
             defaultOption={{ key: defaultSem, value: defaultSem }}
-          />
+            />
+          ) : (
+          <SelectList
+            setSelected={(value: string) => {
+              setSemester(value);
+            }}
+            data={ListofSemestersFull}
+            placeholder="Select..."
+            dropdownTextStyles={{ color: "black" }}
+            inputStyles={{ color: "black" }}
+            search={false}
+            defaultOption={{ key: defaultSem, value: defaultSem }}
+            />
+          )}
         </View>
       </View>
     </SafeAreaView>
