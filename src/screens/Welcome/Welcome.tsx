@@ -52,7 +52,7 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
             const currentDate = new Date();
             const daysDifference = Math.floor(
               (currentDate.getTime() - lastLoginDate.getTime()) /
-              (1000 * 60 * 60 * 24),
+                (1000 * 60 * 60 * 24),
             );
             if (daysDifference > daysDifferenceThreshold) {
               const cookie_status = await extend_cookie();
@@ -70,7 +70,6 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
         setIsLoading(false);
         navigation.navigate("LoginScreen");
       }
-
     } catch (error) {
       const error_message = (error as Error).message;
       setErrorText(error_message);
