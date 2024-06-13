@@ -25,6 +25,8 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
   }
 
   useEffect(() => {
+    setSuccessText("");
+    setErrorText("");
     askNotificationPermission();
   }, []);
 
