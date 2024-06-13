@@ -14,7 +14,7 @@ export const get_user_details = async (
   try {
     setErrorText("");
     setSuccessText("");
-    
+
     const accessToken = await getAccessToken();
     if (accessToken) {
       const responsePromise = await fetch(user_details, {
@@ -56,7 +56,7 @@ export const get_user_details = async (
         return "unauthorized";
       } else {
         setErrorText(response.status + " " + "Error in getting user details");
-        return (response.status.toString());
+        return response.status.toString();
       }
     } else {
       setErrorText("Error: Access token not retrieved");
