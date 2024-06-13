@@ -64,10 +64,19 @@ function ViewAttendance({
   navigation,
 }: types.MyAttendanceProps): React.JSX.Element {
   const currentYear = new Date().getFullYear();
-  const year_data = [];
-  for (let i = currentYear; i >= 2016; i--) {
-    year_data.push({ key: `${i}`, value: `${i}-${(i + 1) % 100}` });
+  const currentMonth = new Date().getMonth();
+  let defaultYearOption = "";
+  let defaultSemOption = "";
+  if (currentMonth > 7 && currentMonth <= 12) {
+    defaultYearOption = `${currentYear}-${(currentYear + 1) % 100}`;
+    defaultSemOption = "Monsoon";
+  } else {
+    defaultYearOption = `${currentYear-1}-${(currentYear) % 100}`;
+    defaultSemOption = "Spring";
   }
+
+  const [selectedYear, setSelectedYear] = useState<string>(defaultYearOption);
+  const [selectedSem, setSelectedSem] = useState<string>(defaultSemOption);
 
   const [courseList, setCourseList] = useState<CourseItem[]>([]);
   const [statusText, setStatusText] = useState("Select Year and Sem");
@@ -94,10 +103,9 @@ function ViewAttendance({
       setStatusText("No Data Found");
     }
     setCourseList(rowslist);
-  };
 
-  const setSemester = () => {
-    filterCourseList();
+    setSelectedYear(selected_year);
+    setSelectedSem(selected_sem);
   };
 
   useEffect(() => {
@@ -117,7 +125,7 @@ function ViewAttendance({
     navigation.navigate("CourseAttendance");
   };
 
-  const PreHeading = (semester: string, year: string) => {
+  const PreHeading = () => {
     return (
       <View style={{ marginTop: 10 }}>
         <Text
@@ -129,7 +137,7 @@ function ViewAttendance({
             marginLeft: 4,
           }}
         >
-          {semester + " " + year}
+          {selectedSem + " " + selectedYear}
         </Text>
       </View>
     );
@@ -139,10 +147,10 @@ function ViewAttendance({
     return (
       <SafeAreaView style={styles.box}>
         <Text style={styles.heading}>Filter Selection</Text>
-        <SemesterSelector />
+        <SemesterSelector defaultYear={selectedYear} defaultSem={selectedSem} />
         <Button
           containerStyle={{ marginTop: 30, width: 200 }}
-          onPress={setSemester}
+          onPress={filterCourseList}
           title="Proceed"
           color="#2D0C8B"
           accessibilityLabel="Button setting semester"
@@ -177,7 +185,7 @@ function ViewAttendance({
   const CourseList = () => {
     return (
       <View style={styles.box2}>
-        {PreHeading(selected_sem, selected_year)}
+        {PreHeading()}
         <DataTable>
           <DataTable.Header key="Header">
             <DataTable.Title style={{ flex: 4 }}>

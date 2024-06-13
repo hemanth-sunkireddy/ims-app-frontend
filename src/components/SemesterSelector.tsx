@@ -6,24 +6,51 @@ import { color, ScreenWidth } from "@rneui/base";
 export let selected_year = "";
 export let selected_sem = "";
 
-function GeneralDetails(): React.JSX.Element {
-  const [selectedYear, setSelectedYear] = useState("");
-  const [selectedSem, setSemester] = useState("");
-  const currentYear = new Date().getFullYear();
+function GeneralDetails(defaultValues: JSON): React.JSX.Element {
+  let currentYear = new Date().getFullYear();
+  let currentMonth = new Date().getMonth();
+
+  const currentYearOption = `${currentYear}-${(currentYear + 1) % 100}`;
+
+  if (currentMonth <= 7)
+    currentYear = currentYear - 1;
+
   const ListofYears = [];
-  for (let i = currentYear; i >= 2016; i--) {
+  for (let i = currentYear; i > currentYear-5; i--) {
     ListofYears.push({
       key: `${i}-${(i + 1) % 100}`,
       value: `${i}-${(i + 1) % 100}`,
     });
   }
+  ListofYears.unshift({ key: "Select...", value: "Select..." });
 
-  const ListofSemesters = [
+  const ListofSemestersFull = [
     { key: "Monsoon", value: "Monsoon" },
     { key: "Spring", value: "Spring" },
   ];
+  const ListofSemestersHalf = [
+    { key: "Monsoon", value: "Monsoon" },
+  ];
 
-  ListofYears.unshift({ key: "Select...", value: "Select..." });
+  let defaultYear: string = String(defaultValues["defaultYear"]);
+  let defaultSem: string = String(defaultValues["defaultSem"]);
+
+  if (!ListofYears.some(value => value.key === defaultYear)) {
+    defaultYear = "Select...";
+  }
+  if (currentMonth > 7 && defaultYear == currentYearOption) {
+    if (!ListofSemestersHalf.some(value => value.key === defaultSem)) {
+      defaultSem = "Select...";
+    }
+  }
+  else {
+    if (!ListofSemestersFull.some(value => value.key === defaultSem)) {
+      defaultSem = "Select...";
+    }
+  }
+
+  const [selectedYear, setSelectedYear] = useState(defaultYear);
+  const [selectedSem, setSemester] = useState(defaultSem);
 
   // Update the exported variables whenever acadyear or semester changes
   useEffect(() => {
@@ -54,6 +81,7 @@ function GeneralDetails(): React.JSX.Element {
             dropdownTextStyles={{ color: "black" }}
             inputStyles={{ color: "black" }}
             search={false}
+            defaultOption={{ key: defaultYear, value: defaultYear }}
           />
         </View>
       </View>
@@ -68,16 +96,31 @@ function GeneralDetails(): React.JSX.Element {
           Semester :
         </Text>
         <View style={{ marginHorizontal: 20, width: 150 }}>
+          {currentMonth > 7 && selectedYear == currentYearOption ? (
           <SelectList
             setSelected={(value: string) => {
               setSemester(value);
             }}
-            data={ListofSemesters}
+            data={ListofSemestersHalf}
             placeholder="Select..."
             dropdownTextStyles={{ color: "black" }}
             inputStyles={{ color: "black" }}
             search={false}
-          />
+            defaultOption={{ key: defaultSem, value: defaultSem }}
+            />
+          ) : (
+          <SelectList
+            setSelected={(value: string) => {
+              setSemester(value);
+            }}
+            data={ListofSemestersFull}
+            placeholder="Select..."
+            dropdownTextStyles={{ color: "black" }}
+            inputStyles={{ color: "black" }}
+            search={false}
+            defaultOption={{ key: defaultSem, value: defaultSem }}
+            />
+          )}
         </View>
       </View>
     </SafeAreaView>
