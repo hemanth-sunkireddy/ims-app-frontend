@@ -32,15 +32,15 @@ const CustomHeader = () => {
           fontSize: 18,
           color: "#ffffff",
           fontWeight: "bold",
-          marginLeft: 80,
+          marginLeft: 100,
         }}
       >
-        IMS - IIIT H
+        IMS IIIT-H
       </Text>
       <View style={{ flex: 1, alignItems: "flex-end" }}>
         <Image
           source={IIITLogo}
-          style={{ width: 80, height: 50, marginLeft: 10 }}
+          style={{ width: 80, height: 50 }}
           resizeMode="contain"
         />
       </View>
