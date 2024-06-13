@@ -16,7 +16,7 @@ function GeneralDetails(defaultValues: JSON): React.JSX.Element {
     currentYear = currentYear - 1;
 
   const ListofYears = [];
-  for (let i = currentYear; i >= 2016; i--) {
+  for (let i = currentYear; i > currentYear-5; i--) {
     ListofYears.push({
       key: `${i}-${(i + 1) % 100}`,
       value: `${i}-${(i + 1) % 100}`,
