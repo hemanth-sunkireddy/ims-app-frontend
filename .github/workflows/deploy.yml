@@ -22,6 +22,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get the tag name
+        id: get_tag_name
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Update the versionName and versionCode
+        run: |
+          sed -i "s/versionName \".*\"/versionName \"$TAG_NAME\"/g" android/app/build.gradle
+          sed -i "s/versionCode .*/versionCode $GITHUB_RUN_NUMBER/g" android/app/build.gradle
+
       - name: Install Java
         uses: actions/setup-java@v4
         with:
