@@ -46,7 +46,8 @@ export const get_user_details = async (
         ) {
           userType = UserTypes.Staff;
         }
-        setSuccessText(response.status + " " + " Redirecting to Dashboard...");
+        setErrorText("");
+        setSuccessText("User Details fetch successful...");
         return true;
       } else if (response.status === 401) {
         setSuccessText("");

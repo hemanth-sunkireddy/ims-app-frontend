@@ -33,42 +33,44 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
       setIsLoading(true);
       setErrorText("");
       setSuccessText("");
+
       const accessToken = await getAccessToken();
       if (!accessToken) {
-        setSuccessText("Redirecting for initial login process");
-        setTimeout(() => {
-          setIsLoading(false);
-          navigation.navigate("LoginScreen");
-        }, 1000);
+        setIsLoading(false);
+        navigation.navigate("LoginScreen");
+        return;
       }
 
-      if (accessToken) {
-        const user_details_status = await get_user_details(
-          setErrorText,
-          setSuccessText,
-        );
-        if (user_details_status == true) {
-          AsyncStorage.getItem("last_login").then(async (value) => {
-            if (value !== null) {
-              const lastLoginDate = new Date(value);
-              const currentDate = new Date();
-              const daysDifference = Math.floor(
-                (currentDate.getTime() - lastLoginDate.getTime()) /
-                  (1000 * 60 * 60 * 24),
-              );
-              if (daysDifference > daysDifferenceThreshold) {
-                const cookie_status = await extend_cookie();
-              }
-              navigation.navigate("SidebarDisplay");
-            } else {
-              setErrorText("Unable to get last login date");
-              setIsLoading(false);
+      const user_details_status = await get_user_details(
+        setErrorText,
+        setSuccessText,
+      );
+      if (user_details_status == true) {
+        AsyncStorage.getItem("last_login").then(async (value) => {
+          if (value !== null) {
+            const lastLoginDate = new Date(value);
+            const currentDate = new Date();
+            const daysDifference = Math.floor(
+              (currentDate.getTime() - lastLoginDate.getTime()) /
+              (1000 * 60 * 60 * 24),
+            );
+            if (daysDifference > daysDifferenceThreshold) {
+              const cookie_status = await extend_cookie();
             }
-          });
-        } else {
-          setIsLoading(false);
-        }
+
+            setIsLoading(false);
+            navigation.navigate("SidebarDisplay");
+          } else {
+            const cookie_status = await extend_cookie();
+            setIsLoading(false);
+            navigation.navigate("SidebarDisplay");
+          }
+        });
+      } else {
+        setIsLoading(false);
+        navigation.navigate("LoginScreen");
       }
+
     } catch (error) {
       const error_message = (error as Error).message;
       setErrorText(error_message);
