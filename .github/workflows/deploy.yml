@@ -25,7 +25,7 @@ jobs:
       - name: Get the tag name
         id: get_tag_name
         run: |
-          echo "Version Name: $GITHUB_REF" >> $GITHUB_STEP_SUMMARY
+          echo "Version Name: ${GITHUB_REF#refs/tags/}" >> $GITHUB_STEP_SUMMARY
           echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Get the version code
