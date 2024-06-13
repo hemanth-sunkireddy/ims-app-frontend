@@ -42,9 +42,7 @@ export const authenticate_user = async (
       }
       return true;
     } else if (response.status == 304) {
-      setErrorText(
-        response.statusText + " " + "Already Logged In",
-      );
+      setErrorText(response.statusText + " " + "Already Logged In");
     } else if (response.status == 404) {
       setErrorText(
         response.status + " " + response.statusText + " " + "Not Found",

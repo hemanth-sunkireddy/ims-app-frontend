@@ -1,7 +1,6 @@
 import notifee from "@notifee/react-native";
 
 export async function onDisplayNotification(message: string) {
-
   // Create a channel (required for Android)
   const channelId = await notifee.createChannel({
     id: "default",

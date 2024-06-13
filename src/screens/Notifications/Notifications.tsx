@@ -4,7 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { onDisplayNotification } from "../../components/SendNotification";
 
 function Notification(): React.JSX.Element {
-
   return (
     <SafeAreaView>
       <ScrollView>
