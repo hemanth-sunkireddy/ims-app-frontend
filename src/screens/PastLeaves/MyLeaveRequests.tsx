@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, SafeAreaView, Text, ScrollView, ActivityIndicator } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { Card } from "@rneui/themed";
 import { past_leave_status } from "../../constants/APIHandler";
 import { getAccessToken } from "../../backend_requests/AccessToken";
@@ -40,8 +46,7 @@ function MyLeaveRequests(): React.JSX.Element {
           const responseData = await response.json();
           try {
             if (responseData) {
-              const applications: LeaveRequest[] =
-                Object.values(responseData);
+              const applications: LeaveRequest[] = Object.values(responseData);
               setLeaveRequests(applications);
             }
           } catch (innerError) {
@@ -92,7 +97,11 @@ function MyLeaveRequests(): React.JSX.Element {
                 <Card key={index} containerStyle={{ marginTop: 15 }}>
                   <Card.Title>
                     <Text
-                      style={{ color: "black", fontWeight: "bold", fontSize: 15 }}
+                      style={{
+                        color: "black",
+                        fontWeight: "bold",
+                        fontSize: 15,
+                      }}
                     >
                       Status: {request.LeaveStatus}
                     </Text>
@@ -105,7 +114,9 @@ function MyLeaveRequests(): React.JSX.Element {
                     </Text>
                   </View>
                   <View style={myleavestyles.leaveRequestPair}>
-                    <Text style={myleavestyles.leaveRequestKey}>From Date:</Text>
+                    <Text style={myleavestyles.leaveRequestKey}>
+                      From Date:
+                    </Text>
                     <Text style={myleavestyles.leaveRequestValue}>
                       {request.fromdate}
                     </Text>
@@ -117,7 +128,9 @@ function MyLeaveRequests(): React.JSX.Element {
                     </Text>
                   </View>
                   <View style={myleavestyles.leaveRequestPair}>
-                    <Text style={myleavestyles.leaveRequestKey}>Total Days:</Text>
+                    <Text style={myleavestyles.leaveRequestKey}>
+                      Total Days:
+                    </Text>
                     <Text style={myleavestyles.leaveRequestValue}>
                       {request.TotalDays}
                     </Text>
