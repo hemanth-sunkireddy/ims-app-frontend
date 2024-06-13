@@ -142,7 +142,7 @@ function Transcript(): React.JSX.Element {
         setCompletegpa(responseData);
       }
     } catch (error) {
-      setError(false);
+      setError(true);
       const error_message = (error as Error).message;
       setErrorText(error_message);
       setIsLoading(false);
@@ -360,7 +360,7 @@ function Transcript(): React.JSX.Element {
         <ScrollView>
           <Text
             style={{
-              color: "black",
+              color: "red",
               textAlign: "center",
               fontSize: 20,
               fontWeight: "bold",
