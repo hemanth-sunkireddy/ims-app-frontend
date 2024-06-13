@@ -80,7 +80,7 @@ function BankDetails({
 
         const json_response = await response.json();
         setDetails(JSON.parse(JSON.stringify(json_response)));
-        
+
         setIsLoaded(true);
       } else {
         setIsFetchFine(false);
