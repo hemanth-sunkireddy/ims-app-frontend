@@ -12,7 +12,6 @@ import ProfileDetails from "./screens/MyProfile/ProfilePage";
 import BankDetails from "./screens/MyBank/BankDetails";
 import EditBankDetails from "./screens/MyBank/EditBank";
 import SidebarDisplay from "./components/SideBarDisplay";
-import NoNetwork from "./screens/NoNetwork";
 import MyLeaveRequests from "./screens/PastLeaves/MyLeaveRequests";
 import Transcript from "./screens/Transcript/Transcript";
 import ViewAttendance from "./screens/Attendance/Attendance";
@@ -43,11 +42,7 @@ function Navigation(): React.JSX.Element {
           component={Welcome}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="NoInternet"
-          component={NoNetwork}
-          options={{ headerShown: false }}
-        />
+       
         <Stack.Screen
           name="LoginScreen"
           component={Login}
