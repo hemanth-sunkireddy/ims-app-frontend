@@ -10,8 +10,11 @@ let userType: UserTypes = UserTypes.Default;
 export const get_user_details = async (
   setErrorText: (text: string) => void,
   setSuccessText: (text: string) => void,
-): Promise<boolean> => {
+): Promise<String> => {
   try {
+    setErrorText("");
+    setSuccessText("");
+    
     const accessToken = await getAccessToken();
     if (accessToken) {
       const responsePromise = await fetch(user_details, {
@@ -46,26 +49,23 @@ export const get_user_details = async (
         ) {
           userType = UserTypes.Staff;
         }
-        setErrorText("");
         setSuccessText("User Details fetch successful...");
-        return true;
+        return "success";
       } else if (response.status === 401) {
-        setSuccessText("");
-        setErrorText(response.status + " " + "Unauthroized");
-        return false;
+        setErrorText("Unauthroized Access, Please Login Again");
+        return "unauthorized";
       } else {
-        setSuccessText("");
         setErrorText(response.status + " " + "Error in getting user details");
-        return false;
+        return (response.status.toString());
       }
     } else {
       setErrorText("Error: Access token not retrieved");
-      return false;
+      return "false";
     }
   } catch (e) {
     const eror_message = (e as Error).message;
     setErrorText("Error: " + eror_message.toString());
-    return false;
+    return "false";
   }
 };
 export { userMail, userName, rollno, userType };

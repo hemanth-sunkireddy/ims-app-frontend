@@ -36,7 +36,7 @@ function Login({ navigation }: types.LoginScreenProps): React.JSX.Element {
           setSuccessText,
         );
         setIsLoading(false);
-        if (user_details_status == true) {
+        if (user_details_status == "success") {
           navigation.navigate("SidebarDisplay");
         }
       }

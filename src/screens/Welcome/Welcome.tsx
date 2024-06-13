@@ -45,7 +45,7 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
         setErrorText,
         setSuccessText,
       );
-      if (user_details_status == true) {
+      if (user_details_status == "success") {
         AsyncStorage.getItem("last_login").then(async (value) => {
           if (value !== null) {
             const lastLoginDate = new Date(value);
@@ -66,9 +66,11 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
             navigation.navigate("SidebarDisplay");
           }
         });
-      } else {
+      } else if (user_details_status == "unauthorized") {
         setIsLoading(false);
         navigation.navigate("LoginScreen");
+      } else {
+        setIsLoading(false);
       }
     } catch (error) {
       const error_message = (error as Error).message;
