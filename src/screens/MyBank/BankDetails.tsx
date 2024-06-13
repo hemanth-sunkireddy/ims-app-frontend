@@ -132,7 +132,8 @@ function BankDetails({
           ) {
             Alert.alert(
               "",
-              "You are not allowed to add another record. Contact Academic office for any change in Bank Account Details.",
+              "You are not allowed to add another record. Contact Academic office \
+              for any change in Bank Account Details.",
             );
           } else {
             Alert.alert("", "Server Error.");

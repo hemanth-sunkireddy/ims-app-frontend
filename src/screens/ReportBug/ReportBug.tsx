@@ -62,7 +62,7 @@ function ReportBug(): React.JSX.Element {
         </Text>
       </View>
 
-      <View style={{ flexDirection: "row", paddingTop: 20, paddingLeft: 20 }}>
+      <View style={{ flexDirection: "row", paddingTop: 10, paddingLeft: 20 }}>
         <Text style={{ fontWeight: "bold", color: "black" }}>
           Issues page:{" "}
         </Text>
@@ -73,6 +73,22 @@ function ReportBug(): React.JSX.Element {
         >
           <Text style={styles.link}>Submit Issue</Text>
         </TouchableOpacity>
+      </View>
+
+      <View style={{ flexDirection: "row", paddingTop: 40, paddingLeft: 20 }}>
+        <Text style={styles.description}>
+          You can also report bugs by sending an email with the subject line
+          "Bug Report for IMS App" to:-{" "}
+          <View style={{ flexDirection: "row", paddingTop: 20}}>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL("mailto:webadmin@students.iiit.ac.in");
+              }}
+            >
+              <Text style={styles.link}>webadmin@students.iiit.ac.in</Text>
+            </TouchableOpacity>
+          </View>
+        </Text>
       </View>
     </SafeAreaView>
   );
