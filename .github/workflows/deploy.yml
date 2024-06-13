@@ -24,12 +24,21 @@ jobs:
 
       - name: Get the tag name
         id: get_tag_name
-        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        run: |
+          echo "Version Name: $GITHUB_REF" >> $GITHUB_STEP_SUMMARY
+          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Get the version code
+        id: get_version_code
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+          echo "Version Code: $GITHUB_RUN_NUMBER" >> $GITHUB_STEP_SUMMARY
+          echo "VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
       - name: Update the versionName and versionCode
         run: |
           sed -i "s/versionName \".*\"/versionName \"$TAG_NAME\"/g" android/app/build.gradle
-          sed -i "s/versionCode .*/versionCode $GITHUB_RUN_NUMBER/g" android/app/build.gradle
+          sed -i "s/versionCode .*/versionCode $VERSION_CODE/g" android/app/build.gradle
 
       - name: Install Java
         uses: actions/setup-java@v4
