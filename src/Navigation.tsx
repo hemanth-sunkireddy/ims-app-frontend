@@ -42,7 +42,7 @@ function Navigation(): React.JSX.Element {
           component={Welcome}
           options={{ headerShown: false }}
         />
-       
+
         <Stack.Screen
           name="LoginScreen"
           component={Login}
