@@ -6,10 +6,13 @@ import { color, ScreenWidth } from "@rneui/base";
 export let selected_year = "";
 export let selected_sem = "";
 
-function GeneralDetails(): React.JSX.Element {
-  const [selectedYear, setSelectedYear] = useState("");
-  const [selectedSem, setSemester] = useState("");
-  const currentYear = new Date().getFullYear();
+function GeneralDetails(defaultValues: JSON): React.JSX.Element {
+  let currentYear = new Date().getFullYear();
+  let currentMonth = new Date().getMonth();
+
+  if (currentMonth <= 7)
+    currentYear = currentYear - 1;
+
   const ListofYears = [];
   for (let i = currentYear; i >= 2016; i--) {
     ListofYears.push({
@@ -17,13 +20,25 @@ function GeneralDetails(): React.JSX.Element {
       value: `${i}-${(i + 1) % 100}`,
     });
   }
+  ListofYears.unshift({ key: "Select...", value: "Select..." });
 
   const ListofSemesters = [
     { key: "Monsoon", value: "Monsoon" },
     { key: "Spring", value: "Spring" },
   ];
 
-  ListofYears.unshift({ key: "Select...", value: "Select..." });
+  let defaultYear: string = String(defaultValues["defaultYear"]);
+  let defaultSem: string = String(defaultValues["defaultSem"]);
+
+  if (!ListofYears.some(value => value.key === defaultYear)) {
+    defaultYear = "Select...";
+  }
+  if (!ListofSemesters.some(value => value.key === defaultSem)) {
+    defaultSem = "Select...";
+  }
+
+  const [selectedYear, setSelectedYear] = useState(defaultYear);
+  const [selectedSem, setSemester] = useState(defaultSem);
 
   // Update the exported variables whenever acadyear or semester changes
   useEffect(() => {
@@ -54,6 +69,7 @@ function GeneralDetails(): React.JSX.Element {
             dropdownTextStyles={{ color: "black" }}
             inputStyles={{ color: "black" }}
             search={false}
+            defaultOption={{ key: defaultYear, value: defaultYear }}
           />
         </View>
       </View>
@@ -77,6 +93,7 @@ function GeneralDetails(): React.JSX.Element {
             dropdownTextStyles={{ color: "black" }}
             inputStyles={{ color: "black" }}
             search={false}
+            defaultOption={{ key: defaultSem, value: defaultSem }}
           />
         </View>
       </View>

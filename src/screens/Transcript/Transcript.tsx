@@ -95,6 +95,21 @@ const styles = StyleSheet.create({
 });
 
 function Transcript(): React.JSX.Element {
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth();
+  let defaultYearOption = "";
+  let defaultSemOption = "";
+  if (currentMonth > 7 && currentMonth <= 12) {
+    defaultYearOption = `${currentYear}-${(currentYear + 1) % 100}`;
+    defaultSemOption = "Monsoon";
+  } else {
+    defaultYearOption = `${currentYear - 1}-${(currentYear) % 100}`;
+    defaultSemOption = "Spring";
+  }
+
+  const [selectedYear, setSelectedYear] = useState<string>(defaultYearOption);
+  const [selectedSem, setSelectedSem] = useState<string>(defaultSemOption);
+
   const screenWidth = Dimensions.get("window").width;
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [completegpa, setCompletegpa] = useState({} as CompleteGPA);
@@ -115,30 +130,23 @@ function Transcript(): React.JSX.Element {
         setIsLoading(false);
         return;
       }
-      try {
-        const response = await fetch(transcript_details, {
-          method: "GET",
-          headers: { Cookie: `access_token_ims_app=${accessToken}` },
-        });
-        if (response.status != 200) {
-          setError(true);
-          setErrorText(response.status + "Error in Fetching GPA");
-          setIsLoading(false);
-        } else if (response.status === 200) {
-          setIsLoading(false);
-          const responseData = await response.json();
-          setCompletegpa(responseData);
-        }
-      } catch (error) {
+      const response = await fetch(transcript_details, {
+        method: "GET",
+        headers: { Cookie: `access_token_ims_app=${accessToken}` },
+      });
+      if (response.status != 200) {
         setError(true);
-        const error_message = (error as Error).message;
-        setErrorText(error_message);
-        setIsLoading(false);
+        setErrorText(response.status + "Error in Fetching GPA");
+      } else if (response.status === 200) {
+        const responseData = await response.json();
+        setCompletegpa(responseData);
       }
     } catch (error) {
       setError(false);
       const error_message = (error as Error).message;
       setErrorText(error_message);
+      setIsLoading(false);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -186,9 +194,16 @@ function Transcript(): React.JSX.Element {
   const handleSelection = () => {
     if (selected_year != null && selected_year != "Select...") {
       if (selected_sem == "Spring" || selected_sem == "Monsoon") {
+        setIsLoading(true);
+
+        setSelectedSem(selected_sem);
+        setSelectedYear(selected_year);
+
         addCourses();
         addGPA();
         setLoadingText("");
+
+        setIsLoading(false);
         return;
       }
     }
@@ -255,7 +270,7 @@ function Transcript(): React.JSX.Element {
     return (
       <SafeAreaView style={styles.box}>
         <Text style={styles.heading}>Filter Selection</Text>
-        <SemesterSelector />
+        <SemesterSelector defaultYear={selectedYear} defaultSem={selectedSem} />
         <View style={{ marginVertical: 30, alignItems: "center" }}>
           <Button
             containerStyle={{ width: 200 }}
@@ -365,7 +380,7 @@ function Transcript(): React.JSX.Element {
         </Text>
         {record && (
           <View>
-            {PreHeading(selected_sem, selected_year)}
+            {PreHeading(selectedSem, selectedYear)}
             <View
               style={[styles.table, { width: screenWidth - 30 }]}
               key="coursesTable"
