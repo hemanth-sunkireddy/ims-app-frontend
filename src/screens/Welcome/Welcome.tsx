@@ -30,7 +30,7 @@ function Welcome({ navigation }: types.WelcomeScreenProps): React.JSX.Element {
     useCallback(() => {
       setSuccessText("");
       setErrorText("");
-    }, [])
+    }, []),
   );
 
   useEffect(() => {
