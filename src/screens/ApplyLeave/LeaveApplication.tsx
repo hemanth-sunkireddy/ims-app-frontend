@@ -97,23 +97,7 @@ function LeaveApplication(): React.JSX.Element {
       return Alert.alert("Alert", "Please Choose the reason for Leave", [
         { text: "OK" },
       ]);
-    } else if (reasonforleave == "Technical Event" && EventCategory == null) {
-      return Alert.alert("Alert", "Please Choose the Event Type", [
-        { text: "OK" },
-      ]);
-    } else if (
-      reasonforleave == "Technical Event" &&
-      EventCategory == "Conference" &&
-      Presentation == null
-    ) {
-      return Alert.alert(
-        "Alert",
-        "Please Choose if you are presenting paper or not",
-        [{ text: "OK" }],
-      );
-    } else if (reasonforleave == "Technical Event" && url == null) {
-      return Alert.alert("Alert", "Please enter the URL", [{ text: "OK" }]);
-    } else {
+    }  else {
       return Alert.alert("Alert", "Are you sure you want to Submit?", [
         {
           text: "Yes",
@@ -151,7 +135,6 @@ function LeaveApplication(): React.JSX.Element {
                 }
               })
               .catch((error) => {
-                console.error("Error:", error);
                 Alert.alert("Error in sending the Request.");
               });
           },
