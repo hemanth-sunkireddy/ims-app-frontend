@@ -135,7 +135,10 @@ function EditBankDetails(): React.JSX.Element {
         .then((_json) => {
           const status_code = _json.status;
           if (status_code == 422) {
-            Alert.alert(status_code + " Your Application Not submitted, Unprocessable Entry.");
+            Alert.alert(
+              status_code +
+                " Your Application Not submitted, Unprocessable Entry.",
+            );
             onDisplayNotification(
               "Error in Submitting bank details, please try again later.",
             );
@@ -144,8 +147,7 @@ function EditBankDetails(): React.JSX.Element {
             onDisplayNotification(
               "Your application for bank details has been sent successfully.",
             );
-          }
-          else {
+          } else {
             Alert.alert(status_code + " Your Application Not submitted");
             onDisplayNotification(
               "Error in Submitting bank details, please try again later.",
