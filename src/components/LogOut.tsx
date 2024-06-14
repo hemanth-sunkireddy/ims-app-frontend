@@ -28,7 +28,7 @@ function LogOut() {
       <Text
         style={{ color: "black", margin: 10, fontSize: 20, marginBottom: 20 }}
       >
-        Are you sure you want to Log Out?
+        Are you sure you want to log out?
       </Text>
       <Button
         onPress={handleLogout}

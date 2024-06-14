@@ -109,7 +109,7 @@ function Navigation(): React.JSX.Element {
           options={{ title: "Course Attendance" }}
         />
         <Stack.Screen name="Notifications" component={Notification} />
-        <Stack.Screen name="Logout" component={LogOut} />
+        <Stack.Screen name="Logout" component={LogOut} options={{ headerShown: false }}/>
         <Stack.Screen name="ReportBug" component={ReportBug} />
       </Stack.Navigator>
     </NavigationContainer>
