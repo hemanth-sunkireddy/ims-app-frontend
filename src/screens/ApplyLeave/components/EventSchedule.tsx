@@ -23,14 +23,14 @@ function EventSchedule(props: {
     const currentDate = selectedDate || fromDate;
     setShowFromDate(false);
     setFromDate(currentDate);
-    props.setFromEventDate(currentDate.toISOString().split('T')[0]);
+    props.setFromEventDate(currentDate.toISOString().split("T")[0]);
   };
 
   const onToDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || toDate;
     setShowToDate(false);
     setToDate(currentDate);
-    props.setToEventDate(currentDate.toISOString().split('T')[0]);
+    props.setToEventDate(currentDate.toISOString().split("T")[0]);
   };
   const showFromDateMode = () => {
     setMode("date");

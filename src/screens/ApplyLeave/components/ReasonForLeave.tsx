@@ -16,7 +16,7 @@ function ReasonForLeave({
   presentation,
   URL,
   setFromEventDate,
-  setToEventDate
+  setToEventDate,
 }): React.JSX.Element {
   const [reasonForLeave, setReasonForLeave] = useState("");
   const [EventCategory, setEventCategory] = useState("");

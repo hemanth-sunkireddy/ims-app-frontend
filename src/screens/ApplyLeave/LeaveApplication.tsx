@@ -13,9 +13,11 @@ import { postLeaveToServer } from "../../backend_requests/PostLeave";
 
 function LeaveApplication(): React.JSX.Element {
   const navigation = useNavigation();
-  const todayDate = new Date().toISOString().split('T')[0];
-  const [fromDate, setFromDate] = useState(new Date().toISOString().split('T')[0]);
-  const [toDate, setToDate] = useState(new Date().toISOString().split('T')[0]);
+  const todayDate = new Date().toISOString().split("T")[0];
+  const [fromDate, setFromDate] = useState(
+    new Date().toISOString().split("T")[0],
+  );
+  const [toDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
   const [totalDays, setTotalDays] = useState(1);
   const [sportsleave, setSportsLeave] = useState(null);
   const [justificationforleave, setJustificationForLeave] = useState(null);
@@ -32,8 +34,12 @@ function LeaveApplication(): React.JSX.Element {
   const [url, setUrl] = useState(null);
   const [missedexams, setmissedexams] = useState(null);
   const [listOfCoursesMissed, setLISTOFCOURSESMISSED] = useState([]);
-  const [fromEventDate, setFromEventDate] = useState(new Date().toISOString().split('T')[0]);
-  const [toEventDate, setToEventDate] = useState(new Date().toISOString().split('T')[0]);
+  const [fromEventDate, setFromEventDate] = useState(
+    new Date().toISOString().split("T")[0],
+  );
+  const [toEventDate, setToEventDate] = useState(
+    new Date().toISOString().split("T")[0],
+  );
 
   useEffect(() => {
     if (reasonforleave === "Sickness") {
@@ -99,8 +105,7 @@ function LeaveApplication(): React.JSX.Element {
       return Alert.alert("Alert", "Please Choose the reason for Leave", [
         { text: "OK" },
       ]);
-    }  else {
-      
+    } else {
       return Alert.alert("Alert", "Are you sure you want to Submit?", [
         {
           text: "Yes",
