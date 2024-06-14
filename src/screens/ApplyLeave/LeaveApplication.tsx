@@ -97,14 +97,6 @@ function LeaveApplication(): React.JSX.Element {
       return Alert.alert("Alert", "Please Choose the reason for Leave", [
         { text: "OK" },
       ]);
-    } else if (reasonforleave == "Sickness" && patientCategory == null) {
-      return Alert.alert("Alert", "Please Choose the Patient Category", [
-        { text: "OK" },
-      ]);
-    } else if (reasonforleave == "Sickness" && doctorCategory == null) {
-      return Alert.alert("Alert", "Please Choose the Doctor Category", [
-        { text: "OK" },
-      ]);
     } else if (reasonforleave == "Technical Event" && EventCategory == null) {
       return Alert.alert("Alert", "Please Choose the Event Type", [
         { text: "OK" },
@@ -125,7 +117,6 @@ function LeaveApplication(): React.JSX.Element {
       return Alert.alert("Alert", "Are you sure you want to Submit?", [
         {
           text: "Yes",
-          // Hello world base 64 code for attachment 1, but not selected file, Selected file base64 code is giving error we need to fix this.
           onPress: () => {
             const json_to_send = {
               rollNumber: rollno,
