@@ -39,12 +39,19 @@ function SidebarDisplay(): React.JSX.Element {
 
     const renderEntry = (entry: Entry) => {
       const { name, icon, target } = entry;
+      
+      const handlePress = () => {
+        if (target === "BottomTab") {
+          props.navigation.navigate(target, { screen: 'Home' });
+        } else {
+          props.navigation.navigate(target);
+        }
+      };
+    
       return (
         <DrawerItem
           label={name}
-          onPress={() => {
-            props.navigation.navigate(target);
-          }}
+          onPress={handlePress}
           inactiveTintColor="#ffffff"
           icon={() => (
             <Image
@@ -57,6 +64,7 @@ function SidebarDisplay(): React.JSX.Element {
         />
       );
     };
+    
 
     return (
       <DrawerContentScrollView>
