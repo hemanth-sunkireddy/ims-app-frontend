@@ -15,6 +15,8 @@ function ReasonForLeave({
   eventscategory,
   presentation,
   URL,
+  setFromEventDate,
+  setToEventDate
 }): React.JSX.Element {
   const [reasonForLeave, setReasonForLeave] = useState("");
   const [EventCategory, setEventCategory] = useState("");
@@ -115,12 +117,16 @@ function ReasonForLeave({
           <EventSchedule
             fromDateText="Event Start Date"
             toDateText="Event End Date"
+            setFromEventDate={setFromEventDate}
+            setToEventDate={setToEventDate}
           />
         ) : null}
         {reasonForLeave === "Cultural Event" ? (
           <EventSchedule
             fromDateText="Event Start Date"
             toDateText="Event End Date"
+            setFromEventDate={setFromEventDate}
+            setToEventDate={setToEventDate}
           />
         ) : null}
         {reasonForLeave === "Technical Event" ? (
@@ -166,6 +172,8 @@ function ReasonForLeave({
               <EventSchedule
                 fromDateText="Event Start Date"
                 toDateText="Event End Date"
+                setFromEventDate={setFromEventDate}
+                setToEventDate={setToEventDate}
               />
             </View>
             <View>
@@ -177,8 +185,6 @@ function ReasonForLeave({
                 inputMode="text"
                 onChangeText={handleurlChange}
               />
-              {/* <View style={LeaveApplicationCss.input}>
-                        </View> */}
             </View>
           </View>
         ) : null}

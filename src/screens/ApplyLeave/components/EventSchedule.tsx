@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import LeaveApplicationCss from "../styles/LeaveScreenStyles";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -10,6 +10,8 @@ const calendarIcon = lightIcons.calendar;
 function EventSchedule(props: {
   fromDateText: string;
   toDateText: string;
+  setFromEventDate: (date: string) => void;
+  setToEventDate: (date: string) => void;
 }): React.JSX.Element {
   const [mode, setMode] = useState("date");
   const [showFromDate, setShowFromDate] = useState(false);
@@ -21,12 +23,14 @@ function EventSchedule(props: {
     const currentDate = selectedDate || fromDate;
     setShowFromDate(false);
     setFromDate(currentDate);
+    props.setFromEventDate(currentDate.toISOString().split('T')[0]);
   };
 
   const onToDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || toDate;
     setShowToDate(false);
     setToDate(currentDate);
+    props.setToEventDate(currentDate.toISOString().split('T')[0]);
   };
   const showFromDateMode = () => {
     setMode("date");
@@ -37,6 +41,7 @@ function EventSchedule(props: {
     setMode("date");
     setShowToDate(true);
   };
+
   return (
     <View>
       <View>

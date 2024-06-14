@@ -32,6 +32,8 @@ function LeaveApplication(): React.JSX.Element {
   const [url, setUrl] = useState(null);
   const [missedexams, setmissedexams] = useState(null);
   const [listOfCoursesMissed, setLISTOFCOURSESMISSED] = useState([]);
+  const [fromEventDate, setFromEventDate] = useState(new Date().toISOString().split('T')[0]);
+  const [toEventDate, setToEventDate] = useState(new Date().toISOString().split('T')[0]);
 
   useEffect(() => {
     if (reasonforleave === "Sickness") {
@@ -98,6 +100,7 @@ function LeaveApplication(): React.JSX.Element {
         { text: "OK" },
       ]);
     }  else {
+      
       return Alert.alert("Alert", "Are you sure you want to Submit?", [
         {
           text: "Yes",
@@ -114,8 +117,8 @@ function LeaveApplication(): React.JSX.Element {
               doctorCategory: doctorCategory,
               eventType: EventCategory,
               areYouPresentingAPaper: Presentation,
-              eventStartDate: fromDate,
-              eventEndDate: toDate,
+              eventStartDate: fromEventDate,
+              eventEndDate: toEventDate,
               eventURL: url,
               missedExamsForLeave: missedexams,
               semesterCourses: listOfCoursesMissed,
@@ -124,7 +127,6 @@ function LeaveApplication(): React.JSX.Element {
               attachment1: file1_base64,
               attachment2: file2_base64,
             };
-
             postLeaveToServer(json_to_send)
               .then((status_of_request) => {
                 if (status_of_request) {
@@ -164,6 +166,8 @@ function LeaveApplication(): React.JSX.Element {
           eventscategory={setEventCategory}
           presentation={setPresentation}
           URL={setUrl}
+          setFromEventDate={setFromEventDate}
+          setToEventDate={setToEventDate}
         />
         <MissedExams
           leaveforsports={setSportsLeave}
