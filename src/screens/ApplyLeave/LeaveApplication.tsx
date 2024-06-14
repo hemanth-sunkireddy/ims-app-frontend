@@ -13,9 +13,9 @@ import { postLeaveToServer } from "../../backend_requests/PostLeave";
 
 function LeaveApplication(): React.JSX.Element {
   const navigation = useNavigation();
-  const todayDate = new Date();
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const todayDate = new Date().toISOString().split('T')[0];
+  const [fromDate, setFromDate] = useState(new Date().toISOString().split('T')[0]);
+  const [toDate, setToDate] = useState(new Date().toISOString().split('T')[0]);
   const [totalDays, setTotalDays] = useState(1);
   const [sportsleave, setSportsLeave] = useState(null);
   const [justificationforleave, setJustificationForLeave] = useState(null);
@@ -32,6 +32,8 @@ function LeaveApplication(): React.JSX.Element {
   const [url, setUrl] = useState(null);
   const [missedexams, setmissedexams] = useState(null);
   const [listOfCoursesMissed, setLISTOFCOURSESMISSED] = useState([]);
+  const [fromEventDate, setFromEventDate] = useState(new Date().toISOString().split('T')[0]);
+  const [toEventDate, setToEventDate] = useState(new Date().toISOString().split('T')[0]);
 
   useEffect(() => {
     if (reasonforleave === "Sickness") {
@@ -63,7 +65,9 @@ function LeaveApplication(): React.JSX.Element {
   }, [reasonforleave]);
 
   const showConfirmDialog = () => {
-    if (fromDate.getTime() > toDate.getTime()) {
+    const fromDateObj = new Date(fromDate); // convert back date from string to date to check to date is greater than from date.
+    const toDateObj = new Date(toDate);
+    if (fromDateObj.getTime() > toDateObj.getTime()) {
       return Alert.alert(
         "Alert",
         "Please select To Date greater than From Date.",
@@ -76,7 +80,7 @@ function LeaveApplication(): React.JSX.Element {
     } else if (!justificationforleave) {
       return Alert.alert(
         "Alert",
-        "Please Fill the Justification for the leave application.",
+        "Please Fill the Justification for the leave applicatio n.",
         [{ text: "OK" }],
       );
     } else if (!sportsleave || sportsleave == "Select...") {
@@ -95,35 +99,11 @@ function LeaveApplication(): React.JSX.Element {
       return Alert.alert("Alert", "Please Choose the reason for Leave", [
         { text: "OK" },
       ]);
-    } else if (reasonforleave == "Sickness" && patientCategory == null) {
-      return Alert.alert("Alert", "Please Choose the Patient Category", [
-        { text: "OK" },
-      ]);
-    } else if (reasonforleave == "Sickness" && doctorCategory == null) {
-      return Alert.alert("Alert", "Please Choose the Doctor Category", [
-        { text: "OK" },
-      ]);
-    } else if (reasonforleave == "Technical Event" && EventCategory == null) {
-      return Alert.alert("Alert", "Please Choose the Event Type", [
-        { text: "OK" },
-      ]);
-    } else if (
-      reasonforleave == "Technical Event" &&
-      EventCategory == "Conference" &&
-      Presentation == null
-    ) {
-      return Alert.alert(
-        "Alert",
-        "Please Choose if you are presenting paper or not",
-        [{ text: "OK" }],
-      );
-    } else if (reasonforleave == "Technical Event" && url == null) {
-      return Alert.alert("Alert", "Please enter the URL", [{ text: "OK" }]);
-    } else {
+    }  else {
+      
       return Alert.alert("Alert", "Are you sure you want to Submit?", [
         {
           text: "Yes",
-          // Hello world base 64 code for attachment 1, but not selected file, Selected file base64 code is giving error we need to fix this.
           onPress: () => {
             const json_to_send = {
               rollNumber: rollno,
@@ -137,8 +117,8 @@ function LeaveApplication(): React.JSX.Element {
               doctorCategory: doctorCategory,
               eventType: EventCategory,
               areYouPresentingAPaper: Presentation,
-              eventStartDate: fromDate,
-              eventEndDate: toDate,
+              eventStartDate: fromEventDate,
+              eventEndDate: toEventDate,
               eventURL: url,
               missedExamsForLeave: missedexams,
               semesterCourses: listOfCoursesMissed,
@@ -147,7 +127,6 @@ function LeaveApplication(): React.JSX.Element {
               attachment1: file1_base64,
               attachment2: file2_base64,
             };
-
             postLeaveToServer(json_to_send)
               .then((status_of_request) => {
                 if (status_of_request) {
@@ -158,7 +137,6 @@ function LeaveApplication(): React.JSX.Element {
                 }
               })
               .catch((error) => {
-                console.error("Error:", error);
                 Alert.alert("Error in sending the Request.");
               });
           },
@@ -188,6 +166,8 @@ function LeaveApplication(): React.JSX.Element {
           eventscategory={setEventCategory}
           presentation={setPresentation}
           URL={setUrl}
+          setFromEventDate={setFromEventDate}
+          setToEventDate={setToEventDate}
         />
         <MissedExams
           leaveforsports={setSportsLeave}
