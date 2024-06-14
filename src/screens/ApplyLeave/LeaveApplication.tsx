@@ -13,9 +13,9 @@ import { postLeaveToServer } from "../../backend_requests/PostLeave";
 
 function LeaveApplication(): React.JSX.Element {
   const navigation = useNavigation();
-  const todayDate = new Date();
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const todayDate = new Date().toISOString().split('T')[0];
+  const [fromDate, setFromDate] = useState(new Date().toISOString().split('T')[0]);
+  const [toDate, setToDate] = useState(new Date().toISOString().split('T')[0]);
   const [totalDays, setTotalDays] = useState(1);
   const [sportsleave, setSportsLeave] = useState(null);
   const [justificationforleave, setJustificationForLeave] = useState(null);
@@ -63,7 +63,9 @@ function LeaveApplication(): React.JSX.Element {
   }, [reasonforleave]);
 
   const showConfirmDialog = () => {
-    if (fromDate.getTime() > toDate.getTime()) {
+    const fromDateObj = new Date(fromDate); // convert back date from string to date to check to date is greater than from date.
+    const toDateObj = new Date(toDate);
+    if (fromDateObj.getTime() > toDateObj.getTime()) {
       return Alert.alert(
         "Alert",
         "Please select To Date greater than From Date.",
@@ -76,7 +78,7 @@ function LeaveApplication(): React.JSX.Element {
     } else if (!justificationforleave) {
       return Alert.alert(
         "Alert",
-        "Please Fill the Justification for the leave application.",
+        "Please Fill the Justification for the leave applicatio n.",
         [{ text: "OK" }],
       );
     } else if (!sportsleave || sportsleave == "Select...") {

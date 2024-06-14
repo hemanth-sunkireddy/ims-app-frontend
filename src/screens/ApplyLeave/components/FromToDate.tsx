@@ -40,7 +40,7 @@ function FromToDate({
     setShowFromDate(false);
     if (selectedDate) {
       setFromDate(selectedDate);
-      setfromdate(selectedDate);
+      setfromdate(selectedDate.toISOString());
       if (!isSameDate(selectedDate, toDate) && selectedDate > toDate) {
         DateCompare();
       }
@@ -51,7 +51,7 @@ function FromToDate({
     setShowToDate(false);
     if (selectedDate) {
       setToDate(selectedDate);
-      settodate(selectedDate);
+      settodate(selectedDate.toISOString());
       if (!isSameDate(selectedDate, fromDate) && selectedDate < fromDate) {
         DateCompare();
       }
