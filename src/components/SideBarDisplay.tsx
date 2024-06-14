@@ -69,12 +69,12 @@ function SidebarDisplay(): React.JSX.Element {
       <DrawerContentScrollView>
         <PreHeader />
         {renderEntry(entries.dashboard)}
-        {renderEntry(entries.notification)}
+        {/* {renderEntry(entries.notification)} */}
         <WhiteLine />
         {renderEntry(entries.attendance)}
         {renderEntry(entries.transcript)}
         <WhiteLine />
-        {renderEntry(entries.about)}
+        {/* {renderEntry(entries.about)} */}
         {renderEntry(entries.reportBug)}
         {renderEntry(entries.logout)}
       </DrawerContentScrollView>
