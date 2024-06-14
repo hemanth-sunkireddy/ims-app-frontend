@@ -14,7 +14,7 @@ import DocumentPicker from "react-native-document-picker";
 import RNFS from "react-native-fs";
 import { onDisplayNotification } from "../../components/SendNotification";
 
-import { rollno, userMail } from "../../backend_requests/UserDetails";
+import { rollno } from "../../backend_requests/UserDetails";
 
 import global from "../../styles/global";
 import card from "../../styles/card";
@@ -133,17 +133,22 @@ function EditBankDetails(): React.JSX.Element {
       })
         .then((response) => response)
         .then((_json) => {
-          // console.log("response: ", _json);
           const status_code = _json.status;
           if (status_code == 422) {
-            Alert.alert("Your Application Not submitted, Unprocessable Entry.");
+            Alert.alert(status_code + " Your Application Not submitted, Unprocessable Entry.");
             onDisplayNotification(
               "Error in Submitting bank details, please try again later.",
             );
-          } else {
-            Alert.alert("Submitted bank details.");
+          } else if (status_code == 200) {
+            Alert.alert(status_code + " Submitted bank details.");
             onDisplayNotification(
               "Your application for bank details has been sent successfully.",
+            );
+          }
+          else {
+            Alert.alert(status_code + " Your Application Not submitted");
+            onDisplayNotification(
+              "Error in Submitting bank details, please try again later.",
             );
           }
         })
